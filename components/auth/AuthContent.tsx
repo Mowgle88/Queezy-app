@@ -1,12 +1,35 @@
-import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import CustomButton from '../ui/CustomButton';
 import { Colors } from '../../constants/styles';
+import AuthForm from './AuthForm';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../App';
 
-function AuthContent() {
+interface AuthContentProps {
+  isLogin: boolean,
+}
+
+type NativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Signup', 'Login'>;
+
+function AuthContent({ isLogin }: AuthContentProps) {
+  const [credentialsInvalid, setCredentialsInvalid] = useState({
+    userName: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+  const navigation = useNavigation<NativeStackProps>();
 
   function switchAuthModeHandler() {
+    if (isLogin) {
+      navigation.replace('Signup');
+    } else {
+      navigation.replace('Login');
+    }
   }
 
   function submitHandler() {
@@ -14,13 +37,14 @@ function AuthContent() {
 
   return (
     <View style={styles.authContent}>
-      <TextInput style={styles.input} />
-      <CustomButton onPress={submitHandler}>
-        Log In
-      </CustomButton>
+      <AuthForm
+        isLogin={isLogin}
+        onSubmit={submitHandler}
+        credentialsInvalid={credentialsInvalid}
+      />
       <View style={styles.buttons}>
         <CustomButton mode='flat' onPress={switchAuthModeHandler}>
-          Login
+          {isLogin ? 'Create a new user' : 'Log in instead'}
         </CustomButton>
       </View>
     </View>

@@ -4,7 +4,7 @@ import AuthContent from '../../components/auth/AuthContent'
 
 export default function SignupScreen() {
   return (
-    <AuthContent />
+    <AuthContent isLogin={false} />
   )
 }
 
