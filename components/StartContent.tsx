@@ -1,17 +1,29 @@
 import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
 import React from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+
 import { IStartContentData } from '../constants/startContentData';
 import { Colors } from '../constants/styles';
 import CustomButton from './ui/CustomButton';
+import { RootStackParamList } from '../App';
 
-interface StartScreenItem {
+interface StartContentProps {
   item: IStartContentData,
 }
 
-export default function StartContent({ item }: StartScreenItem) {
+type StartContentNavigationProp = NavigationProp<RootStackParamList, 'StartScreen'>;
+
+export default function StartContent({ item }: StartContentProps) {
   const { width } = useWindowDimensions();
 
+  const navigation = useNavigation<StartContentNavigationProp>();
+
   function goSignupHandler() {
+    navigation.navigate('Signup');
+  }
+
+  function goLoginHandler() {
+    navigation.navigate('Login');
   }
 
   return (
@@ -27,7 +39,7 @@ export default function StartContent({ item }: StartScreenItem) {
         <CustomButton style={styles.button} onPress={goSignupHandler}>Sign Up</CustomButton>
         <View style={styles.textContainer}>
           <Text style={styles.text2}>Already have an account? </Text>
-          <CustomButton mode='flat' onPress={goSignupHandler}>Login</CustomButton>
+          <CustomButton mode='flat' onPress={goLoginHandler}>Login</CustomButton>
         </View>
       </View>
     </View>
