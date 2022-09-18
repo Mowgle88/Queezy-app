@@ -1,4 +1,4 @@
-import { Animated, FlatList, StyleSheet, View, ViewToken } from 'react-native';
+import { Animated, FlatList, ImageBackground, StyleSheet, View, ViewToken } from 'react-native';
 import React, { useRef, useState } from 'react';
 
 import { startContentData } from '../constants/startContentData';
@@ -17,7 +17,10 @@ export default function StartScreen() {
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('../assets/auth-image-bachground.png')}
+      resizeMode="cover"
+      style={styles.container}>
       <FlatList
         data={startContentData}
         renderItem={({ item }) => <StartContent item={item} />}
@@ -33,7 +36,7 @@ export default function StartScreen() {
         ref={slidesRef}
       />
       <Paginator style={styles.paginator} data={startContentData} scrollX={scrollX} />
-    </View>
+    </ImageBackground>
   )
 }
 
