@@ -5,7 +5,11 @@ export const Colors = {
   pastelPink: '#FFD6DD',
   hawkesBlue: '#C4D0FB',
   mintTulip: '#C9F2E9',
-  black: '#49465F',
-  grey: '#858494',
-  grey2: '#E6E6E6',
-}
+  black: '#0C092A',
+  grey: '#49465F',
+  grey2: '#858494',
+  grey3: '#CCCCCC',
+  grey4: '#E6E6E6',
+  grey5: '#EFEEFC',
+  white: '#FFFFFF',
+};

@@ -8,6 +8,7 @@ import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
 import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
+import { Colors } from './constants/styles';
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -21,7 +22,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AuthStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.grey5 },
+        headerTintColor: Colors.black,
+        contentStyle: { backgroundColor: Colors.grey5 },
+      }}
+    >
       <Stack.Screen name="StartScreen" component={StartScreen} options={{
         headerShown: false,
       }} />
