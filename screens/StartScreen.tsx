@@ -1,20 +1,38 @@
-import { Image, ImageBackground, StyleSheet, View } from 'react-native'
-import React from 'react'
-import StartContent from '../components/StartContent'
+import { Animated, FlatList, StyleSheet, View, ViewToken } from 'react-native';
+import React, { useRef, useState } from 'react';
+
+import { startContentData } from '../constants/startContentData';
+import StartContent from '../components/StartContent';
+import Paginator from '../components/Paginator';
 
 export default function StartScreen() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const slidesRef = useRef(null);
+
+  const viewableItemsChanged = useRef(({ viewableItems }: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
+    setCurrentIndex(viewableItems[0].index!)
+  }).current;
+
+  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/auth-image-bachground.png')} resizeMode="cover" style={styles.image}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={require('../assets/Illustration.png')}
-          />
-        </View>
-        <View style={styles.contentContainer}>
-          <StartContent />
-        </View>
-      </ImageBackground>
+      <FlatList
+        data={startContentData}
+        renderItem={({ item }) => <StartContent item={item} />}
+        keyExtractor={(item) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator
+        pagingEnabled
+        bounces={false}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
+        scrollEventThrottle={32}
+        onViewableItemsChanged={viewableItemsChanged}
+        viewabilityConfig={viewConfig}
+        ref={slidesRef}
+      />
+      <Paginator style={styles.paginator} data={startContentData} scrollX={scrollX} />
     </View>
   )
 }
@@ -22,27 +40,11 @@ export default function StartScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  imageContainer: {
-    flex: 2,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "center"
   },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "flex-end"
-
-  },
-  image: {
-    flex: 1,
-    // justifyContent: "flex-end"
-  },
-  text: {
-    color: "white",
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000c0"
+  paginator: {
+    position: 'absolute',
+    bottom: 250,
   }
 })
