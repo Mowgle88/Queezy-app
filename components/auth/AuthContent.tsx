@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 
 import CustomButton from '../ui/CustomButton';
 import { Colors } from '../../constants/styles';
-import AuthForm from './AuthForm';
+import AuthForm, { ICredentials } from './AuthForm';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 
 interface AuthContentProps {
   isLogin: boolean,
+  onAuthenticate: ({ email, password }: { email: string, password: string }) => void
 }
 
 type NativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Signup', 'Login'>;
 
-function AuthContent({ isLogin }: AuthContentProps) {
+function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     userName: false,
     email: false,
@@ -32,7 +33,34 @@ function AuthContent({ isLogin }: AuthContentProps) {
     }
   }
 
-  function submitHandler() {
+  function submitHandler(credentials: ICredentials) {
+    let { userName, email, password, confirmPassword } = credentials;
+
+    userName = userName.trim();
+    email = email.trim();
+    password = password.trim();
+
+    const userNameIsValid = email.length > 3;
+    const emailIsValid = email.includes('@');
+    const passwordIsValid = password.length > 6;
+    const passwordsAreEqual = password === confirmPassword;
+
+    if (
+      !userNameIsValid ||
+      !emailIsValid ||
+      !passwordIsValid ||
+      (!isLogin && !passwordsAreEqual)
+    ) {
+      Alert.alert('Invalid input', 'Please check your entered credentials.');
+      setCredentialsInvalid({
+        userName: !userNameIsValid,
+        email: !emailIsValid,
+        password: !passwordIsValid,
+        confirmPassword: !passwordIsValid || !passwordsAreEqual,
+      });
+      return;
+    }
+    onAuthenticate({ email, password });
   }
 
   return (
