@@ -13,6 +13,7 @@
     "@klarna/react-native-vector-drawable": "^0.1.2",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
+    "axios": "^0.27.2",
     "generate": "^0.14.0",
     "react": "18.1.0",
     "react-native": "0.70.0",
