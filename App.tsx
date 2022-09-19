@@ -9,6 +9,7 @@ import SignupScreen from './screens/auth/SignupScreen';
 import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { Colors } from './constants/styles';
+import AuthContextProvider from './store/auth-context';
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -62,7 +63,9 @@ const App = () => {
   return (
     <>
       <StatusBar />
-      <Root />
+      <AuthContextProvider>
+        <Root />
+      </AuthContextProvider>
     </>
   );
 };
