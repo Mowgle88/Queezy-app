@@ -1,11 +1,36 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Alert, StyleSheet } from 'react-native'
+import React, { useContext, useState } from 'react'
+
+import AuthContent from '../../components/auth/AuthContent'
+import { login } from '../../util/auth';
+import LoadingOverlay from '../../components/ui/LoadingOverlay';
+import { AuthContext } from '../../store/auth-context';
 
 export default function LoginScreen() {
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const authCtx = useContext(AuthContext);
+
+  async function signupHandler({ email, password }: { email: string, password: string }) {
+    setIsAuthenticating(true);
+    try {
+      const token = await login(email, password);
+      authCtx.authenticate(token);
+    } catch (error) {
+      Alert.alert(
+        'Authentication failed!',
+        'Could not log you in. Please check your credentials or try again later!'
+      )
+      setIsAuthenticating(false);
+    }
+  }
+
+  if (isAuthenticating) {
+    return <LoadingOverlay message={'Logging you in...'} />
+  }
+
   return (
-    <View>
-      <Text>LoginScreen</Text>
-    </View>
+    <AuthContent isLogin onAuthenticate={signupHandler} />
   )
 }
 

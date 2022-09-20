@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import StartScreen from './screens/StartScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
 
+import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
 import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
+import { Colors } from './constants/styles';
+import IconButton from './components/ui/IconButton';
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -21,7 +24,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AuthStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.grey5 },
+        headerTintColor: Colors.black,
+        contentStyle: { backgroundColor: Colors.grey5 },
+      }}
+    >
       <Stack.Screen name="StartScreen" component={StartScreen} options={{
         headerShown: false,
       }} />
@@ -34,8 +43,14 @@ function AuthStack() {
 
 function AuthenticatedStack() {
 
+  const authCtx = useContext(AuthContext);
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerRight: ({ tintColor }) => <IconButton icon={'exit'} size={24} color={tintColor!} onPress={authCtx.logout} />
+      }}
+    >
       <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
@@ -44,9 +59,11 @@ function AuthenticatedStack() {
 function Root() {
   const [isTryingLogin, setIsTryingLogin] = useState(false);
 
+  const authCtx = useContext(AuthContext);
+
   return (
     <NavigationContainer>
-      {!isTryingLogin ? <AuthStack /> : <AuthenticatedStack />}
+      {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }
@@ -55,7 +72,9 @@ const App = () => {
   return (
     <>
       <StatusBar />
-      <Root />
+      <AuthContextProvider>
+        <Root />
+      </AuthContextProvider>
     </>
   );
 };

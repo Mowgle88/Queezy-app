@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   flatText: {
     color: Colors.royalBlue,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   pressed: {
     opacity: 0.75,
