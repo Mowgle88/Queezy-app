@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthContextProvider, { AuthContext } from './store/auth-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
@@ -11,6 +11,7 @@ import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { Colors } from './constants/styles';
 import IconButton from './components/ui/IconButton';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -61,6 +62,17 @@ function Root() {
 
   const authCtx = useContext(AuthContext);
 
+  useEffect(() => {
+    async function fetchToken() {
+      const storedToken = await AsyncStorage.getItem('token');
+
+      if (storedToken) {
+        authCtx.authenticate(storedToken);
+      }
+    }
+    fetchToken();
+  }, [])
+
   return (
     <NavigationContainer>
       {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
@@ -88,3 +100,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
