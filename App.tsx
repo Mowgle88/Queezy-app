@@ -10,6 +10,7 @@ import SignupScreen from './screens/auth/SignupScreen';
 import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { Colors } from './constants/styles';
+import IconButton from './components/ui/IconButton';
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -41,8 +42,15 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
+
+  const authCtx = useContext(AuthContext);
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerRight: ({ tintColor }) => <IconButton icon={'exit'} size={24} color={tintColor!} onPress={authCtx.logout} />
+      }}
+    >
       <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
