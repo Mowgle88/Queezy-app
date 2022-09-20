@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import StartScreen from './screens/StartScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
 
+import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
 import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { Colors } from './constants/styles';
-import AuthContextProvider from './store/auth-context';
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -41,7 +41,6 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
-
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -52,9 +51,11 @@ function AuthenticatedStack() {
 function Root() {
   const [isTryingLogin, setIsTryingLogin] = useState(false);
 
+  const authCtx = useContext(AuthContext);
+
   return (
     <NavigationContainer>
-      {!isTryingLogin ? <AuthStack /> : <AuthenticatedStack />}
+      {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }
