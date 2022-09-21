@@ -7,6 +7,7 @@ import AuthForm, { ICredentials } from './AuthForm';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface AuthContentProps {
   isLogin: boolean,
@@ -64,18 +65,25 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
   }
 
   return (
-    <View style={styles.authContent}>
-      <AuthForm
-        isLogin={isLogin}
-        onSubmit={submitHandler}
-        credentialsInvalid={credentialsInvalid}
-      />
-      <View style={styles.buttons}>
-        <CustomButton mode='flat' onPress={switchAuthModeHandler}>
-          {isLogin ? 'Create a new user' : 'Log in instead'}
-        </CustomButton>
+    <LinearGradient
+      colors={['#9087E5', '#C4D0FB']}
+      style={{ flex: 1 }}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+    >
+      <View style={styles.authContent}>
+        <AuthForm
+          isLogin={isLogin}
+          onSubmit={submitHandler}
+          credentialsInvalid={credentialsInvalid}
+        />
+        <View style={styles.buttons}>
+          <CustomButton mode='flat' onPress={switchAuthModeHandler}>
+            {isLogin ? 'Create a new user' : 'Log in instead'}
+          </CustomButton>
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 

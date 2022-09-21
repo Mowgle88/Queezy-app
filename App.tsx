@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import { Image, StatusBar, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,15 +8,14 @@ import SplashScreen from 'react-native-splash-screen'
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
-import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { Colors } from './constants/styles';
 import IconButton from './components/ui/IconButton';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
+import LinearGradient from 'react-native-linear-gradient';
 
 export type RootStackParamList = {
   StartScreen: undefined,
-  LoginOrSignupScreen: undefined,
   Login: undefined;
   Signup: undefined;
   Home: undefined;
@@ -28,17 +27,43 @@ function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.grey5 },
-        headerTintColor: Colors.black,
+        headerTintColor: Colors.grey,
+        headerTitleAlign: 'center',
         contentStyle: { backgroundColor: Colors.grey5 },
+        animation: 'fade',
       }}
     >
       <Stack.Screen name="StartScreen" component={StartScreen} options={{
         headerShown: false,
       }} />
-      <Stack.Screen name="LoginOrSignupScreen" component={LoginOrSignupScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} options={{
+        headerBackground: () => (
+          <LinearGradient
+            colors={['#9087E5', '#C4D0FB']}
+            style={{ flex: 1 }}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          />
+        ),
+        headerRight: () => (
+          <Image style={{ width: 35, height: 35 }} source={require('./assets/queezy.png')} />
+        )
+      }} />
+      <Stack.Screen name="Signup" component={SignupScreen} options={{
+        title: 'Sign Up',
+        presentation: 'card',
+        headerBackground: () => (
+          <LinearGradient
+            colors={['#9087E5', '#C4D0FB']}
+            style={{ flex: 1 }}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          />
+        ),
+        headerRight: () => (
+          <Image style={{ width: 35, height: 35 }} source={require('./assets/queezy.png')} />
+        )
+      }} />
     </Stack.Navigator>
   );
 }
