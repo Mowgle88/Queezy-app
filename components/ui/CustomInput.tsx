@@ -34,7 +34,7 @@ function CustomInput({
       <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
         {label}
       </Text>
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, isInvalid && styles.inputContainerInvalid]}>
         {source && <VectorImage style={styles.vectorImage} source={source} />}
         <TextInput
           style={[styles.input, isInvalid && styles.inputInvalid]}
@@ -77,6 +77,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.white,
     borderRadius: 15,
+    borderWidth: 2,
+    borderColor: Colors.grey4
+  },
+  inputContainerInvalid: {
+    backgroundColor: Colors.pastelPink,
+    borderColor: Colors.pinkSalmon
+
   },
   vectorImage: {
     marginRight: 8
@@ -92,6 +99,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   inputInvalid: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.pastelPink,
   },
 });
