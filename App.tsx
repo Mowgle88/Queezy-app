@@ -3,6 +3,7 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from 'react-native-splash-screen'
 
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
@@ -64,14 +65,26 @@ function Root() {
 
   useEffect(() => {
     async function fetchToken() {
+
       const storedToken = await AsyncStorage.getItem('token');
 
       if (storedToken) {
         authCtx.authenticate(storedToken);
       }
+      setIsTryingLogin(true);
     }
+
     fetchToken();
+    SplashScreen.hide();
   }, [])
+
+  useEffect(() => {
+    if (isTryingLogin) {
+      SplashScreen.hide();
+    } else {
+      SplashScreen.show();
+    }
+  }, [isTryingLogin])
 
   return (
     <NavigationContainer>
