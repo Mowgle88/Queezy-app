@@ -8,7 +8,6 @@ import SplashScreen from 'react-native-splash-screen'
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
-import LoginOrSignupScreen from './screens/auth/LoginOrSignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { Colors } from './constants/styles';
 import IconButton from './components/ui/IconButton';
@@ -16,7 +15,6 @@ import AuthContextProvider, { AuthContext } from './store/auth-context';
 
 export type RootStackParamList = {
   StartScreen: undefined,
-  LoginOrSignupScreen: undefined,
   Login: undefined;
   Signup: undefined;
   Home: undefined;
@@ -36,7 +34,6 @@ function AuthStack() {
       <Stack.Screen name="StartScreen" component={StartScreen} options={{
         headerShown: false,
       }} />
-      <Stack.Screen name="LoginOrSignupScreen" component={LoginOrSignupScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
