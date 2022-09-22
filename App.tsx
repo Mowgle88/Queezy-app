@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, StatusBar, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen'
+import LinearGradient from 'react-native-linear-gradient';
 
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
@@ -12,16 +14,32 @@ import HomeScreen from './screens/main/HomeScreen';
 import { Colors } from './constants/styles';
 import IconButton from './components/ui/IconButton';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
-import LinearGradient from 'react-native-linear-gradient';
+import SearchScreen from './screens/main/SearchScreen';
+import CreateQuizScreen from './screens/main/CreateQuizScreen';
+import AchievementsBoardScreen from './screens/main/AchievementsBoardScreen';
+import ProfileScreen from './screens/main/ProfileScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import QuizDetailsScreen from './screens/QuizDetailsScreen';
 
 export type RootStackParamList = {
   StartScreen: undefined,
-  Login: undefined;
-  Signup: undefined;
-  Home: undefined;
+  Login: undefined,
+  Signup: undefined,
+  Main: MainStackParamList,
+  QuizDetails: undefined,
+  Settings: undefined,
 };
 
+export type MainStackParamList = {
+  Home: undefined,
+  Search: undefined,
+  CreateQuiz: undefined,
+  Achievements: undefined,
+  Profile: undefined,
+}
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const MainTab = createBottomTabNavigator<MainStackParamList>();
 
 function AuthStack() {
   return (
@@ -68,17 +86,34 @@ function AuthStack() {
   );
 }
 
-function AuthenticatedStack() {
-
+function MainTabs() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <Stack.Navigator
+    <MainTab.Navigator
       screenOptions={{
         headerRight: ({ tintColor }) => <IconButton icon={'exit'} size={24} color={tintColor!} onPress={authCtx.logout} />
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <MainTab.Screen name="Home" component={HomeScreen} />
+      <MainTab.Screen name="Search" component={SearchScreen} />
+      <MainTab.Screen name="CreateQuiz" component={CreateQuizScreen} />
+      <MainTab.Screen name="Achievements" component={AchievementsBoardScreen} />
+      <MainTab.Screen name="Profile" component={ProfileScreen} />
+    </MainTab.Navigator>
+  );
+}
+
+function AuthenticatedStack() {
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Main" component={MainTabs} options={{
+        headerShown: false
+      }}
+      />
+      <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }
