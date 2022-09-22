@@ -1,17 +1,15 @@
 import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
 import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { IStartContentData } from '../constants/startContentData';
 import { Colors } from '../constants/styles';
 import CustomButton from './ui/CustomButton';
-import { RootStackParamList } from '../App';
+import { StartContentNavigationProp } from '../navigation/types';
 
 interface StartContentProps {
   item: IStartContentData,
 }
-
-type StartContentNavigationProp = NavigationProp<RootStackParamList, 'StartScreen'>;
 
 export default function StartContent({ item }: StartContentProps) {
   const { width } = useWindowDimensions();

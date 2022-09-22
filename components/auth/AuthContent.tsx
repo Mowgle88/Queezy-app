@@ -5,16 +5,13 @@ import CustomButton from '../ui/CustomButton';
 import { Colors } from '../../constants/styles';
 import AuthForm, { ICredentials } from './AuthForm';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
 import LinearGradient from 'react-native-linear-gradient';
+import { AuthContentNativeStackProps } from '../../navigation/types';
 
 interface AuthContentProps {
   isLogin: boolean,
   onAuthenticate: ({ email, password }: { email: string, password: string }) => void
 }
-
-type NativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Signup', 'Login'>;
 
 function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
@@ -24,7 +21,7 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
     confirmPassword: false,
   });
 
-  const navigation = useNavigation<NativeStackProps>();
+  const navigation = useNavigation<AuthContentNativeStackProps>();
 
   function switchAuthModeHandler() {
     if (isLogin) {
