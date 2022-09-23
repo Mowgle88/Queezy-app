@@ -8,7 +8,7 @@ import SplashScreen from 'react-native-splash-screen'
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
-import HomeScreen from './screens/HomeScreen';
+import HomeScreen from './screens/main/HomeScreen';
 import { Colors } from './constants/styles';
 import IconButton from './components/ui/IconButton';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
