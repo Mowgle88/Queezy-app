@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
 interface IconButtonProps {
   icon: string,
   size: number,

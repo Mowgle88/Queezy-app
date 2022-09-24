@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function AchievementsBoard() {
+export default function AchievementsBoardScreen() {
   return (
     <View>
-      <Text>AchievementsBoard</Text>
+      <Text>AchievementsBoardScreen</Text>
     </View>
   )
 }
