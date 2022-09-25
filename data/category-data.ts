@@ -10,3 +10,10 @@ export const CATEGORIES = [
   new Category('c7', 'Travel', '#368dff'),
   new Category('c8', 'History', '#5721d4'),
 ];
+
+export const QUIZ_TYPES = [
+  new Category('t1', 'Multiple', '#EFEEFC'),
+  new Category('t2', 'TrueOfFalse', '#EFEEFC'),
+  new Category('t3', 'TypeAnswer', '#EFEEFC'),
+  new Category('t4', 'Checkbox', '#EFEEFC'),
+];

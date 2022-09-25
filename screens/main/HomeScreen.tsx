@@ -1,22 +1,49 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 
 import Category from '../../models/category';
 import CategoryGridTile from '../../components/CategoryGridTile';
 import { CATEGORIES } from '../../data/category-data';
 import { Colors } from '../../constants/styles';
+import QuizTypesModal from '../../components/QuizTypesModal';
 
 interface renderCategoryItemProps {
   item: Category
 }
 
-function renderCategoryItem(itemData: renderCategoryItemProps) {
-  return <CategoryGridTile title={itemData.item.title} color={itemData.item.color} description={0} />;
-}
-
 export default function HomeScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function renderCategoryItem(itemData: renderCategoryItemProps) {
+    function pressHandler() {
+      setModalVisible(true);
+    }
+
+    return (
+      <CategoryGridTile
+        title={itemData.item.title}
+        color={itemData.item.color}
+        description={0}
+        onPress={pressHandler}
+      />
+    );
+  }
+
+  function confirmHandler() {
+    setModalVisible(false);
+  }
+
+  function changeModalIsVisible() {
+    setModalVisible((currentModalIsVisible) => !currentModalIsVisible);
+  }
+
   return (
     <View style={styles.container}>
+      <QuizTypesModal
+        visible={modalVisible}
+        onConfirmCategory={confirmHandler}
+        onCancel={changeModalIsVisible}
+      />
       <FlatList
         data={CATEGORIES}
         renderItem={renderCategoryItem}
@@ -47,5 +74,4 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.grey2,
     marginVertical: 10
   }
-
 })

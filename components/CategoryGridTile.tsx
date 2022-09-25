@@ -1,13 +1,16 @@
 import { Pressable, StyleSheet, Text, View, Image, Platform } from 'react-native';
 import React from 'react';
+import { Colors } from '../constants/styles';
 
 interface CategoryGridTileProps {
   title: string,
   color: string,
-  description: number
+  description?: number,
+  onPress: () => void,
+  isQuizTypes?: boolean
 }
 
-export default function CategoryGridTile({ title, color, description }: CategoryGridTileProps) {
+export default function CategoryGridTile({ title, color, description, onPress, isQuizTypes }: CategoryGridTileProps) {
 
   let source;
 
@@ -36,6 +39,38 @@ export default function CategoryGridTile({ title, color, description }: Category
     case 'History':
       source = require('../assets/categories/Icon-History.png');
       break;
+    case 'Multiple':
+      source = require('../assets/categories/Icon-Multiple.png');
+      break;
+    case 'TrueOfFalse':
+      source = require('../assets/categories/Icon-TrueOfFalse.png');
+      break;
+    case 'TypeAnswer':
+      source = require('../assets/categories/Icon-TypeAnswer.png');
+      break;
+    case 'Checkbox':
+      source = require('../assets/categories/Icon-Checkbox.png');
+      break;
+  }
+
+  const style = {
+    innerContainerHeight: 132,
+    imageStyle: {
+      width: 48,
+      height: 48,
+    },
+    title: {
+      color: 'white',
+      fontSize: 20,
+    }
+  }
+
+  if (isQuizTypes) {
+    style.innerContainerHeight = 100;
+    style.imageStyle.width = 40;
+    style.imageStyle.height = 40;
+    style.title.color = Colors.royalBlue;
+    style.title.fontSize = 14;
   }
 
   return (
@@ -45,11 +80,12 @@ export default function CategoryGridTile({ title, color, description }: Category
         style={({ pressed }) => [
           styles.button, pressed ? styles.buttonPressed : null
         ]}
+        onPress={onPress}
       >
-        <View style={[styles.innerContainer, { backgroundColor: color }]}>
-          <Image style={styles.image} source={source} />
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description}>{description} Quizzes</Text>
+        <View style={[styles.innerContainer, { backgroundColor: color, height: style.innerContainerHeight }]}>
+          <Image style={style.imageStyle} source={source} />
+          <Text style={[styles.title, style.title]}>{title}</Text>
+          {!isQuizTypes && <Text style={styles.description}>{description} Quizzes</Text>}
         </View>
       </Pressable>
     </View>
@@ -60,7 +96,6 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     margin: 16,
-    height: 132,
     borderRadius: 25,
     elevation: 4,
     backgroundColor: 'white',
@@ -83,14 +118,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  image: {
-    width: 48,
-    height: 48
-  },
   title: {
     fontWeight: 'bold',
-    fontSize: 20,
-    color: 'white'
+    marginTop: 5
   },
   description: {
     fontWeight: 'bold',
