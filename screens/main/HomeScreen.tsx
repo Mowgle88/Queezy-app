@@ -1,11 +1,12 @@
-import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 
 import Category from '../../models/category';
 import CategoryGridTile from '../../components/CategoryGridTile';
 import { CATEGORIES } from '../../data/category-data';
 import { Colors } from '../../constants/styles';
 import QuizTypesModal from '../../components/QuizTypesModal';
+import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
 interface renderCategoryItemProps {
   item: Category
@@ -13,6 +14,14 @@ interface renderCategoryItemProps {
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const snapPoints = useMemo(() => ['40%', '90%'], []);
+
+  // const handleSheetChanges = useCallback((index: number) => {
+  //   console.log('handleSheetChanges', index);
+  // }, []);
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
     function pressHandler() {
@@ -44,17 +53,24 @@ export default function HomeScreen() {
         onConfirmCategory={confirmHandler}
         onCancel={changeModalIsVisible}
       />
-      <FlatList
-        data={CATEGORIES}
-        renderItem={renderCategoryItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        ListHeaderComponent={
-          <Text style={styles.flatTitle}>Categories</Text>
-        }
-        ListFooterComponent={<View></View>}
-        ListFooterComponentStyle={{ marginBottom: 50 }}
-      />
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={1}
+        snapPoints={snapPoints}
+        // onChange={handleSheetChanges}
+        handleStyle={styles.bottomSheetContainer}
+      >
+        <BottomSheetFlatList
+          data={CATEGORIES}
+          renderItem={renderCategoryItem}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          ListHeaderComponent={
+            <Text style={styles.flatTitle}>Categories</Text>
+          }
+          contentContainerStyle={styles.bottomSheetFlatListContainer}
+        />
+      </BottomSheet>
     </View>
   )
 }
@@ -63,6 +79,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 50,
+    backgroundColor: Colors.royalBlue,
+  },
+  bottomSheetContainer: {
+    backgroundColor: Colors.grey5,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  bottomSheetFlatListContainer: {
+    paddingBottom: 100,
+    backgroundColor: Colors.grey5
   },
   flatTitle: {
     fontWeight: 'bold',
