@@ -17,17 +17,10 @@ interface renderCategoryItemProps {
 
 export default function QuizTypesModal({ visible, onConfirmCategory, onCancel }: QuizTypesModalProps) {
 
-  function confirmHandler() {
-    onConfirmCategory();
-  }
-
-  function cancellHandler() {
-    onCancel();
-  }
-
   function renderCategoryItem(itemData: renderCategoryItemProps) {
 
     function pressHandler() {
+      // TODO:  I will implement the logic of transition to the game screen
       Alert.alert(itemData.item.title)
     }
 
@@ -58,21 +51,12 @@ export default function QuizTypesModal({ visible, onConfirmCategory, onCancel }:
               numColumns={2}
             />
           </View>
-          <View style={styles.buttonContainer}>
-            <View style={styles.button}>
-              <Button
-                title='Cancel'
-                onPress={cancellHandler}
-                color={Colors.pinkSalmon}
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                title='Confirm'
-                onPress={confirmHandler}
-                color={Colors.royalBlue}
-              />
-            </View>
+          <View style={styles.button}>
+            <Button
+              title='Cancel'
+              onPress={onCancel}
+              color={Colors.pinkSalmon}
+            />
           </View>
         </View>
       </View>
@@ -112,11 +96,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginTop: 16,
-  },
   button: {
+    marginTop: 16,
     width: 130,
     marginHorizontal: 8,
     borderRadius: 10,

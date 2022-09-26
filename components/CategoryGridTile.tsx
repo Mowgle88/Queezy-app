@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View, Image, Platform } from 'react-native';
 import React from 'react';
 import { Colors } from '../constants/styles';
+import { getSourcePath } from '../util/imageSourcePath';
 
 interface CategoryGridTileProps {
   title: string,
@@ -12,66 +13,7 @@ interface CategoryGridTileProps {
 
 export default function CategoryGridTile({ title, color, description, onPress, isQuizTypes }: CategoryGridTileProps) {
 
-  let source;
-
-  switch (title) {
-    case 'Art':
-      source = require('../assets/categories/Icon-Art.png');
-      break;
-    case 'Math':
-      source = require('../assets/categories/Icon-Math.png');
-      break;
-    case 'Science':
-      source = require('../assets/categories/Icon-Science.png');
-      break;
-    case 'Sport':
-      source = require('../assets/categories/Icon-Sport.png');
-      break;
-    case 'Music':
-      source = require('../assets/categories/Icon-Music.png');
-      break;
-    case 'Tech':
-      source = require('../assets/categories/Icon-Tech.png');
-      break;
-    case 'Travel':
-      source = require('../assets/categories/Icon-Travel.png');
-      break;
-    case 'History':
-      source = require('../assets/categories/Icon-History.png');
-      break;
-    case 'Multiple':
-      source = require('../assets/categories/Icon-Multiple.png');
-      break;
-    case 'TrueOfFalse':
-      source = require('../assets/categories/Icon-TrueOfFalse.png');
-      break;
-    case 'TypeAnswer':
-      source = require('../assets/categories/Icon-TypeAnswer.png');
-      break;
-    case 'Checkbox':
-      source = require('../assets/categories/Icon-Checkbox.png');
-      break;
-  }
-
-  const style = {
-    innerContainerHeight: 132,
-    imageStyle: {
-      width: 48,
-      height: 48,
-    },
-    title: {
-      color: 'white',
-      fontSize: 20,
-    }
-  }
-
-  if (isQuizTypes) {
-    style.innerContainerHeight = 100;
-    style.imageStyle.width = 40;
-    style.imageStyle.height = 40;
-    style.title.color = Colors.royalBlue;
-    style.title.fontSize = 14;
-  }
+  let source = getSourcePath(title);
 
   return (
     <View style={styles.gridItem}>
@@ -82,9 +24,13 @@ export default function CategoryGridTile({ title, color, description, onPress, i
         ]}
         onPress={onPress}
       >
-        <View style={[styles.innerContainer, { backgroundColor: color, height: style.innerContainerHeight }]}>
-          <Image style={style.imageStyle} source={source} />
-          <Text style={[styles.title, style.title]}>{title}</Text>
+        <View style={[
+          { backgroundColor: color },
+          styles.innerContainer,
+          isQuizTypes && styles.innerContainerHeight
+        ]}>
+          <Image style={isQuizTypes ? styles.quizTypesimage : styles.categoryImage} source={source} />
+          <Text style={[styles.title, isQuizTypes && styles.quizTypesTitle]}>{title}</Text>
           {!isQuizTypes && <Text style={styles.description}>{description} Quizzes</Text>}
         </View>
       </Pressable>
@@ -116,11 +62,29 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 132
+  },
+  innerContainerHeight: {
+    height: 100
+  },
+  categoryImage: {
+    width: 48,
+    height: 48,
+  },
+  quizTypesimage: {
+    width: 40,
+    height: 40,
   },
   title: {
     fontWeight: 'bold',
-    marginTop: 5
+    marginTop: 5,
+    color: 'white',
+    fontSize: 20,
+  },
+  quizTypesTitle: {
+    color: Colors.royalBlue,
+    fontSize: 14,
   },
   description: {
     fontWeight: 'bold',
