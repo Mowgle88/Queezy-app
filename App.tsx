@@ -3,13 +3,16 @@ import { StatusBar, StyleSheet } from 'react-native';
 import AuthContextProvider from './store/auth-context';
 
 import Root from './navigation/Root';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   return (
     <>
       <StatusBar />
       <AuthContextProvider>
-        <Root />
+        <GestureHandlerRootView style={{ flex: 1 }} >
+          <Root />
+        </GestureHandlerRootView>
       </AuthContextProvider>
     </>
   );
