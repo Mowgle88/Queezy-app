@@ -30,3 +30,7 @@ export async function fetchUsers() {
 export async function deleteUser(id: string) {
   return axios.delete(`${BACKEND_URL}/users/${id}.json`)
 }
+
+export function updateUser(id: string, userData: IUser) {
+  return axios.put(`${BACKEND_URL}/users/${id}.json`, userData)
+}
