@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import Category from '../../models/category';
 import CategoryGridTile from '../../components/CategoryGridTile';
@@ -7,6 +7,11 @@ import { CATEGORIES } from '../../data/category-data';
 import { Colors } from '../../constants/styles';
 import QuizTypesModal from '../../components/QuizTypesModal';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import GreetingBoard from '../../components/GreetingBoard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchUsers } from '../../util/http';
+import { AuthContext } from '../../store/auth-context';
+import SplashScreen from 'react-native-splash-screen';
 
 interface renderCategoryItemProps {
   item: Category
@@ -14,6 +19,20 @@ interface renderCategoryItemProps {
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    async function fetchToken() {
+      const userId = await AsyncStorage.getItem('userId');
+      const userName = await AsyncStorage.getItem('userName');
+
+      if (userId && userName) {
+        authCtx.setUser(userId, userName)
+      }
+    }
+    fetchToken();
+  }, [])
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -53,9 +72,10 @@ export default function HomeScreen() {
         onConfirmCategory={confirmHandler}
         onCancel={changeModalIsVisible}
       />
+      <GreetingBoard userName={authCtx.userName} />
       <BottomSheet
         ref={bottomSheetRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         // onChange={handleSheetChanges}
         handleStyle={styles.bottomSheetContainer}
