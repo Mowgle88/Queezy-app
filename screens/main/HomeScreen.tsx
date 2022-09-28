@@ -9,9 +9,9 @@ import QuizTypesModal from '../../components/QuizTypesModal';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import GreetingBoard from '../../components/GreetingBoard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { fetchUsers } from '../../util/http';
 import { AuthContext } from '../../store/auth-context';
-import SplashScreen from 'react-native-splash-screen';
+import RecentQuizBoard from '../../components/RecentQuizBoard';
+import FeaturedBoard from '../../components/FeaturedBoard';
 
 interface renderCategoryItemProps {
   item: Category
@@ -36,7 +36,7 @@ export default function HomeScreen() {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const snapPoints = useMemo(() => ['40%', '90%'], []);
+  const snapPoints = useMemo(() => ['40%', '85%'], []);
 
   // const handleSheetChanges = useCallback((index: number) => {
   //   console.log('handleSheetChanges', index);
@@ -68,6 +68,8 @@ export default function HomeScreen() {
         onCancel={changeModalIsVisible}
       />
       <GreetingBoard userName={authCtx.userName} />
+      <RecentQuizBoard />
+      <FeaturedBoard />
       <BottomSheet
         ref={bottomSheetRef}
         index={0}
