@@ -5,6 +5,7 @@ import AuthContent from '../../components/auth/AuthContent'
 import { login } from '../../util/auth';
 import LoadingOverlay from '../../components/ui/LoadingOverlay';
 import { AuthContext } from '../../store/auth-context';
+import { fetchUsers } from '../../util/http';
 
 export default function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -16,6 +17,9 @@ export default function LoginScreen() {
     try {
       const token = await login(email, password);
       authCtx.authenticate(token);
+      const users = await fetchUsers();
+      const user = users.filter((user) => user.email === email)[0];
+      authCtx.setUser(user.userId, user.userName);
     } catch (error) {
       Alert.alert(
         'Authentication failed!',
