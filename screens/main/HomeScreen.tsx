@@ -57,10 +57,6 @@ export default function HomeScreen() {
     );
   }
 
-  function confirmHandler() {
-    setModalVisible(false);
-  }
-
   function changeModalIsVisible() {
     setModalVisible((currentModalIsVisible) => !currentModalIsVisible);
   }
@@ -69,7 +65,6 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <QuizTypesModal
         visible={modalVisible}
-        onConfirmCategory={confirmHandler}
         onCancel={changeModalIsVisible}
       />
       <GreetingBoard userName={authCtx.userName} />
