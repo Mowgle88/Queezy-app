@@ -1,13 +1,14 @@
 import { ReactNode } from 'react';
 import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import VectorImage from 'react-native-vector-image';
 
 import { Colors } from '../../constants/styles';
 
 interface CustomButtonProps {
   children: ReactNode,
   onPress: () => void,
-  mode?: 'flat',
-  style?: StyleProp<ViewStyle>
+  mode?: 'flat' | 'light',
+  style?: StyleProp<ViewStyle>,
 }
 
 export default function CustomButton({ children, onPress, mode, style }: CustomButtonProps) {
@@ -17,8 +18,12 @@ export default function CustomButton({ children, onPress, mode, style }: CustomB
         onPress={onPress}
         style={({ pressed }) => pressed && styles.pressed}
       >
-        <View style={[styles.button, mode === 'flat' && styles.flat, style]}>
-          <Text style={[styles.buttonText, mode === 'flat' && styles.flatText]}>{children}</Text>
+        <View style={[styles.button, mode === 'flat' && styles.flat, style, mode === 'light' && styles.light]}>
+          {
+            mode === 'light' &&
+            <VectorImage style={styles.vectorImage} source={require('../../assets/icons/Icon-find-friends.svg')} />
+          }
+          <Text style={[styles.buttonText, mode === 'flat' && styles.flatText, mode === 'light' && styles.lightText]}>{children}</Text>
         </View>
       </Pressable>
     </View>
@@ -35,6 +40,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     elevation: 0
   },
+  light: {
+    width: 146,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'white',
+  },
   buttonText: {
     color: 'white',
     textAlign: 'center',
@@ -45,7 +59,14 @@ const styles = StyleSheet.create({
     color: Colors.royalBlue,
     backgroundColor: 'transparent',
   },
+  lightText: {
+    color: Colors.royalBlue,
+    fontSize: 14,
+  },
   pressed: {
     opacity: 0.75,
-  }
+  },
+  vectorImage: {
+    // marginRight: 8
+  },
 })

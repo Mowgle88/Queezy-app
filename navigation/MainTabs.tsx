@@ -68,7 +68,8 @@ export default function MainTabs() {
       <MainTab.Screen name="Home" component={HomeScreen} options={{
         tabBarIcon: ({ focused }) => (
           <TabBarIcon focused={focused} source={require('../assets/Home.png')} />
-        )
+        ),
+        headerShown: false,
       }} />
       <MainTab.Screen name="Search" component={SearchScreen} options={{
         tabBarIcon: ({ focused }) => (

@@ -7,7 +7,6 @@ import Category from '../models/category';
 
 interface QuizTypesModalProps {
   visible: boolean,
-  onConfirmCategory: () => void,
   onCancel: () => void,
 }
 
@@ -15,7 +14,7 @@ interface renderCategoryItemProps {
   item: Category
 }
 
-export default function QuizTypesModal({ visible, onConfirmCategory, onCancel }: QuizTypesModalProps) {
+export default function QuizTypesModal({ visible, onCancel }: QuizTypesModalProps) {
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
 
