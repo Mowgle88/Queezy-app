@@ -92,7 +92,8 @@ export default function MainTabs() {
       <MainTab.Screen name="Profile" component={ProfileScreen} options={{
         tabBarIcon: ({ focused }) => (
           <TabBarIcon focused={focused} source={require('../assets/Profile.png')} />
-        )
+        ),
+        headerShown: false,
       }} />
     </MainTab.Navigator>
   );
