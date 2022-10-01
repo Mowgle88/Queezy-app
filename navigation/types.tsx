@@ -22,3 +22,4 @@ export type StartContentNavigationProp = NavigationProp<RootStackParamList, 'Sta
 
 export type AuthContentNativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Signup', 'Login'>;
 
+export type ProfileScreenNativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Main', 'Settings'>;
