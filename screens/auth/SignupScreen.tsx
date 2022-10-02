@@ -6,20 +6,27 @@ import { createUser } from '../../util/auth'
 import LoadingOverlay from '../../components/ui/LoadingOverlay';
 import { AuthContext } from '../../store/auth-context';
 import { addUserToDatabase } from '../../util/http';
-import { IUser } from '../../models/user';
+import { IUserData } from '../../models/user';
 
 export default function SignupScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const authCtx = useContext(AuthContext);
 
-  async function signupHandler({ email, password, userName }: IUser) {
+  async function signupHandler({ email, password, userName, date }: IUserData) {
     setIsAuthenticating(true);
     try {
       const token = await createUser(email, password);
       authCtx.authenticate(token);
-      const userId = await addUserToDatabase({ email, password, userName });
-      authCtx.setUser(userId, userName);
+      const userID = await addUserToDatabase({ email, password, userName, date });
+      const userData = {
+        userId: userID,
+        email: email,
+        password: password,
+        userName: userName,
+        date: date
+      }
+      authCtx.setUser(userData);
     } catch (error) {
       Alert.alert(
         'Authentication failed!',

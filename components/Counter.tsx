@@ -4,14 +4,14 @@ import IconButton from './ui/IconButton';
 import { Colors } from '../constants/styles';
 
 export default function Counter({ stringNumber }: { stringNumber: string }) {
-  let [count, seCount] = useState(+stringNumber);
+  let [count, setCount] = useState(+stringNumber);
 
   function increment() {
-    seCount(count += 30);
+    setCount(count += 30);
   }
   function decrement() {
     if (count > 0) {
-      seCount(count -= 30);
+      setCount(count -= 30);
     }
   }
   return (
