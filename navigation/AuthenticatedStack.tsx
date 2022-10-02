@@ -18,7 +18,14 @@ export default function AuthenticatedStack() {
       }}
       />
       <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{
+        // headerShadowVisible: true,
+        headerTransparent: true,
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontSize: 24
+        }
+      }} />
     </Stack.Navigator>
   );
 }
