@@ -6,11 +6,21 @@ import { Colors } from '../constants/styles';
 import Counter from '../components/Counter';
 import CustomButton from '../components/ui/CustomButton';
 import { AuthContext } from '../store/auth-context';
+import { useNavigation } from '@react-navigation/native';
+import { SettingsScreenNativeStackProps } from '../navigation/types';
 
 export default function SettingsScreen() {
   const [isEnabled, setIsEnabled] = useState(false);
 
+  const navigation = useNavigation<SettingsScreenNativeStackProps>();
+
   const authCtx = useContext(AuthContext);
+
+  function pressHandler(type: 'profile' | 'email' | 'password' | 'difficulty') {
+    navigation.navigate('EditProfile', {
+      typeScreen: type
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -20,19 +30,19 @@ export default function SettingsScreen() {
         description={'Update username, country, etc'}
         type={'profile'}
         source={require('../assets/icons/Icon-user.svg')}
-        onPress={() => { }} />
+        onPress={pressHandler} />
       <SettingItem
         title={'Change Email Address'}
         description={authCtx.email}
         type={'email'}
         source={require('../assets/icons/Icon-email.svg')}
-        onPress={() => { }} />
+        onPress={pressHandler} />
       <SettingItem
         title={'Change Password'}
         description={`last change ${authCtx.date}`}
         type={'password'}
         source={require('../assets/icons/Icon-password.svg')}
-        onPress={() => { }} />
+        onPress={pressHandler} />
       <Text style={styles.categoryTitle}>Other</Text>
       <View style={styles.timeGameContainer}>
         <Text style={styles.switchTitle}>Time game</Text>
@@ -57,7 +67,7 @@ export default function SettingsScreen() {
         description={'Easy, normal, hard'}
         type={'difficulty'}
         source={require('../assets/icons/Icon-difficulty.svg')}
-        onPress={() => { }} />
+        onPress={pressHandler} />
       <View style={styles.buttonContainer}>
         <CustomButton mode='flat' onPress={authCtx.logout}>Logout</CustomButton>
       </View>

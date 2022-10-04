@@ -6,6 +6,8 @@ import QuizDetailsScreen from '../screens/QuizDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MainTabs from './MainTabs';
 import { RootStackParamList } from './types';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import { Colors } from '../constants/styles';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -25,6 +27,13 @@ export default function AuthenticatedStack() {
         headerTitleStyle: {
           fontSize: 24
         }
+      }} />
+      <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{
+        headerStyle: {
+          backgroundColor: Colors.grey5
+        },
+        headerTitle: '',
+        headerShadowVisible: false,
       }} />
     </Stack.Navigator>
   );

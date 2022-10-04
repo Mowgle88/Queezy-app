@@ -40,13 +40,13 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
     password = password.trim();
     const date = new Date().toISOString().slice(0, 10);
 
-    const userNameIsValid = email.length > 3;
+    const userNameIsValid = userName.length > 3;
     const emailIsValid = email.includes('@');
     const passwordIsValid = password.length > 6;
     const passwordsAreEqual = password === confirmPassword;
 
     if (
-      !userNameIsValid ||
+      (!isLogin && !userNameIsValid) ||
       !emailIsValid ||
       !passwordIsValid ||
       (!isLogin && !passwordsAreEqual)
