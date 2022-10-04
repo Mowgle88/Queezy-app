@@ -7,11 +7,11 @@ import AuthForm, { ICredentials } from './AuthForm';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import { AuthContentNativeStackProps } from '../../navigation/types';
-import { IUser } from '../../models/user';
+import { IUserData } from '../../models/user';
 
 interface AuthContentProps {
   isLogin: boolean,
-  onAuthenticate: ({ email, password, userName }: IUser) => void
+  onAuthenticate: ({ email, password, userName, date }: IUserData) => void
 }
 
 function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
@@ -38,6 +38,7 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
     userName = userName.trim();
     email = email.trim();
     password = password.trim();
+    const date = new Date().toISOString().slice(0, 10);
 
     const userNameIsValid = email.length > 3;
     const emailIsValid = email.includes('@');
@@ -59,7 +60,7 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
       });
       return;
     }
-    onAuthenticate({ email, password, userName });
+    onAuthenticate({ email, password, userName, date });
   }
 
   return (

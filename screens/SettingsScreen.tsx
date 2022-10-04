@@ -23,13 +23,13 @@ export default function SettingsScreen() {
         onPress={() => { }} />
       <SettingItem
         title={'Change Email Address'}
-        description={''}
+        description={authCtx.email}
         type={'email'}
         source={require('../assets/icons/Icon-email.svg')}
         onPress={() => { }} />
       <SettingItem
         title={'Change Password'}
-        description={''}
+        description={`last change ${authCtx.date}`}
         type={'password'}
         source={require('../assets/icons/Icon-password.svg')}
         onPress={() => { }} />
