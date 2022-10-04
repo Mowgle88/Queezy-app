@@ -12,6 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../store/auth-context';
 import RecentQuizBoard from '../../components/RecentQuizBoard';
 import FeaturedBoard from '../../components/FeaturedBoard';
+import { fetchUser } from '../../util/http';
+import { ILocalStorageUserData } from '../../models/user';
 
 interface renderCategoryItemProps {
   item: Category
@@ -23,15 +25,16 @@ export default function HomeScreen() {
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
-    async function fetchToken() {
-      const userId = await AsyncStorage.getItem('userId');
-      const userName = await AsyncStorage.getItem('userName');
+    async function fetchUserData() {
+      const userData = await AsyncStorage.getItem('userData');
 
-      if (userId && userName) {
-        authCtx.setUser(userId, userName)
+      if (userData) {
+        const lSUserData: ILocalStorageUserData = JSON.parse(userData);
+        const user = await fetchUser(lSUserData.userId)
+        authCtx.setUser({ ...user, userId: lSUserData.userId })
       }
     }
-    fetchToken();
+    fetchUserData();
   }, [])
 
   const bottomSheetRef = useRef<BottomSheet>(null);

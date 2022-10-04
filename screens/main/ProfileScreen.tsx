@@ -1,6 +1,5 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import IconButton from '../../components/ui/IconButton';
 import { Colors } from '../../constants/styles';
@@ -10,25 +9,12 @@ import StatisticsBoard from '../../components/StatisticsBoard';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileScreenNativeStackProps } from '../../navigation/types';
 
-
 export default function ProfileScreen() {
   const [indexIcon, setIndexIcon] = useState(0);
 
   const authCtx = useContext(AuthContext);
 
   const navigation = useNavigation<ProfileScreenNativeStackProps>();
-
-  useEffect(() => {
-    async function fetchToken() {
-      const userId = await AsyncStorage.getItem('userId');
-      const userName = await AsyncStorage.getItem('userName');
-
-      if (userId && userName) {
-        authCtx.setUser(userId, userName)
-      }
-    }
-    fetchToken();
-  }, [])
 
   return (
     <ImageBackground style={styles.imageBgContainer} source={require('../../assets/Profile-background.png')}>
