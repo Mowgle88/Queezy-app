@@ -5,8 +5,10 @@ import { AuthContext } from '../store/auth-context';
 import EditProfileForm from '../components/EditProfileForm';
 import { ICredentials } from '../components/auth/AuthForm';
 import { EditProfileScreenProps } from '../navigation/types';
+import { addUserToDatabase, updateUser } from '../util/http';
+import { changeUserName } from '../util/editProfile';
 
-export default function EditProfileScreen({ route }: EditProfileScreenProps) {
+export default function EditProfileScreen({ navigation, route }: EditProfileScreenProps) {
 
   const [isChangeUsername, setIsChangeUsername] = useState(false);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
@@ -64,6 +66,21 @@ export default function EditProfileScreen({ route }: EditProfileScreenProps) {
       });
       return;
     }
+
+    switch (typeScreen) {
+      case 'profile':
+        changeUserName({ userName, email, password, date }, authCtx)
+        break;
+      case 'email':
+
+        break;
+      case 'password':
+
+        break;
+    }
+
+    navigation.goBack();
+
   }
 
   return (
