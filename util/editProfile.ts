@@ -1,4 +1,5 @@
 import { IUser, IUserData } from "../models/user";
+import { chengeEmail } from "./auth";
 import { updateUser } from "./http";
 
 interface IAuthCtx {
@@ -23,4 +24,17 @@ export function changeUserName(userData: IUserData, authCtx: IAuthCtx) {
   }
   updateUser(authCtx.userId, user);
   authCtx.setUser({ ...user, userId: authCtx.userId })
+}
+
+export async function changeEmail(userData: IUserData, authCtx: IAuthCtx) {
+  const user = {
+    userName: authCtx.userName,
+    email: userData.email,
+    password: authCtx.password,
+    date: authCtx.date
+  }
+  updateUser(authCtx.userId, user);
+  authCtx.setUser({ ...user, userId: authCtx.userId });
+  const token = await chengeEmail(user.email, authCtx.token);
+  authCtx.authenticate(token);
 }
