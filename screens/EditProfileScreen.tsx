@@ -5,8 +5,7 @@ import { AuthContext } from '../store/auth-context';
 import EditProfileForm from '../components/EditProfileForm';
 import { ICredentials } from '../components/auth/AuthForm';
 import { EditProfileScreenProps } from '../navigation/types';
-import { addUserToDatabase, updateUser } from '../util/http';
-import { changeEmail, changeUserName } from '../util/editProfile';
+import { changeEmail, changePassword, changeUserName } from '../util/editProfile';
 
 export default function EditProfileScreen({ navigation, route }: EditProfileScreenProps) {
 
@@ -75,7 +74,7 @@ export default function EditProfileScreen({ navigation, route }: EditProfileScre
         changeEmail({ userName, email, password, date }, authCtx)
         break;
       case 'password':
-
+        changePassword({ userName, email, password, date }, authCtx)
         break;
     }
 

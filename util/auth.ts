@@ -21,6 +21,14 @@ interface IChengeEmailResponse {
   expiresIn: string
 }
 
+interface IChengePasswordResponse {
+  idToken: string,
+  email: string,
+  refreshToken: string,
+  expiresIn: string,
+  localId: string
+}
+
 const API_KEY = 'AIzaSyDwYyv4wXD1iRHPG8f0spPPmXlH2ManpxQ';
 
 export async function authenticate(mode: mode, email: string, password: string) {
@@ -47,13 +55,29 @@ export function login(email: string, password: string) {
   return authenticate('signInWithPassword', email, password);
 }
 
-export async function chengeEmail(email: string, token: string) {
+export async function changeUserUmail(email: string, token: string) {
   const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
 
   const response: AxiosResponse<IChengeEmailResponse> = await axios.post(
     URL,
     {
       email: email,
+      idToken: token,
+      returnSecureToken: true
+    }
+  )
+
+  const newToken = response.data.idToken;
+  return newToken;
+}
+
+export async function changeUserPassword(password: string, token: string) {
+  const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
+
+  const response: AxiosResponse<IChengePasswordResponse> = await axios.post(
+    URL,
+    {
+      password: password,
       idToken: token,
       returnSecureToken: true
     }
