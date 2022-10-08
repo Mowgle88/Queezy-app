@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import QuizDetailsScreen from '../screens/QuizDetailsScreen';
+import QuizDetailsScreen from '../screens/game/QuizDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MainTabs from './MainTabs';
 import { RootStackParamList } from './types';
@@ -19,7 +19,6 @@ export default function AuthenticatedStack() {
         headerShown: false
       }}
       />
-      <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{
         // headerShadowVisible: true,
         headerTransparent: true,

@@ -6,7 +6,7 @@ export type RootStackParamList = {
   Login: undefined,
   Signup: undefined,
   Main: MainStackParamList,
-  QuizDetails: undefined,
+  QuizStack: QuizStackParamList,
   Settings: undefined,
   EditProfile: {
     typeScreen: 'profile' | 'email' | 'password' | 'difficulty'
@@ -19,6 +19,13 @@ export type MainStackParamList = {
   CreateQuiz: undefined,
   Achievements: undefined,
   Profile: undefined,
+}
+
+export type QuizStackParamList = {
+  QuizDetails: undefined,
+  QuizGame: undefined,
+  QuizCompleted: undefined,
+  ReviewQuiz: undefined,
 }
 
 export type StartContentNavigationProp = NavigationProp<RootStackParamList, 'StartScreen'>;
