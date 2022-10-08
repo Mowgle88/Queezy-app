@@ -44,18 +44,13 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
     });
   }
 
-  const updateUserNameHandler = (value: string) => setEnteredUserName(value);
-  const updateEmailHandler = (value: string) => setEnteredEmail(value);
-  const updatePasswordHandler = (value: string) => setEnteredPassword(value);
-  const updateConfirmPasswordHandler = (value: string) => setEnteredConfirmPassword(value);
-
   return (
     <View style={styles.form}>
       <View>
         {isChangeUsername && (
           <CustomInput
             label=""
-            onUpdateValue={updateUserNameHandler}
+            onUpdateValue={setEnteredUserName}
             value={enteredUserName}
             keyboardType="email-address"
             isInvalid={userNameIsInvalid}
@@ -67,7 +62,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
         {isChangeEmail &&
           <CustomInput
             label=""
-            onUpdateValue={updateEmailHandler}
+            onUpdateValue={setEnteredEmail}
             value={enteredEmail}
             keyboardType="email-address"
             isInvalid={emailIsInvalid}
@@ -80,7 +75,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
           <>
             <CustomInput
               label=""
-              onUpdateValue={updatePasswordHandler}
+              onUpdateValue={setEnteredPassword}
               value={enteredPassword}
               isInvalid={passwordIsInvalid}
               keyboardType={'default'}
@@ -92,7 +87,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             />
             <CustomInput
               label="Confirm Password"
-              onUpdateValue={updateConfirmPasswordHandler}
+              onUpdateValue={setEnteredConfirmPassword}
               value={enteredConfirmPassword}
               isInvalid={passwordsDontMatch}
               keyboardType={'default'}
