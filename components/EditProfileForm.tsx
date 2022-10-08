@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { ICredentials, ICredentialsInvalid } from './auth/AuthForm';
 import CustomButton from './ui/CustomButton';
@@ -27,23 +27,6 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
 
-  function updateInputValueHandler(inputType: string, enteredValue: string) {
-    switch (inputType) {
-      case 'userName':
-        setEnteredUserName(enteredValue);
-        break;
-      case 'email':
-        setEnteredEmail(enteredValue);
-        break;
-      case 'password':
-        setEnteredPassword(enteredValue);
-        break;
-      case 'confirmPassword':
-        setEnteredConfirmPassword(enteredValue);
-        break;
-    }
-  }
-
   function updateSecurePasswordHandler() {
     setIsSecurePassword(!isSecurePassword)
   }
@@ -61,13 +44,18 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
     });
   }
 
+  const updateUserNameHandler = (value: string) => setEnteredUserName(value);
+  const updateEmailHandler = (value: string) => setEnteredEmail(value);
+  const updatePasswordHandler = (value: string) => setEnteredPassword(value);
+  const updateConfirmPasswordHandler = (value: string) => setEnteredConfirmPassword(value);
+
   return (
     <View style={styles.form}>
       <View>
         {isChangeUsername && (
           <CustomInput
             label=""
-            onUpdateValue={updateInputValueHandler.bind(this, 'userName')}
+            onUpdateValue={updateUserNameHandler}
             value={enteredUserName}
             keyboardType="email-address"
             isInvalid={userNameIsInvalid}
@@ -79,7 +67,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
         {isChangeEmail &&
           <CustomInput
             label=""
-            onUpdateValue={updateInputValueHandler.bind(this, 'email')}
+            onUpdateValue={updateEmailHandler}
             value={enteredEmail}
             keyboardType="email-address"
             isInvalid={emailIsInvalid}
@@ -92,7 +80,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
           <>
             <CustomInput
               label=""
-              onUpdateValue={updateInputValueHandler.bind(this, 'password')}
+              onUpdateValue={updatePasswordHandler}
               value={enteredPassword}
               isInvalid={passwordIsInvalid}
               keyboardType={'default'}
@@ -104,10 +92,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             />
             <CustomInput
               label="Confirm Password"
-              onUpdateValue={updateInputValueHandler.bind(
-                this,
-                'confirmPassword'
-              )}
+              onUpdateValue={updateConfirmPasswordHandler}
               value={enteredConfirmPassword}
               isInvalid={passwordsDontMatch}
               keyboardType={'default'}

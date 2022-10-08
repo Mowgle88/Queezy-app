@@ -29,10 +29,11 @@ interface IChengePasswordResponse {
   localId: string
 }
 
+const BACKEND_URL = 'https://identitytoolkit.googleapis.com/v1/accounts';
 const API_KEY = 'AIzaSyDwYyv4wXD1iRHPG8f0spPPmXlH2ManpxQ';
 
 export async function authenticate(mode: mode, email: string, password: string) {
-  const URL = `https://identitytoolkit.googleapis.com/v1/accounts:${mode}?key=${API_KEY}`;
+  const URL = `${BACKEND_URL}:${mode}?key=${API_KEY}`;
 
   const response: AxiosResponse<IAuthResponseData> = await axios.post(
     URL,
@@ -55,8 +56,8 @@ export function login(email: string, password: string) {
   return authenticate('signInWithPassword', email, password);
 }
 
-export async function changeUserUmail(email: string, token: string) {
-  const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
+export async function changeUserEmail(email: string, token: string) {
+  const URL = `${BACKEND_URL}:update?key=${API_KEY}`;
 
   const response: AxiosResponse<IChengeEmailResponse> = await axios.post(
     URL,
@@ -72,7 +73,7 @@ export async function changeUserUmail(email: string, token: string) {
 }
 
 export async function changeUserPassword(password: string, token: string) {
-  const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
+  const URL = `${BACKEND_URL}:update?key=${API_KEY}`;
 
   const response: AxiosResponse<IChengePasswordResponse> = await axios.post(
     URL,

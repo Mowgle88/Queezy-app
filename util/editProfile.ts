@@ -1,5 +1,5 @@
 import { IUser, IUserData } from "../models/user";
-import { changeUserPassword, changeUserUmail } from "./auth";
+import { changeUserPassword, changeUserEmail } from "./auth";
 import { updateUser } from "./http";
 
 interface IAuthCtx {
@@ -35,7 +35,7 @@ export async function changeEmail(userData: IUserData, authCtx: IAuthCtx) {
   }
   updateUser(authCtx.userId, user);
   authCtx.setUser({ ...user, userId: authCtx.userId });
-  const token = await changeUserUmail(user.email, authCtx.token);
+  const token = await changeUserEmail(user.email, authCtx.token);
   authCtx.authenticate(token);
 }
 

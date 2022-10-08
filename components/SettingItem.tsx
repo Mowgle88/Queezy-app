@@ -14,10 +14,13 @@ interface SettingItemProps {
 }
 
 export default function SettingItem({ title, description, source, onPress, type }: SettingItemProps) {
+
+  const onPressHandler = () => onPress(type);
+
   return (
     <Pressable
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
-      onPress={() => { onPress(type) }}
+      onPress={onPressHandler}
     >
       <View style={styles.iconContainer}>
         <VectorImage source={source!} />

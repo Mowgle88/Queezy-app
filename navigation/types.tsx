@@ -1,5 +1,5 @@
-import { NavigationProp } from "@react-navigation/native";
-import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NavigationProp, RouteProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
   StartScreen: undefined,
@@ -29,4 +29,6 @@ export type ProfileScreenNativeStackProps = NativeStackNavigationProp<RootStackP
 
 export type SettingsScreenNativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Settings', 'EditProfile'>;
 
-export type EditProfileScreenProps = NativeStackScreenProps<RootStackParamList, 'EditProfile'>;
+export type EditProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'EditProfile'>;
+
+export type EditProfileScreenRouteProp = RouteProp<RootStackParamList, 'EditProfile'>;

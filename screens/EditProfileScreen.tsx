@@ -4,10 +4,11 @@ import { Colors } from '../constants/styles';
 import { AuthContext } from '../store/auth-context';
 import EditProfileForm from '../components/EditProfileForm';
 import { ICredentials } from '../components/auth/AuthForm';
-import { EditProfileScreenProps } from '../navigation/types';
+import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../navigation/types';
 import { changeEmail, changePassword, changeUserName } from '../util/editProfile';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-export default function EditProfileScreen({ navigation, route }: EditProfileScreenProps) {
+export default function EditProfileScreen() {
 
   const [isChangeUsername, setIsChangeUsername] = useState(false);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
@@ -21,6 +22,9 @@ export default function EditProfileScreen({ navigation, route }: EditProfileScre
   });
 
   const authCtx = useContext(AuthContext);
+
+  const navigation = useNavigation<EditProfileScreenNavigationProp>();
+  const route = useRoute<EditProfileScreenRouteProp>();
 
   const typeScreen = route.params.typeScreen;
 
@@ -51,11 +55,11 @@ export default function EditProfileScreen({ navigation, route }: EditProfileScre
     const passwordIsValid = password.length > 6;
     const passwordsAreEqual = password === confirmPassword;
 
-    if (
-      (isChangeUsername && !userNameIsValid) ||
-      (isChangeEmail && !emailIsValid) ||
-      (isChangePassword && !passwordIsValid || !passwordsAreEqual)
-    ) {
+    const isValidUserName = isChangeUsername && !userNameIsValid;
+    const isValidEmail = isChangeEmail && !emailIsValid;
+    const isValidPassword = isChangePassword && !passwordIsValid || !passwordsAreEqual;
+
+    if (isValidUserName || isValidEmail || isValidPassword) {
       Alert.alert('Invalid input', 'Please check your entered credentials.');
       setCredentialsInvalid({
         userName: !userNameIsValid,
@@ -66,15 +70,17 @@ export default function EditProfileScreen({ navigation, route }: EditProfileScre
       return;
     }
 
+    const userData = { userName, email, password, date };
+
     switch (typeScreen) {
       case 'profile':
-        changeUserName({ userName, email, password, date }, authCtx)
+        changeUserName(userData, authCtx)
         break;
       case 'email':
-        changeEmail({ userName, email, password, date }, authCtx)
+        changeEmail(userData, authCtx)
         break;
       case 'password':
-        changePassword({ userName, email, password, date }, authCtx)
+        changePassword(userData, authCtx)
         break;
     }
 
