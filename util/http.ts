@@ -37,6 +37,6 @@ export async function deleteUser(id: string) {
   return axios.delete(`${BACKEND_URL}/users/${id}.json`)
 }
 
-export function updateUser(id: string, userData: IUser) {
+export function updateUser(id: string, userData: IUserData) {
   return axios.put(`${BACKEND_URL}/users/${id}.json`, userData)
 }

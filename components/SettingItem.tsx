@@ -10,14 +10,17 @@ interface SettingItemProps {
   description: string,
   type: 'profile' | 'email' | 'password' | 'difficulty',
   source?: ImageRequireSource,
-  onPress: () => void
+  onPress: (type: 'profile' | 'email' | 'password' | 'difficulty') => void
 }
 
-export default function SettingItem({ title, description, source, onPress }: SettingItemProps) {
+export default function SettingItem({ title, description, source, onPress, type }: SettingItemProps) {
+
+  const onPressHandler = () => onPress(type);
+
   return (
     <Pressable
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
-      onPress={onPress}
+      onPress={onPressHandler}
     >
       <View style={styles.iconContainer}>
         <VectorImage source={source!} />
