@@ -7,9 +7,9 @@ import { Colors } from '../constants/styles';
 import StartScreen from '../screens/StartScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import SignupScreen from '../screens/auth/SignupScreen';
-import { RootStackParamList } from './types';
+import { AuthStackParamList } from './types';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 function HeaderBackground() {
   return (
@@ -28,7 +28,7 @@ function HeaderRightImage() {
   )
 }
 
-export default function AuthStach() {
+export default function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{

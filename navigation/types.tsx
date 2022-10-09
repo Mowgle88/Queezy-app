@@ -2,15 +2,26 @@ import { NavigationProp, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
+  AuthStack: AuthStackParamList,
+  AuthenticatedStack: AuthenticatedStackParamList
+};
+
+export type AuthStackParamList = {
   StartScreen: undefined,
   Login: undefined,
   Signup: undefined,
+}
+
+export type AuthenticatedStackParamList = {
   Main: MainStackParamList,
-  QuizStack: QuizStackParamList,
   Settings: undefined,
   EditProfile: {
     typeScreen: 'profile' | 'email' | 'password' | 'difficulty'
-  }
+  },
+  QuizDetails: undefined,
+  QuizGame: undefined,
+  QuizCompleted: undefined,
+  ReviewQuiz: undefined,
 };
 
 export type MainStackParamList = {
@@ -21,21 +32,16 @@ export type MainStackParamList = {
   Profile: undefined,
 }
 
-export type QuizStackParamList = {
-  QuizDetails: undefined,
-  QuizGame: undefined,
-  QuizCompleted: undefined,
-  ReviewQuiz: undefined,
-}
+export type StartContentNavigationProp = NavigationProp<AuthStackParamList, 'StartScreen'>;
 
-export type StartContentNavigationProp = NavigationProp<RootStackParamList, 'StartScreen'>;
+export type AuthContentNativeStackProps = NativeStackNavigationProp<AuthStackParamList, 'Signup', 'Login'>;
 
-export type AuthContentNativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Signup', 'Login'>;
+export type ProfileScreenNativeStackProps = NativeStackNavigationProp<AuthenticatedStackParamList, 'Main', 'Settings'>;
 
-export type ProfileScreenNativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Main', 'Settings'>;
+export type SettingsScreenNativeStackProps = NativeStackNavigationProp<AuthenticatedStackParamList, 'Settings', 'EditProfile'>;
 
-export type SettingsScreenNativeStackProps = NativeStackNavigationProp<RootStackParamList, 'Settings', 'EditProfile'>;
+export type EditProfileScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'EditProfile'>;
 
-export type EditProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'EditProfile'>;
+export type EditProfileScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'EditProfile'>;
 
-export type EditProfileScreenRouteProp = RouteProp<RootStackParamList, 'EditProfile'>;
+export type HomeScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'Main'>;
