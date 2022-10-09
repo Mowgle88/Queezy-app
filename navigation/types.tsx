@@ -18,7 +18,7 @@ export type AuthenticatedStackParamList = {
   EditProfile: {
     typeScreen: 'profile' | 'email' | 'password' | 'difficulty'
   },
-  QuizDetails: undefined,
+  QuizDetails: { title: string },
   QuizGame: undefined,
   QuizCompleted: undefined,
   ReviewQuiz: undefined,
@@ -45,3 +45,7 @@ export type EditProfileScreenNavigationProp = NativeStackNavigationProp<Authenti
 export type EditProfileScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'EditProfile'>;
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'Main'>;
+
+export type QuizDetailsScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'QuizDetails'>;
+
+export type QuizDetailsScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizDetails'>;

@@ -37,7 +37,11 @@ export default function AuthenticatedStack() {
         headerTitle: '',
         headerShadowVisible: false,
       }} />
-      <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} />
+      <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} options={{
+        headerTransparent: true,
+        headerTitle: '',
+        headerTintColor: 'white'
+      }} />
       <Stack.Screen name="QuizGame" component={QuizGameScreen} />
       <Stack.Screen name="QuizCompleted" component={QuizCompletedScreen} />
       <Stack.Screen name="ReviewQuiz" component={ReviewQuizScreen} />

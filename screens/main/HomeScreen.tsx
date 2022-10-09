@@ -48,7 +48,9 @@ export default function HomeScreen() {
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
     function pressHandler() {
-      navigation.navigate('QuizDetails');
+      navigation.navigate('QuizDetails', {
+        title: itemData.item.title
+      });
     }
 
     return (
