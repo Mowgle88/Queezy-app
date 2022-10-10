@@ -18,8 +18,8 @@ export function getSourcePath(title: string) {
       return require('../assets/categories/Icon-History.png');
     case 'Multiple':
       return require('../assets/categories/Icon-Multiple.png');
-    case 'TrueOfFalse':
-      return require('../assets/categories/Icon-TrueOfFalse.png');
+    case 'TrueOrFalse':
+      return require('../assets/categories/Icon-TrueOrFalse.png');
     case 'TypeAnswer':
       return require('../assets/categories/Icon-TypeAnswer.png');
     case 'Checkbox':

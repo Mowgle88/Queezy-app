@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function QuizDetailsScreen() {
+export default function QuizGameScreen() {
   return (
     <View>
-      <Text>QuizDetailsScreen</Text>
+      <Text>GameScreen</Text>
     </View>
   )
 }

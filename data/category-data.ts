@@ -13,7 +13,7 @@ export const CATEGORIES = [
 
 export const QUIZ_TYPES = [
   new Category('t1', 'Multiple', '#EFEEFC'),
-  new Category('t2', 'TrueOfFalse', '#EFEEFC'),
+  new Category('t2', 'TrueOrFalse', '#EFEEFC'),
   new Category('t3', 'TypeAnswer', '#EFEEFC'),
   new Category('t4', 'Checkbox', '#EFEEFC'),
 ];

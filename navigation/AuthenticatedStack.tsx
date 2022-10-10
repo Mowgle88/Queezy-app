@@ -2,14 +2,17 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import QuizDetailsScreen from '../screens/QuizDetailsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import { AuthenticatedStackParamList } from './types';
 import MainTabs from './MainTabs';
-import { RootStackParamList } from './types';
+import SettingsScreen from '../screens/SettingsScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import QuizDetailsScreen from '../screens/game/QuizDetailsScreen';
+import QuizGameScreen from '../screens/game/QuizGameScreen';
+import QuizCompletedScreen from '../screens/game/QuizCompletedScreen';
+import ReviewQuizScreen from '../screens/game/ReviewQuizScreen';
 import { Colors } from '../constants/styles';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<AuthenticatedStackParamList>();
 
 export default function AuthenticatedStack() {
 
@@ -19,7 +22,6 @@ export default function AuthenticatedStack() {
         headerShown: false
       }}
       />
-      <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{
         // headerShadowVisible: true,
         headerTransparent: true,
@@ -35,6 +37,14 @@ export default function AuthenticatedStack() {
         headerTitle: '',
         headerShadowVisible: false,
       }} />
+      <Stack.Screen name="QuizDetails" component={QuizDetailsScreen} options={{
+        headerTransparent: true,
+        headerTitle: '',
+        headerTintColor: 'white'
+      }} />
+      <Stack.Screen name="QuizGame" component={QuizGameScreen} />
+      <Stack.Screen name="QuizCompleted" component={QuizCompletedScreen} />
+      <Stack.Screen name="ReviewQuiz" component={ReviewQuizScreen} />
     </Stack.Navigator>
   );
 }

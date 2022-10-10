@@ -1,5 +1,6 @@
-import { Alert, Button, FlatList, Modal, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, Modal, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+
 import { Colors } from '../constants/styles';
 import { QUIZ_TYPES } from '../data/category-data';
 import CategoryGridTile from './CategoryGridTile';
@@ -8,19 +9,19 @@ import Category from '../models/category';
 interface QuizTypesModalProps {
   visible: boolean,
   onCancel: () => void,
+  onSelectType: (quizType: string) => void
 }
 
 interface renderCategoryItemProps {
   item: Category
 }
 
-export default function QuizTypesModal({ visible, onCancel }: QuizTypesModalProps) {
+export default function QuizTypesModal({ visible, onCancel, onSelectType }: QuizTypesModalProps) {
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
 
     function pressHandler() {
-      // TODO:  I will implement the logic of transition to the game screen
-      Alert.alert(itemData.item.title)
+      onSelectType(itemData.item.title);
     }
 
     return (

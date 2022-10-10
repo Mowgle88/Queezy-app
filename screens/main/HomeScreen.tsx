@@ -1,28 +1,29 @@
 import { Alert, StyleSheet, Text, View } from 'react-native';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-
-import Category from '../../models/category';
-import CategoryGridTile from '../../components/CategoryGridTile';
-import { CATEGORIES } from '../../data/category-data';
-import { Colors } from '../../constants/styles';
-import QuizTypesModal from '../../components/QuizTypesModal';
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import GreetingBoard from '../../components/GreetingBoard';
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../../store/auth-context';
+import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
+
+import { Colors } from '../../constants/styles';
+import Category from '../../models/category';
+import { CATEGORIES } from '../../data/category-data';
+import CategoryGridTile from '../../components/CategoryGridTile';
+import GreetingBoard from '../../components/GreetingBoard';
 import RecentQuizBoard from '../../components/RecentQuizBoard';
 import FeaturedBoard from '../../components/FeaturedBoard';
 import { fetchUser } from '../../util/http';
+import { AuthContext } from '../../store/auth-context';
 import { ILocalStorageUserData } from '../../models/user';
+import { HomeScreenNavigationProp } from '../../navigation/types';
 
 interface renderCategoryItemProps {
   item: Category
 }
 
 export default function HomeScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
 
   const authCtx = useContext(AuthContext);
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   useEffect(() => {
     async function fetchUserData() {
@@ -47,7 +48,9 @@ export default function HomeScreen() {
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
     function pressHandler() {
-      setModalVisible(true);
+      navigation.navigate('QuizDetails', {
+        title: itemData.item.title
+      });
     }
 
     return (
@@ -60,16 +63,8 @@ export default function HomeScreen() {
     );
   }
 
-  function changeModalIsVisible() {
-    setModalVisible((currentModalIsVisible) => !currentModalIsVisible);
-  }
-
   return (
     <View style={styles.container}>
-      <QuizTypesModal
-        visible={modalVisible}
-        onCancel={changeModalIsVisible}
-      />
       <GreetingBoard userName={authCtx.userName} />
       <RecentQuizBoard />
       <FeaturedBoard />
