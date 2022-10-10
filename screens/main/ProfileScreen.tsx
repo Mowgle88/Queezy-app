@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import IconButton from '../../components/ui/IconButton';
 import { Colors } from '../../constants/styles';
-import { AuthContext } from '../../store/auth-context';
+import { UserContext } from '../../store/user-context';
 import { avatarSource } from '../../constants/avatar';
 import StatisticsBoard from '../../components/StatisticsBoard';
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +12,7 @@ import { ProfileScreenNativeStackProps } from '../../navigation/types';
 export default function ProfileScreen() {
   const [indexIcon, setIndexIcon] = useState(0);
 
-  const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
 
   const navigation = useNavigation<ProfileScreenNativeStackProps>();
 
@@ -32,7 +32,7 @@ export default function ProfileScreen() {
               <IconButton icon={'camera'} size={16} color={'black'} onPress={() => { }} />
             </View>
           </View>
-          <Text style={styles.userNameText}>{authCtx.userName}</Text>
+          <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
           <StatisticsBoard />
 
         </View>

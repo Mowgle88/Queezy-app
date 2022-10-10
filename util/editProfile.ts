@@ -4,50 +4,52 @@ import { updateUser } from "./http";
 
 interface IAuthCtx {
   token: string;
-  userId: string;
-  userName: string;
-  email: string;
-  password: string;
-  date: string;
   isAuthenticated: boolean;
   authenticate: (token: string) => void;
   logout: () => void;
-  setUser: (userData: IUser) => void;
 }
 
-export function changeUserName(userData: IUserData, authCtx: IAuthCtx) {
-  const user = {
-    userName: userData.userName,
-    email: authCtx.email,
-    password: authCtx.password,
-    date: authCtx.date
-  }
-  updateUser(authCtx.userId, user);
-  authCtx.setUser({ ...user, userId: authCtx.userId })
+interface IUserCtx {
+  user: {
+    userId: string,
+    userName: string,
+    email: string,
+    password: string,
+    date: string,
+  },
+  setUser: (userData: IUser) => void,
+  removeUser: () => void;
 }
 
-export async function changeEmail(userData: IUserData, authCtx: IAuthCtx) {
-  const user = {
-    userName: authCtx.userName,
-    email: userData.email,
-    password: authCtx.password,
-    date: authCtx.date
-  }
-  updateUser(authCtx.userId, user);
-  authCtx.setUser({ ...user, userId: authCtx.userId });
+export function changeUserName(userData: IUserData, userCtx: IUserCtx) {
+  const user = { ...userCtx.user };
+  Reflect.deleteProperty(user, 'userId');
+  user.userName = userData.userName;
+
+  updateUser(userCtx.user.userId, user);
+  userCtx.setUser({ ...user, userId: userCtx.user.userId })
+}
+
+export async function changeEmail(userData: IUserData, authCtx: IAuthCtx, userCtx: IUserCtx) {
+  const user = { ...userCtx.user };
+  Reflect.deleteProperty(user, 'userId');
+  user.email = userData.email;
+
+  updateUser(userCtx.user.userId, user);
+  userCtx.setUser({ ...user, userId: userCtx.user.userId });
   const token = await changeUserEmail(user.email, authCtx.token);
   authCtx.authenticate(token);
 }
 
-export async function changePassword(userData: IUserData, authCtx: IAuthCtx) {
-  const user = {
-    userName: authCtx.userName,
-    email: authCtx.email,
-    password: userData.password,
-    date: userData.date
-  }
-  updateUser(authCtx.userId, user);
-  authCtx.setUser({ ...user, userId: authCtx.userId });
+export async function changePassword(userData: IUserData, authCtx: IAuthCtx, userCtx: IUserCtx) {
+
+  const user = { ...userCtx.user };
+  Reflect.deleteProperty(user, 'userId');
+  user.password = userData.password;
+  user.date = userData.date;
+
+  updateUser(userCtx.user.userId, user);
+  userCtx.setUser({ ...user, userId: userCtx.user.userId });
   const token = await changeUserPassword(user.password, authCtx.token);
   authCtx.authenticate(token);
 }

@@ -4,7 +4,18 @@ import { IUser, IUserData } from "../models/user";
 const BACKEND_URL = 'https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/';
 
 export async function addUserToDatabase(userData: IUserData) {
-  const response = await axios.post(`${BACKEND_URL}/users.json`, userData);
+  const userBackendData = {
+    ...userData,
+    settings: {
+      difficulty: 'medium',
+      isTimeGame: false,
+      timeOnAnswer: 60
+    },
+    quizData: {
+      points: 0
+    }
+  }
+  const response = await axios.post(`${BACKEND_URL}/users.json`, userBackendData);
   const id = response.data.name;
   return id;
 }
