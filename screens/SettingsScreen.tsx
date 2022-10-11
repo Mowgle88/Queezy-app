@@ -8,6 +8,7 @@ import CustomButton from '../components/ui/CustomButton';
 import { AuthContext } from '../store/auth-context';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsScreenNativeStackProps } from '../navigation/types';
+import { UserContext } from '../store/user-context';
 
 export default function SettingsScreen() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -15,11 +16,17 @@ export default function SettingsScreen() {
   const navigation = useNavigation<SettingsScreenNativeStackProps>();
 
   const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
 
   function pressHandler(type: 'profile' | 'email' | 'password' | 'difficulty') {
     navigation.navigate('EditProfile', {
       typeScreen: type
     });
+  }
+
+  function onLogoutHandler() {
+    authCtx.logout();
+    userCtx.removeUser();
   }
 
   return (
@@ -33,13 +40,13 @@ export default function SettingsScreen() {
         onPress={pressHandler} />
       <SettingItem
         title={'Change Email Address'}
-        description={authCtx.email}
+        description={userCtx.user.email}
         type={'email'}
         source={require('../assets/icons/Icon-email.svg')}
         onPress={pressHandler} />
       <SettingItem
         title={'Change Password'}
-        description={`last change ${authCtx.date}`}
+        description={`last change ${userCtx.user.date}`}
         type={'password'}
         source={require('../assets/icons/Icon-password.svg')}
         onPress={pressHandler} />
@@ -69,7 +76,7 @@ export default function SettingsScreen() {
         source={require('../assets/icons/Icon-difficulty.svg')}
         onPress={pressHandler} />
       <View style={styles.buttonContainer}>
-        <CustomButton mode='flat' onPress={authCtx.logout}>Logout</CustomButton>
+        <CustomButton mode='flat' onPress={onLogoutHandler}>Logout</CustomButton>
       </View>
     </View>
   )

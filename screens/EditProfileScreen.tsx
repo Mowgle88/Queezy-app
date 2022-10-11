@@ -7,6 +7,7 @@ import { ICredentials } from '../components/auth/AuthForm';
 import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../navigation/types';
 import { changeEmail, changePassword, changeUserName } from '../util/editProfile';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { UserContext } from '../store/user-context';
 
 export default function EditProfileScreen() {
 
@@ -22,6 +23,7 @@ export default function EditProfileScreen() {
   });
 
   const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
 
   const navigation = useNavigation<EditProfileScreenNavigationProp>();
   const route = useRoute<EditProfileScreenRouteProp>();
@@ -74,18 +76,16 @@ export default function EditProfileScreen() {
 
     switch (typeScreen) {
       case 'profile':
-        changeUserName(userData, authCtx)
+        changeUserName(userData, userCtx)
         break;
       case 'email':
-        changeEmail(userData, authCtx)
+        changeEmail(userData, authCtx, userCtx)
         break;
       case 'password':
-        changePassword(userData, authCtx)
+        changePassword(userData, authCtx, userCtx)
         break;
     }
-
     navigation.goBack();
-
   }
 
   return (
@@ -94,13 +94,13 @@ export default function EditProfileScreen() {
         {isChangeUsername &&
           <>
             <Text style={styles.title}>Change username</Text>
-            <Text style={styles.text}>Current username: {authCtx.userName}</Text>
+            <Text style={styles.text}>Current username: {userCtx.user.userName}</Text>
           </>
         }
         {isChangeEmail &&
           <>
             <Text style={styles.title}>Change email</Text>
-            <Text style={styles.text}>Current email: {authCtx.email}</Text>
+            <Text style={styles.text}>Current email: {userCtx.user.email}</Text>
           </>
         }
         {isChangePassword &&

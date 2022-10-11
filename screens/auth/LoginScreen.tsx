@@ -6,11 +6,13 @@ import { login } from '../../util/auth';
 import LoadingOverlay from '../../components/ui/LoadingOverlay';
 import { AuthContext } from '../../store/auth-context';
 import { fetchUsers } from '../../util/http';
+import { UserContext } from '../../store/user-context';
 
 export default function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
 
   async function signupHandler({ email, password }: { email: string, password: string }) {
     setIsAuthenticating(true);
@@ -19,7 +21,7 @@ export default function LoginScreen() {
       authCtx.authenticate(token);
       const users = await fetchUsers();
       const user = users.filter((user) => user.email === email)[0];
-      authCtx.setUser(user);
+      userCtx.setUser(user);
     } catch (error) {
       Alert.alert(
         'Authentication failed!',

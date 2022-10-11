@@ -12,7 +12,7 @@ import GreetingBoard from '../../components/GreetingBoard';
 import RecentQuizBoard from '../../components/RecentQuizBoard';
 import FeaturedBoard from '../../components/FeaturedBoard';
 import { fetchUser } from '../../util/http';
-import { AuthContext } from '../../store/auth-context';
+import { UserContext } from '../../store/user-context';
 import { ILocalStorageUserData } from '../../models/user';
 import { HomeScreenNavigationProp } from '../../navigation/types';
 
@@ -22,7 +22,7 @@ interface renderCategoryItemProps {
 
 export default function HomeScreen() {
 
-  const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function HomeScreen() {
       if (userData) {
         const lSUserData: ILocalStorageUserData = JSON.parse(userData);
         const user = await fetchUser(lSUserData.userId)
-        authCtx.setUser({ ...user, userId: lSUserData.userId })
+        userCtx.setUser({ ...user, userId: lSUserData.userId })
       }
     }
     fetchUserData();
@@ -65,7 +65,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <GreetingBoard userName={authCtx.userName} />
+      <GreetingBoard userName={userCtx.user.userName} />
       <RecentQuizBoard />
       <FeaturedBoard />
       <BottomSheet
