@@ -65,17 +65,20 @@ export default function HomeScreen() {
   // }, []);
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
-    function pressHandler() {
-      navigation.navigate('QuizDetails', {
-        title: itemData.item.title
-      });
-    }
 
     const categoryName = itemData.item.title.toLowerCase();
     const difficulty = userCtx.settings.difficulty;
     const quizzes = quizCtx.quizСategoryData && quizCtx.quizСategoryData[categoryName as ICategoryName] ?
       quizCtx.quizСategoryData[categoryName as ICategoryName][difficulty] :
       null;
+
+    function pressHandler() {
+      navigation.navigate('QuizDetails', {
+        title: itemData.item.title,
+        difficulty: difficulty,
+        quizzesOfThisCategory: quizzes!
+      });
+    }
 
     return (
       <CategoryGridTile

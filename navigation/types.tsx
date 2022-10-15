@@ -1,5 +1,6 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { IQuizItem } from "../models/quizData";
 
 export type RootStackParamList = {
   AuthStack: AuthStackParamList,
@@ -18,7 +19,11 @@ export type AuthenticatedStackParamList = {
   EditProfile: {
     typeScreen: 'profile' | 'email' | 'password' | 'difficulty'
   },
-  QuizDetails: { title: string },
+  QuizDetails: {
+    title: string,
+    difficulty: "medium" | "easy" | "hard",
+    quizzesOfThisCategory: IQuizItem[]
+  },
   QuizGame: undefined,
   QuizCompleted: undefined,
   ReviewQuiz: undefined,
