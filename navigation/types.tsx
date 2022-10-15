@@ -24,7 +24,10 @@ export type AuthenticatedStackParamList = {
     difficulty: "medium" | "easy" | "hard",
     quizzesOfThisCategory: IQuizItem[]
   },
-  QuizGame: undefined,
+  QuizGame: {
+    quizType: string,
+    quizzesOfThisCategory: IQuizItem[]
+  },
   QuizCompleted: undefined,
   ReviewQuiz: undefined,
 };

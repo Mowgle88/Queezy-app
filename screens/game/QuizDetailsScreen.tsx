@@ -1,5 +1,5 @@
 import { Alert, Image, ImageBackground, StyleSheet, useWindowDimensions, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import QuizDetalsContent from '../../components/QuizDetalsContent';
@@ -23,7 +23,10 @@ export default function QuizDetailsScreen() {
   }
 
   function selectType(quizType: string) {
-    // TODO:  I will implement the logic of transition to the game screens
+    navigation.navigate('QuizGame', {
+      quizType: quizType,
+      quizzesOfThisCategory: quizzes
+    })
     Alert.alert(title, quizType);
   }
 
@@ -40,7 +43,8 @@ export default function QuizDetailsScreen() {
           source={require('../../assets/Illustration-4.png')}
         />
         <QuizDetalsContent
-          title={title} number={quizzes ? quizzes.length : 0}
+          title={title}
+          number={quizzes ? quizzes.length : 0}
           difficulty={difficulty}
           onPress={() => setModalVisible(true)}
         />
