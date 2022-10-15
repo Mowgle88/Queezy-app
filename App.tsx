@@ -1,10 +1,11 @@
 import React from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import AuthContextProvider from './store/auth-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import Root from './navigation/Root';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AuthContextProvider from './store/auth-context';
 import UserContextProvider from './store/user-context';
+import QuizContextProvider from './store/quiz-context';
 
 const App = () => {
   return (
@@ -12,16 +13,20 @@ const App = () => {
       <StatusBar />
       <AuthContextProvider>
         <UserContextProvider>
-          <GestureHandlerRootView style={{ flex: 1 }} >
-            <Root />
-          </GestureHandlerRootView>
+          <QuizContextProvider>
+            <GestureHandlerRootView style={styles.container} >
+              <Root />
+            </GestureHandlerRootView>
+          </QuizContextProvider>
         </UserContextProvider>
       </AuthContextProvider>
     </>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1 }
+});
 
 export default App;
 

@@ -51,3 +51,8 @@ export async function deleteUser(id: string) {
 export function updateUser(id: string, userData: IUserData) {
   return axios.put(`${BACKEND_URL}/users/${id}.json`, userData)
 }
+
+export async function getQuizCategories() {
+  const response = await axios.get(`${BACKEND_URL}/categories.json`);
+  return response.data;
+}
