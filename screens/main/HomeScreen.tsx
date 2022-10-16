@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, Text, View } from 'react-native';
-import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
@@ -11,10 +11,12 @@ import CategoryGridTile from '../../components/CategoryGridTile';
 import GreetingBoard from '../../components/GreetingBoard';
 import RecentQuizBoard from '../../components/RecentQuizBoard';
 import FeaturedBoard from '../../components/FeaturedBoard';
-import { fetchUser } from '../../util/http';
+import { fetchUser, getQuizCategories } from '../../util/http';
 import { UserContext } from '../../store/user-context';
 import { ILocalStorageUserData } from '../../models/user';
 import { HomeScreenNavigationProp } from '../../navigation/types';
+import { IQuizCategoriesData, ICategoryName } from '../../models/quizData';
+import { QuizContext } from '../../store/quiz-context';
 
 interface renderCategoryItemProps {
   item: Category
@@ -23,6 +25,7 @@ interface renderCategoryItemProps {
 export default function HomeScreen() {
 
   const userCtx = useContext(UserContext);
+  const quizCtx = useContext(QuizContext);
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   useEffect(() => {
@@ -38,6 +41,21 @@ export default function HomeScreen() {
     fetchUserData();
   }, [])
 
+  useEffect(() => {
+    async function fetchQuizCategoriesData() {
+      const categoriesData = await AsyncStorage.getItem('quizСategoryData');
+
+      if (categoriesData) {
+        const lsCategoriesData: IQuizCategoriesData = JSON.parse(categoriesData);
+        quizCtx.setQuizСategoryData(lsCategoriesData);
+      } else {
+        const categoriesData: IQuizCategoriesData = await getQuizCategories()
+        quizCtx.setQuizСategoryData(categoriesData);
+      }
+    }
+    fetchQuizCategoriesData();
+  }, [])
+
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const snapPoints = useMemo(() => ['40%', '85%'], []);
@@ -47,9 +65,18 @@ export default function HomeScreen() {
   // }, []);
 
   function renderCategoryItem(itemData: renderCategoryItemProps) {
+
+    const categoryName = itemData.item.title.toLowerCase();
+    const difficulty = userCtx.settings.difficulty;
+    const quizzes = quizCtx.quizСategoryData && quizCtx.quizСategoryData[categoryName as ICategoryName] ?
+      quizCtx.quizСategoryData[categoryName as ICategoryName][difficulty] :
+      null;
+
     function pressHandler() {
       navigation.navigate('QuizDetails', {
-        title: itemData.item.title
+        title: itemData.item.title,
+        difficulty: difficulty,
+        quizzesOfThisCategory: quizzes!
       });
     }
 
@@ -57,7 +84,7 @@ export default function HomeScreen() {
       <CategoryGridTile
         title={itemData.item.title}
         color={itemData.item.color}
-        description={0}
+        description={quizzes ? quizzes.length : 0}
         onPress={pressHandler}
       />
     );

@@ -10,8 +10,8 @@ export function getSourcePath(title: string) {
       return require('../assets/categories/Icon-Sport.png');
     case 'Music':
       return require('../assets/categories/Icon-Music.png');
-    case 'Tech':
-      return require('../assets/categories/Icon-Tech.png');
+    case 'Films':
+      return require('../assets/categories/Icon-Films.png');
     case 'Travel':
       return require('../assets/categories/Icon-Travel.png');
     case 'History':

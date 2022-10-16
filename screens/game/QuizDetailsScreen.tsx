@@ -1,5 +1,5 @@
 import { Alert, Image, ImageBackground, StyleSheet, useWindowDimensions, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import QuizDetalsContent from '../../components/QuizDetalsContent';
@@ -15,6 +15,8 @@ export default function QuizDetailsScreen() {
   const route = useRoute<QuizDetailsScreenRouteProp>();
 
   const title = route.params.title;
+  const difficulty = route.params.difficulty;
+  const quizzes = route.params.quizzesOfThisCategory;
 
   function changeModalIsVisible() {
     setModalVisible((currentModalIsVisible) => !currentModalIsVisible);
@@ -38,8 +40,8 @@ export default function QuizDetailsScreen() {
           source={require('../../assets/Illustration-4.png')}
         />
         <QuizDetalsContent
-          title={title} number={0}
-          difficulty='medium'
+          title={title} number={quizzes ? quizzes.length : 0}
+          difficulty={difficulty}
           onPress={() => setModalVisible(true)}
         />
       </View>
