@@ -1,4 +1,4 @@
-import { Alert, Image, ImageBackground, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -27,7 +27,7 @@ export default function QuizDetailsScreen() {
       quizType: quizType,
       quizzesOfThisCategory: quizzes
     })
-    Alert.alert(title, quizType);
+    setModalVisible(false);
   }
 
   return (

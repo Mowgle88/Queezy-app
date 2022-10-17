@@ -5,6 +5,8 @@ export const Colors = {
   pastelPink: '#FFD6DD',
   hawkesBlue: '#C4D0FB',
   mintTulip: '#C9F2E9',
+  green: '#53DF83',
+  red: '#FF6666',
   black: '#0C092A',
   grey: '#49465F',
   grey2: '#858494',

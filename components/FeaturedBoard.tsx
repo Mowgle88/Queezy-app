@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    alignItems: 'center',
   },
   text: {
     marginTop: 35,
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-
   },
   description: {
     marginTop: 20,
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     top: 134
   },
   button: {
-    marginTop: 10,
-    alignItems: 'center',
+    marginTop: 30,
   }
 })

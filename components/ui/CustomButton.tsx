@@ -13,7 +13,7 @@ interface CustomButtonProps {
 
 export default function CustomButton({ children, onPress, mode, style }: CustomButtonProps) {
   return (
-    <View style={style}>
+    <View>
       <Pressable
         onPress={onPress}
         style={({ pressed }) => pressed && styles.pressed}
