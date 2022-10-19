@@ -1,13 +1,13 @@
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { Colors } from '../constants/styles';
-import { AuthContext } from '../store/auth-context';
-import EditProfileForm from '../components/EditProfileForm';
-import { ICredentials } from '../components/auth/AuthForm';
-import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../navigation/types';
-import { changeEmail, changePassword, changeUserName } from '../util/editProfile';
+import { Colors } from '../../constants/styles';
+import { AuthContext } from '../../store/auth-context';
+import EditProfileForm from '../../components/settings/EditProfileForm';
+import { ICredentials } from '../../components/auth/AuthForm';
+import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../../navigation/types';
+import { changeEmail, changePassword, changeUserName } from '../../util/editProfile';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { UserContext } from '../store/user-context';
+import { UserContext } from '../../store/user-context';
 
 export default function EditProfileScreen() {
 

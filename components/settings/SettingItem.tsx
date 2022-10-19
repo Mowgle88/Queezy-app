@@ -2,7 +2,7 @@ import { ImageRequireSource, Pressable, StyleSheet, Text, View } from 'react-nat
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Colors } from '../constants/styles';
+import { Colors } from '../../constants/styles';
 import VectorImage from 'react-native-vector-image';
 
 interface SettingItemProps {

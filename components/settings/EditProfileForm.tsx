@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
-import { ICredentials, ICredentialsInvalid } from './auth/AuthForm';
-import CustomButton from './ui/CustomButton';
-import CustomInput from './ui/CustomInput';
+import { ICredentials, ICredentialsInvalid } from '../auth/AuthForm';
+import CustomButton from '../ui/CustomButton';
+import CustomInput from '../ui/CustomInput';
 
 interface EditProfileFormProps {
   isChangeUsername?: boolean,
@@ -56,7 +56,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             isInvalid={userNameIsInvalid}
             secure={false}
             placeholder={'Your username'}
-            source={require('../assets/icons/Icon-user.svg')}
+            source={require('../../assets/icons/Icon-user.svg')}
           />
         )}
         {isChangeEmail &&
@@ -68,7 +68,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             isInvalid={emailIsInvalid}
             secure={false}
             placeholder={'Your email address'}
-            source={require('../assets/icons/Icon-email.svg')}
+            source={require('../../assets/icons/Icon-email.svg')}
           />
         }
         {isChangePassword && (
@@ -83,7 +83,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
               placeholder={'Your password'}
               isPassword
               onUpdateSecure={updateSecurePasswordHandler}
-              source={require('../assets/icons/Icon-password.svg')}
+              source={require('../../assets/icons/Icon-password.svg')}
             />
             <CustomInput
               label="Confirm Password"
@@ -95,7 +95,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
               placeholder={'Confirm password'}
               isPassword
               onUpdateSecure={updateSecureConfirmPasswordHandler}
-              source={require('../assets/icons/Icon-password.svg')}
+              source={require('../../assets/icons/Icon-password.svg')}
             />
           </>
         )}

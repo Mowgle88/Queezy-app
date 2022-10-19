@@ -1,14 +1,14 @@
 import { StyleSheet, Switch, Text, View } from 'react-native';
 import React, { useContext, useState } from 'react';
 
-import SettingItem from '../components/SettingItem';
-import { Colors } from '../constants/styles';
-import Counter from '../components/Counter';
-import CustomButton from '../components/ui/CustomButton';
-import { AuthContext } from '../store/auth-context';
+import SettingItem from '../../components/settings/SettingItem';
+import { Colors } from '../../constants/styles';
+import Counter from '../../components/Counter';
+import CustomButton from '../../components/ui/CustomButton';
+import { AuthContext } from '../../store/auth-context';
 import { useNavigation } from '@react-navigation/native';
-import { SettingsScreenNativeStackProps } from '../navigation/types';
-import { UserContext } from '../store/user-context';
+import { SettingsScreenNativeStackProps } from '../../navigation/types';
+import { UserContext } from '../../store/user-context';
 
 export default function SettingsScreen() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -36,19 +36,19 @@ export default function SettingsScreen() {
         title={'Update Profile'}
         description={'Update username, country, etc'}
         type={'profile'}
-        source={require('../assets/icons/Icon-user.svg')}
+        source={require('../../assets/icons/Icon-user.svg')}
         onPress={pressHandler} />
       <SettingItem
         title={'Change Email Address'}
         description={userCtx.user.email}
         type={'email'}
-        source={require('../assets/icons/Icon-email.svg')}
+        source={require('../../assets/icons/Icon-email.svg')}
         onPress={pressHandler} />
       <SettingItem
         title={'Change Password'}
         description={`last change ${userCtx.user.date}`}
         type={'password'}
-        source={require('../assets/icons/Icon-password.svg')}
+        source={require('../../assets/icons/Icon-password.svg')}
         onPress={pressHandler} />
       <Text style={styles.categoryTitle}>Other</Text>
       <View style={styles.timeGameContainer}>
@@ -73,7 +73,7 @@ export default function SettingsScreen() {
         title={'Change Difficulty'}
         description={'Easy, normal, hard'}
         type={'difficulty'}
-        source={require('../assets/icons/Icon-difficulty.svg')}
+        source={require('../../assets/icons/Icon-difficulty.svg')}
         onPress={pressHandler} />
       <View style={styles.buttonContainer}>
         <CustomButton mode='flat' onPress={onLogoutHandler}>Logout</CustomButton>
