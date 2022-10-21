@@ -14,6 +14,7 @@ export default function EditProfileScreen() {
   const [isChangeUsername, setIsChangeUsername] = useState(false);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
   const [isChangePassword, setIsChangePassword] = useState(false);
+  const [isChangeDifficulty, setIsChangeDifficulty] = useState(false);
 
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     userName: false,
@@ -40,6 +41,9 @@ export default function EditProfileScreen() {
         break;
       case 'password':
         setIsChangePassword(true);
+        break;
+      case 'difficulty':
+        setIsChangeDifficulty(true);
         break;
     }
   }, [typeScreen])
@@ -91,24 +95,27 @@ export default function EditProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
+        <Text style={styles.title}>
+          Change
+          {isChangeUsername && ' username'}
+          {isChangeEmail && ' email'}
+          {isChangePassword && ' password'}
+          {isChangeDifficulty && ' difficulty'}
+        </Text>
         {isChangeUsername &&
-          <>
-            <Text style={styles.title}>Change username</Text>
-            <Text style={styles.text}>Current username: {userCtx.user.userName}</Text>
-          </>
+          <Text style={styles.text}>Current username: {userCtx.user.userName}</Text>
         }
         {isChangeEmail &&
-          <>
-            <Text style={styles.title}>Change email</Text>
-            <Text style={styles.text}>Current email: {userCtx.user.email}</Text>
-          </>
-        }
-        {isChangePassword &&
-          <Text style={styles.title}>Change password</Text>
+          <Text style={styles.text}>Current email: {userCtx.user.email}</Text>
         }
       </View>
-      <EditProfileForm onSubmit={submitHandler} credentialsInvalid={credentialsInvalid}
-        isChangeUsername={isChangeUsername} isChangeEmail={isChangeEmail} isChangePassword={isChangePassword}
+      <EditProfileForm
+        onSubmit={submitHandler}
+        credentialsInvalid={credentialsInvalid}
+        isChangeUsername={isChangeUsername}
+        isChangeEmail={isChangeEmail}
+        isChangePassword={isChangePassword}
+        isChangeDifficulty={isChangeDifficulty}
       />
     </View>
   )
@@ -120,7 +127,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey5,
     paddingHorizontal: 20,
     paddingBottom: 40,
-    // justifyContent: 'space-between'
   },
   textContainer: {
     marginTop: 15,

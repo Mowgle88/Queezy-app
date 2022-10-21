@@ -1,24 +1,30 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ICredentials, ICredentialsInvalid } from '../auth/AuthForm';
 import CustomButton from '../ui/CustomButton';
 import CustomInput from '../ui/CustomInput';
+import { difficultyData } from '../../constants/difficultyData';
+import RadioButtons from '../ui/RadioButtons';
+import { UserContext } from '../../store/user-context';
 
 interface EditProfileFormProps {
   isChangeUsername?: boolean,
   isChangeEmail?: boolean,
   isChangePassword?: boolean,
+  isChangeDifficulty?: boolean,
   onSubmit: (credentials: ICredentials) => void,
   credentialsInvalid: ICredentialsInvalid
 }
 
-export default function EditProfileForm(this: any, { isChangeUsername, isChangeEmail, isChangePassword, onSubmit, credentialsInvalid }: EditProfileFormProps) {
+export default function EditProfileForm(this: any, { isChangeUsername, isChangeEmail, isChangePassword, isChangeDifficulty, onSubmit, credentialsInvalid }: EditProfileFormProps) {
   const [enteredUserName, setEnteredUserName] = useState('');
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
   const [isSecurePassword, setIsSecurePassword] = useState(true);
   const [isSecureConfirmPassword, setIsSecureConfirmPassword] = useState(true);
+
+  const userCtx = useContext(UserContext);
 
   const {
     userName: userNameIsInvalid,
@@ -99,6 +105,12 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             />
           </>
         )}
+        {isChangeDifficulty && (
+          <RadioButtons
+            passValue={(value) => { console.log(value) }}
+            defaultValue={userCtx.settings.difficulty} radioButtons={difficultyData}
+          />
+        )}
       </View>
       <View style={styles.button}>
         <CustomButton onPress={submitHandler}>Confirm</CustomButton>
@@ -115,4 +127,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 12,
   },
+  radioButtonsContainer: {
+    marginTop: 50,
+  }
 })

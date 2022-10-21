@@ -46,7 +46,7 @@ export type AuthContentNativeStackProps = NativeStackNavigationProp<AuthStackPar
 
 export type ProfileScreenNativeStackProps = NativeStackNavigationProp<AuthenticatedStackParamList, 'Main', 'Settings'>;
 
-export type SettingsScreenNativeStackProps = NativeStackNavigationProp<AuthenticatedStackParamList, 'Settings', 'EditProfile'>;
+export type SettingsScreenNativeStackProps = NativeStackNavigationProp<AuthenticatedStackParamList, 'Settings'>;
 
 export type EditProfileScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'EditProfile'>;
 
