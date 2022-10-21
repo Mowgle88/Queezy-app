@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useContext, useState } from 'react';
-import { ICredentials, ICredentialsInvalid } from '../auth/AuthForm';
+import { ICredentialsInvalid } from '../auth/AuthForm';
 import CustomButton from '../ui/CustomButton';
 import CustomInput from '../ui/CustomInput';
 import { difficultyData } from '../../constants/difficultyData';
@@ -12,8 +12,16 @@ interface EditProfileFormProps {
   isChangeEmail?: boolean,
   isChangePassword?: boolean,
   isChangeDifficulty?: boolean,
-  onSubmit: (credentials: ICredentials) => void,
+  onSubmit: (credentials: IDataToEdit) => void,
   credentialsInvalid: ICredentialsInvalid
+}
+
+export interface IDataToEdit {
+  userName: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+  difficulty?: string
 }
 
 export default function EditProfileForm(this: any, { isChangeUsername, isChangeEmail, isChangePassword, isChangeDifficulty, onSubmit, credentialsInvalid }: EditProfileFormProps) {
@@ -21,6 +29,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState('');
   const [isSecurePassword, setIsSecurePassword] = useState(true);
   const [isSecureConfirmPassword, setIsSecureConfirmPassword] = useState(true);
 
@@ -47,6 +56,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
       email: enteredEmail,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
+      difficulty: selectedDifficulty
     });
   }
 
@@ -107,7 +117,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
         )}
         {isChangeDifficulty && (
           <RadioButtons
-            passValue={(value) => { console.log(value) }}
+            passValue={(value) => { setSelectedDifficulty(value) }}
             defaultValue={userCtx.settings.difficulty} radioButtons={difficultyData}
           />
         )}

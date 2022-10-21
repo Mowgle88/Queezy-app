@@ -1,9 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IUser } from "../models/user";
 
 interface AuthContextProviderProps {
   children: React.ReactNode
+}
+
+export interface IAuthContext {
+  token: string;
+  isAuthenticated: boolean;
+  authenticate: (token: string) => void;
+  logout: () => void;
 }
 
 export const AuthContext = createContext({

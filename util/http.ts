@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUser, IUserData } from "../models/user";
+import { IUser, IUserBackendData, IUserData } from "../models/user";
 
 const BACKEND_URL = 'https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/';
 
@@ -48,7 +48,7 @@ export async function deleteUser(id: string) {
   return axios.delete(`${BACKEND_URL}/users/${id}.json`)
 }
 
-export function updateUser(id: string, userData: IUserData) {
+export function updateUser(id: string, userData: IUserBackendData) {
   return axios.put(`${BACKEND_URL}/users/${id}.json`, userData)
 }
 
