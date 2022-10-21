@@ -24,7 +24,10 @@ export type AuthenticatedStackParamList = {
     difficulty: "medium" | "easy" | "hard",
     quizzesOfThisCategory: IQuizItem[]
   },
-  QuizGame: undefined,
+  QuizGame: {
+    quizType: string,
+    quizzesOfThisCategory: IQuizItem[]
+  },
   QuizCompleted: undefined,
   ReviewQuiz: undefined,
 };
@@ -54,3 +57,7 @@ export type HomeScreenNavigationProp = NativeStackNavigationProp<AuthenticatedSt
 export type QuizDetailsScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'QuizDetails'>;
 
 export type QuizDetailsScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizDetails'>;
+
+export type QuizGameScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'QuizGame'>;
+
+export type QuizGameScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizGame'>;
