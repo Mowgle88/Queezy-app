@@ -9,19 +9,30 @@ import { AuthContext } from '../../store/auth-context';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsScreenNativeStackProps } from '../../navigation/types';
 import { UserContext } from '../../store/user-context';
+import { setTimeGame } from '../../util/editProfile';
 
 export default function SettingsScreen() {
-  const [isEnabled, setIsEnabled] = useState(false);
 
   const navigation = useNavigation<SettingsScreenNativeStackProps>();
 
   const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
+  const isTimeGame = userCtx.settings.isTimeGame;
+
   function pressHandler(type: 'profile' | 'email' | 'password' | 'difficulty') {
     navigation.navigate('EditProfile', {
       typeScreen: type
     });
+  }
+
+  function changeValue(value: boolean) {
+    const userSettingsData = {
+      difficulty: userCtx.settings.difficulty,
+      isTimeGame: value,
+      timeOnAnswer: userCtx.settings.timeOnAnswer
+    }
+    setTimeGame(userSettingsData, userCtx);
   }
 
   function onLogoutHandler() {
@@ -54,21 +65,23 @@ export default function SettingsScreen() {
       <View style={styles.timeGameContainer}>
         <Text style={styles.switchTitle}>Time game</Text>
         <View style={styles.switchContainer}>
-          <Text style={styles.switchTitle}>{isEnabled ? 'on' : 'off'}</Text>
+          <Text style={styles.switchTitle}>{isTimeGame ? 'on' : 'off'}</Text>
           <Switch
             trackColor={{ false: "#767577", true: Colors.royalBlue }}
-            thumbColor={isEnabled ? Colors.hawkesBlue : "#f4f3f4"}
-            onValueChange={() => setIsEnabled(previousState => !previousState)}
-            value={isEnabled}
+            thumbColor={isTimeGame ? Colors.hawkesBlue : "#f4f3f4"}
+            onValueChange={changeValue}
+            value={isTimeGame}
           />
         </View>
       </View>
-      <View style={[styles.timeGameContainer, styles.timeToAnswerContainer]}>
-        <Text style={styles.switchTitle}>Time to answer</Text>
-        <View>
-          <Counter stringNumber='60' />
+      {isTimeGame &&
+        <View style={[styles.timeGameContainer, styles.timeToAnswerContainer]}>
+          <Text style={styles.switchTitle}>Time to answer</Text>
+          <View>
+            <Counter stringNumber='60' />
+          </View>
         </View>
-      </View>
+      }
       <SettingItem
         title={'Change Difficulty'}
         description={'Easy, normal, hard'}

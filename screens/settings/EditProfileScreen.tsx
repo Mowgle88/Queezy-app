@@ -99,7 +99,7 @@ export default function EditProfileScreen() {
         changePassword(userData, authCtx, userCtx)
         break;
       case 'difficulty':
-        changeDifficulty(userSettingsData, authCtx, userCtx)
+        changeDifficulty(userSettingsData, userCtx)
         break;
     }
     navigation.goBack();

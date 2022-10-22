@@ -49,7 +49,7 @@ export async function changePassword(userData: IUserData, authCtx: IAuthContext,
   authCtx.authenticate(token);
 }
 
-export async function changeDifficulty(userData: IUserSettingsData, authCtx: IAuthContext, userCtx: IUserContext) {
+export async function changeDifficulty(userSettingsData: IUserSettingsData, userCtx: IUserContext) {
 
   const userBackendData = {
     ...userCtx.user,
@@ -57,11 +57,24 @@ export async function changeDifficulty(userData: IUserSettingsData, authCtx: IAu
     quizData: userCtx.quizData
   };
   Reflect.deleteProperty(userBackendData, 'userId');
-  userBackendData.settings.difficulty = userData.difficulty;
+  userBackendData.settings.difficulty = userSettingsData.difficulty;
 
   updateUser(userCtx.user.userId, userBackendData);
   userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
   userCtx.setSettings(userBackendData.settings);
-  const token = await changeUserPassword(userBackendData.password, authCtx.token);
-  authCtx.authenticate(token);
+}
+
+export async function setTimeGame(userSettingsData: IUserSettingsData, userCtx: IUserContext) {
+
+  const userBackendData = {
+    ...userCtx.user,
+    settings: userCtx.settings,
+    quizData: userCtx.quizData
+  };
+  Reflect.deleteProperty(userBackendData, 'userId');
+  userBackendData.settings.isTimeGame = userSettingsData.isTimeGame;
+
+  updateUser(userCtx.user.userId, userBackendData);
+  userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
+  userCtx.setSettings(userBackendData.settings);
 }
