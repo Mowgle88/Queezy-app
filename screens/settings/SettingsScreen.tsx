@@ -9,7 +9,7 @@ import { AuthContext } from '../../store/auth-context';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsScreenNativeStackProps } from '../../navigation/types';
 import { UserContext } from '../../store/user-context';
-import { setTimeGame } from '../../util/editProfile';
+import { changeTimeGame, setTimeGame } from '../../util/editProfile';
 
 export default function SettingsScreen() {
 
@@ -19,6 +19,7 @@ export default function SettingsScreen() {
   const userCtx = useContext(UserContext);
 
   const isTimeGame = userCtx.settings.isTimeGame;
+  const timeOnAnswer = userCtx.settings.timeOnAnswer;
 
   function pressHandler(type: 'profile' | 'email' | 'password' | 'difficulty') {
     navigation.navigate('EditProfile', {
@@ -27,12 +28,11 @@ export default function SettingsScreen() {
   }
 
   function changeValue(value: boolean) {
-    const userSettingsData = {
-      difficulty: userCtx.settings.difficulty,
-      isTimeGame: value,
-      timeOnAnswer: userCtx.settings.timeOnAnswer
-    }
-    setTimeGame(userSettingsData, userCtx);
+    setTimeGame(value, userCtx);
+  }
+
+  function changeTime(time: number) {
+    changeTimeGame(time, userCtx);
   }
 
   function onLogoutHandler() {
@@ -78,7 +78,7 @@ export default function SettingsScreen() {
         <View style={[styles.timeGameContainer, styles.timeToAnswerContainer]}>
           <Text style={styles.switchTitle}>Time to answer</Text>
           <View>
-            <Counter stringNumber='60' />
+            <Counter number={timeOnAnswer} changeTime={changeTime} />
           </View>
         </View>
       }

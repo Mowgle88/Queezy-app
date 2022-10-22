@@ -3,21 +3,28 @@ import React, { useState } from 'react'
 import IconButton from './ui/IconButton';
 import { Colors } from '../constants/styles';
 
-export default function Counter({ stringNumber }: { stringNumber: string }) {
-  let [count, setCount] = useState(+stringNumber);
+interface Counter {
+  number: number,
+  changeTime: (time: number) => void,
+}
+
+export default function Counter({ number, changeTime }: Counter) {
+  let [count, setCount] = useState(number);
 
   function increment() {
     setCount(count += 30);
+    changeTime(count)
   }
   function decrement() {
     if (count > 0) {
       setCount(count -= 30);
+      changeTime(count)
     }
   }
   return (
     <View style={styles.container}>
       <IconButton icon={'arrow-down-circle'} size={30} color={Colors.dullLavender} onPress={decrement} />
-      <Text style={styles.text}>{count.toString()}</Text>
+      <Text style={styles.text}>{count}</Text>
       <IconButton icon={'arrow-up-circle'} size={30} color={Colors.dullLavender} onPress={increment} />
     </View>
   )

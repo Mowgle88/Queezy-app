@@ -64,7 +64,7 @@ export async function changeDifficulty(userSettingsData: IUserSettingsData, user
   userCtx.setSettings(userBackendData.settings);
 }
 
-export async function setTimeGame(userSettingsData: IUserSettingsData, userCtx: IUserContext) {
+export async function setTimeGame(value: boolean, userCtx: IUserContext) {
 
   const userBackendData = {
     ...userCtx.user,
@@ -72,9 +72,23 @@ export async function setTimeGame(userSettingsData: IUserSettingsData, userCtx: 
     quizData: userCtx.quizData
   };
   Reflect.deleteProperty(userBackendData, 'userId');
-  userBackendData.settings.isTimeGame = userSettingsData.isTimeGame;
+  userBackendData.settings.isTimeGame = value;
 
   updateUser(userCtx.user.userId, userBackendData);
   userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
+  userCtx.setSettings(userBackendData.settings);
+}
+
+export async function changeTimeGame(time: number, userCtx: IUserContext) {
+
+  const userBackendData = {
+    ...userCtx.user,
+    settings: userCtx.settings,
+    quizData: userCtx.quizData
+  };
+  Reflect.deleteProperty(userBackendData, 'userId');
+  userBackendData.settings.timeOnAnswer = time;
+
+  updateUser(userCtx.user.userId, userBackendData);
   userCtx.setSettings(userBackendData.settings);
 }
