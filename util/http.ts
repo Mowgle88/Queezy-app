@@ -52,7 +52,7 @@ export async function fetchUsers() {
 }
 
 export async function fetchUser(id: string) {
-  const response = await axios.get<IUserData>(`${BACKEND_URL}/users/${id}.json`)
+  const response = await axios.get<IFetchUsers>(`${BACKEND_URL}/users/${id}.json`)
   return response.data;
 }
 

@@ -34,8 +34,10 @@ export default function HomeScreen() {
 
       if (userData) {
         const lSUserData: ILocalStorageUserData = JSON.parse(userData);
-        const user = await fetchUser(lSUserData.userId)
+        const user = await fetchUser(lSUserData.userId);
         userCtx.setUser({ ...user, userId: lSUserData.userId })
+        userCtx.setSettings(user.settings);
+        userCtx.setQuizData(user.quizData);
       }
     }
     fetchUserData();
