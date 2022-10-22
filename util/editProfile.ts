@@ -61,6 +61,7 @@ export async function changeDifficulty(userData: IUserData, authCtx: IAuthContex
 
   updateUser(userCtx.user.userId, userBackendData);
   userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
+  userCtx.setSettings(userBackendData.settings);
   const token = await changeUserPassword(userBackendData.password, authCtx.token);
   authCtx.authenticate(token);
 }
