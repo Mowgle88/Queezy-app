@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUser, IUserBackendData, IUserData } from "../models/user";
+import { IUser, IUserBackendData, IUserData, IUserQuizData, IUserSettingsData } from "../models/user";
 
 const BACKEND_URL = 'https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/';
 
@@ -20,18 +20,30 @@ export async function addUserToDatabase(userData: IUserData) {
   return id;
 }
 
+type IFetchUsers = IUser & { settings: IUserSettingsData } & { quizData: IUserQuizData };
+
 export async function fetchUsers() {
-  const response = await axios.get<IUser[]>(`${BACKEND_URL}/users.json`);
+  const response = await axios.get<IFetchUsers[]>(`${BACKEND_URL}/users.json`);
 
   const users = [];
 
   for (const key in response.data) {
     const userObj = {
-      userId: key,
-      email: response.data[key].email,
-      password: response.data[key].password,
-      userName: response.data[key].userName,
-      date: response.data[key].date
+      user: {
+        userId: key,
+        email: response.data[key].email,
+        password: response.data[key].password,
+        userName: response.data[key].userName,
+        date: response.data[key].date,
+      },
+      settings: {
+        difficulty: response.data[key].settings.difficulty,
+        isTimeGame: response.data[key].settings.isTimeGame,
+        timeOnAnswer: response.data[key].settings.timeOnAnswer,
+      },
+      quizData: {
+        points: response.data[key].quizData.points
+      }
     };
     users.push(userObj);
   }

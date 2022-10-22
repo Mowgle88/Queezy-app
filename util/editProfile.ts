@@ -1,4 +1,4 @@
-import { IUserData } from "../models/user";
+import { IUserData, IUserSettingsData } from "../models/user";
 import { IAuthContext } from "../store/auth-context";
 import { IUserContext } from "../store/user-context";
 import { changeUserPassword, changeUserEmail } from "./auth";
@@ -49,7 +49,7 @@ export async function changePassword(userData: IUserData, authCtx: IAuthContext,
   authCtx.authenticate(token);
 }
 
-export async function changeDifficulty(userData: IUserData, authCtx: IAuthContext, userCtx: IUserContext) {
+export async function changeDifficulty(userData: IUserSettingsData, authCtx: IAuthContext, userCtx: IUserContext) {
 
   const userBackendData = {
     ...userCtx.user,

@@ -80,8 +80,13 @@ export default function EditProfileScreen() {
       email,
       password,
       date,
-      difficulty: difficulty as 'medium' | 'easy' | 'hard'
     };
+
+    const userSettingsData = {
+      difficulty: difficulty as 'medium' | 'easy' | 'hard',
+      isTimeGame: userCtx.settings.isTimeGame,
+      timeOnAnswer: userCtx.settings.timeOnAnswer
+    }
 
     switch (typeScreen) {
       case 'profile':
@@ -94,7 +99,7 @@ export default function EditProfileScreen() {
         changePassword(userData, authCtx, userCtx)
         break;
       case 'difficulty':
-        changeDifficulty(userData, authCtx, userCtx)
+        changeDifficulty(userSettingsData, authCtx, userCtx)
         break;
     }
     navigation.goBack();

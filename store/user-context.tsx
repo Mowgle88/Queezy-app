@@ -95,6 +95,8 @@ function UserContextProvider({ children }: UserContextProviderProps) {
       date: ''
     });
     AsyncStorage.removeItem('userData');
+    AsyncStorage.removeItem('settingsData');
+    AsyncStorage.removeItem('quizData');
   }
 
   const value = {

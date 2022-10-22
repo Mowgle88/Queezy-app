@@ -20,8 +20,10 @@ export default function LoginScreen() {
       const token = await login(email, password);
       authCtx.authenticate(token);
       const users = await fetchUsers();
-      const user = users.filter((user) => user.email === email)[0];
-      userCtx.setUser(user);
+      const userData = users.filter((userData) => userData.user.email === email)[0];
+      userCtx.setUser(userData.user);
+      userCtx.setSettings(userData.settings);
+      userCtx.setQuizData(userData.quizData);
     } catch (error) {
       Alert.alert(
         'Authentication failed!',
