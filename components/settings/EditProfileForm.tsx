@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { ICredentialsInvalid } from '../auth/AuthForm';
 import CustomButton from '../ui/CustomButton';
 import CustomInput from '../ui/CustomInput';
-import { difficultyData } from '../../constants/difficultyData';
+import { difficultyData, difficultyDataType } from '../../constants/difficultyData';
 import RadioButtons from '../ui/RadioButtons';
 import { UserContext } from '../../store/user-context';
 
@@ -21,7 +21,7 @@ export interface IDataToEdit {
   email: string,
   password: string,
   confirmPassword: string,
-  difficulty?: string
+  difficulty?: difficultyDataType
 }
 
 export default function EditProfileForm(this: any, { isChangeUsername, isChangeEmail, isChangePassword, isChangeDifficulty, onSubmit, credentialsInvalid }: EditProfileFormProps) {
@@ -29,7 +29,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<difficultyDataType | null>(null);
   const [isSecurePassword, setIsSecurePassword] = useState(true);
   const [isSecureConfirmPassword, setIsSecureConfirmPassword] = useState(true);
 
@@ -56,7 +56,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
       email: enteredEmail,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
-      difficulty: selectedDifficulty
+      difficulty: selectedDifficulty!
     });
   }
 

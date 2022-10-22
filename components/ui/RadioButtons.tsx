@@ -1,16 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { Colors } from '../../constants/styles';
+import { difficultyDataType, RadioButtonProps } from '../../constants/difficultyData';
 
-type RadioButtonProps = {
-  key: string;
-  value: string;
-}
+export type RadioButtonsTypes = difficultyDataType;
 
 interface RadioButtonsProps {
-  radioButtons: RadioButtonProps[],
-  defaultValue: string,
-  passValue: (value: string) => void
+  radioButtons: RadioButtonProps<RadioButtonsTypes>[],
+  defaultValue: RadioButtonsTypes,
+  passValue: (value: RadioButtonsTypes) => void
 }
 
 export default function RadioButtons({ radioButtons, defaultValue, passValue }: RadioButtonsProps) {
