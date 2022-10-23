@@ -4,13 +4,18 @@ import { IUserContext } from "../store/user-context";
 import { changeUserPassword, changeUserEmail } from "./auth";
 import { updateUser } from "./http";
 
-export function changeUserName(userData: IUserData, userCtx: IUserContext) {
+function setUserBackendData(userCtx: IUserContext) {
   const userBackendData = {
     ...userCtx.user,
     settings: userCtx.settings,
     quizData: userCtx.quizData
   };
   Reflect.deleteProperty(userBackendData, 'userId');
+  return userBackendData;
+}
+
+export function changeUserName(userData: IUserData, userCtx: IUserContext) {
+  const userBackendData = setUserBackendData(userCtx);
   userBackendData.userName = userData.userName;
 
   updateUser(userCtx.user.userId, userBackendData);
@@ -18,12 +23,7 @@ export function changeUserName(userData: IUserData, userCtx: IUserContext) {
 }
 
 export async function changeEmail(userData: IUserData, authCtx: IAuthContext, userCtx: IUserContext) {
-  const userBackendData = {
-    ...userCtx.user,
-    settings: userCtx.settings,
-    quizData: userCtx.quizData
-  };
-  Reflect.deleteProperty(userBackendData, 'userId');
+  const userBackendData = setUserBackendData(userCtx);
   userBackendData.email = userData.email;
 
   updateUser(userCtx.user.userId, userBackendData);
@@ -33,13 +33,7 @@ export async function changeEmail(userData: IUserData, authCtx: IAuthContext, us
 }
 
 export async function changePassword(userData: IUserData, authCtx: IAuthContext, userCtx: IUserContext) {
-
-  const userBackendData = {
-    ...userCtx.user,
-    settings: userCtx.settings,
-    quizData: userCtx.quizData
-  };
-  Reflect.deleteProperty(userBackendData, 'userId');
+  const userBackendData = setUserBackendData(userCtx);
   userBackendData.password = userData.password;
   userBackendData.date = userData.date;
 
@@ -50,28 +44,15 @@ export async function changePassword(userData: IUserData, authCtx: IAuthContext,
 }
 
 export async function changeDifficulty(userSettingsData: IUserSettingsData, userCtx: IUserContext) {
-
-  const userBackendData = {
-    ...userCtx.user,
-    settings: userCtx.settings,
-    quizData: userCtx.quizData
-  };
-  Reflect.deleteProperty(userBackendData, 'userId');
+  const userBackendData = setUserBackendData(userCtx);
   userBackendData.settings.difficulty = userSettingsData.difficulty;
 
   updateUser(userCtx.user.userId, userBackendData);
-  userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
   userCtx.setSettings(userBackendData.settings);
 }
 
 export async function setTimeGame(value: boolean, userCtx: IUserContext) {
-
-  const userBackendData = {
-    ...userCtx.user,
-    settings: userCtx.settings,
-    quizData: userCtx.quizData
-  };
-  Reflect.deleteProperty(userBackendData, 'userId');
+  const userBackendData = setUserBackendData(userCtx);
   userBackendData.settings.isTimeGame = value;
 
   updateUser(userCtx.user.userId, userBackendData);
@@ -80,13 +61,7 @@ export async function setTimeGame(value: boolean, userCtx: IUserContext) {
 }
 
 export async function changeTimeGame(time: number, userCtx: IUserContext) {
-
-  const userBackendData = {
-    ...userCtx.user,
-    settings: userCtx.settings,
-    quizData: userCtx.quizData
-  };
-  Reflect.deleteProperty(userBackendData, 'userId');
+  const userBackendData = setUserBackendData(userCtx);
   userBackendData.settings.timeOnAnswer = time;
 
   updateUser(userCtx.user.userId, userBackendData);
