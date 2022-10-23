@@ -8,10 +8,15 @@ export interface IUser {
   date: string
 }
 
-export type IUserData = Omit<IUser, "userId">;
+export type IUserData = Omit<IUser, "userId"> & {
+  difficulty: 'medium' | 'easy' | 'hard'
+};
 
 export interface IUserBackendData {
-  user: IUser,
+  email: string,
+  password: string,
+  userName: string,
+  date: string,
   settings: ISettings,
   quizData: IQuizData,
 }

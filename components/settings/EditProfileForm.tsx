@@ -1,24 +1,39 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
-import { ICredentials, ICredentialsInvalid } from './auth/AuthForm';
-import CustomButton from './ui/CustomButton';
-import CustomInput from './ui/CustomInput';
+import React, { useContext, useState } from 'react';
+import { ICredentialsInvalid } from '../auth/AuthForm';
+import CustomButton from '../ui/CustomButton';
+import CustomInput from '../ui/CustomInput';
+import { difficultyData, difficultyDataType } from '../../constants/difficultyData';
+import RadioButtons from '../ui/RadioButtons';
+import { UserContext } from '../../store/user-context';
 
 interface EditProfileFormProps {
   isChangeUsername?: boolean,
   isChangeEmail?: boolean,
   isChangePassword?: boolean,
-  onSubmit: (credentials: ICredentials) => void,
+  isChangeDifficulty?: boolean,
+  onSubmit: (credentials: IDataToEdit) => void,
   credentialsInvalid: ICredentialsInvalid
 }
 
-export default function EditProfileForm(this: any, { isChangeUsername, isChangeEmail, isChangePassword, onSubmit, credentialsInvalid }: EditProfileFormProps) {
+export interface IDataToEdit {
+  userName: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+  difficulty?: difficultyDataType
+}
+
+export default function EditProfileForm(this: any, { isChangeUsername, isChangeEmail, isChangePassword, isChangeDifficulty, onSubmit, credentialsInvalid }: EditProfileFormProps) {
   const [enteredUserName, setEnteredUserName] = useState('');
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<difficultyDataType | null>(null);
   const [isSecurePassword, setIsSecurePassword] = useState(true);
   const [isSecureConfirmPassword, setIsSecureConfirmPassword] = useState(true);
+
+  const userCtx = useContext(UserContext);
 
   const {
     userName: userNameIsInvalid,
@@ -41,6 +56,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
       email: enteredEmail,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
+      difficulty: selectedDifficulty!
     });
   }
 
@@ -56,7 +72,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             isInvalid={userNameIsInvalid}
             secure={false}
             placeholder={'Your username'}
-            source={require('../assets/icons/Icon-user.svg')}
+            source={require('../../assets/icons/Icon-user.svg')}
           />
         )}
         {isChangeEmail &&
@@ -68,7 +84,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
             isInvalid={emailIsInvalid}
             secure={false}
             placeholder={'Your email address'}
-            source={require('../assets/icons/Icon-email.svg')}
+            source={require('../../assets/icons/Icon-email.svg')}
           />
         }
         {isChangePassword && (
@@ -83,7 +99,7 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
               placeholder={'Your password'}
               isPassword
               onUpdateSecure={updateSecurePasswordHandler}
-              source={require('../assets/icons/Icon-password.svg')}
+              source={require('../../assets/icons/Icon-password.svg')}
             />
             <CustomInput
               label="Confirm Password"
@@ -95,9 +111,15 @@ export default function EditProfileForm(this: any, { isChangeUsername, isChangeE
               placeholder={'Confirm password'}
               isPassword
               onUpdateSecure={updateSecureConfirmPasswordHandler}
-              source={require('../assets/icons/Icon-password.svg')}
+              source={require('../../assets/icons/Icon-password.svg')}
             />
           </>
+        )}
+        {isChangeDifficulty && (
+          <RadioButtons
+            passValue={(value) => { setSelectedDifficulty(value) }}
+            defaultValue={userCtx.settings.difficulty} radioButtons={difficultyData}
+          />
         )}
       </View>
       <View style={styles.button}>
@@ -115,4 +137,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 12,
   },
+  radioButtonsContainer: {
+    marginTop: 50,
+  }
 })

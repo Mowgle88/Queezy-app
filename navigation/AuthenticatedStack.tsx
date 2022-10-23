@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { AuthenticatedStackParamList } from './types';
 import MainTabs from './MainTabs';
-import SettingsScreen from '../screens/SettingsScreen';
-import EditProfileScreen from '../screens/EditProfileScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
+import EditProfileScreen from '../screens/settings/EditProfileScreen';
 import QuizDetailsScreen from '../screens/game/QuizDetailsScreen';
 import QuizGameScreen from '../screens/game/QuizGameScreen';
 import QuizCompletedScreen from '../screens/game/QuizCompletedScreen';

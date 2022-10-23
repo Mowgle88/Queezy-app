@@ -1,55 +1,67 @@
-import { IUser, IUserData } from "../models/user";
+import { IUserData } from "../models/user";
+import { IAuthContext } from "../store/auth-context";
+import { IUserContext } from "../store/user-context";
 import { changeUserPassword, changeUserEmail } from "./auth";
 import { updateUser } from "./http";
 
-interface IAuthCtx {
-  token: string;
-  isAuthenticated: boolean;
-  authenticate: (token: string) => void;
-  logout: () => void;
+export function changeUserName(userData: IUserData, userCtx: IUserContext) {
+  const userBackendData = {
+    ...userCtx.user,
+    settings: userCtx.settings,
+    quizData: userCtx.quizData
+  };
+  Reflect.deleteProperty(userBackendData, 'userId');
+  userBackendData.userName = userData.userName;
+
+  updateUser(userCtx.user.userId, userBackendData);
+  userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId })
 }
 
-interface IUserCtx {
-  user: {
-    userId: string,
-    userName: string,
-    email: string,
-    password: string,
-    date: string,
-  },
-  setUser: (userData: IUser) => void,
-  removeUser: () => void;
-}
+export async function changeEmail(userData: IUserData, authCtx: IAuthContext, userCtx: IUserContext) {
+  const userBackendData = {
+    ...userCtx.user,
+    settings: userCtx.settings,
+    quizData: userCtx.quizData
+  };
+  Reflect.deleteProperty(userBackendData, 'userId');
+  userBackendData.email = userData.email;
 
-export function changeUserName(userData: IUserData, userCtx: IUserCtx) {
-  const user = { ...userCtx.user };
-  Reflect.deleteProperty(user, 'userId');
-  user.userName = userData.userName;
-
-  updateUser(userCtx.user.userId, user);
-  userCtx.setUser({ ...user, userId: userCtx.user.userId })
-}
-
-export async function changeEmail(userData: IUserData, authCtx: IAuthCtx, userCtx: IUserCtx) {
-  const user = { ...userCtx.user };
-  Reflect.deleteProperty(user, 'userId');
-  user.email = userData.email;
-
-  updateUser(userCtx.user.userId, user);
-  userCtx.setUser({ ...user, userId: userCtx.user.userId });
-  const token = await changeUserEmail(user.email, authCtx.token);
+  updateUser(userCtx.user.userId, userBackendData);
+  userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
+  const token = await changeUserEmail(userBackendData.email, authCtx.token);
   authCtx.authenticate(token);
 }
 
-export async function changePassword(userData: IUserData, authCtx: IAuthCtx, userCtx: IUserCtx) {
+export async function changePassword(userData: IUserData, authCtx: IAuthContext, userCtx: IUserContext) {
 
-  const user = { ...userCtx.user };
-  Reflect.deleteProperty(user, 'userId');
-  user.password = userData.password;
-  user.date = userData.date;
+  const userBackendData = {
+    ...userCtx.user,
+    settings: userCtx.settings,
+    quizData: userCtx.quizData
+  };
+  Reflect.deleteProperty(userBackendData, 'userId');
+  userBackendData.password = userData.password;
+  userBackendData.date = userData.date;
 
-  updateUser(userCtx.user.userId, user);
-  userCtx.setUser({ ...user, userId: userCtx.user.userId });
-  const token = await changeUserPassword(user.password, authCtx.token);
+  updateUser(userCtx.user.userId, userBackendData);
+  userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
+  const token = await changeUserPassword(userBackendData.password, authCtx.token);
+  authCtx.authenticate(token);
+}
+
+export async function changeDifficulty(userData: IUserData, authCtx: IAuthContext, userCtx: IUserContext) {
+
+  const userBackendData = {
+    ...userCtx.user,
+    settings: userCtx.settings,
+    quizData: userCtx.quizData
+  };
+  Reflect.deleteProperty(userBackendData, 'userId');
+  userBackendData.settings.difficulty = userData.difficulty;
+
+  updateUser(userCtx.user.userId, userBackendData);
+  userCtx.setUser({ ...userBackendData, userId: userCtx.user.userId });
+  userCtx.setSettings(userBackendData.settings);
+  const token = await changeUserPassword(userBackendData.password, authCtx.token);
   authCtx.authenticate(token);
 }

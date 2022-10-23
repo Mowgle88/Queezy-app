@@ -1,19 +1,19 @@
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { Colors } from '../constants/styles';
-import { AuthContext } from '../store/auth-context';
-import EditProfileForm from '../components/EditProfileForm';
-import { ICredentials } from '../components/auth/AuthForm';
-import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../navigation/types';
-import { changeEmail, changePassword, changeUserName } from '../util/editProfile';
+import { Colors } from '../../constants/styles';
+import { AuthContext } from '../../store/auth-context';
+import EditProfileForm, { IDataToEdit } from '../../components/settings/EditProfileForm';
+import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../../navigation/types';
+import { changeDifficulty, changeEmail, changePassword, changeUserName } from '../../util/editProfile';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { UserContext } from '../store/user-context';
+import { UserContext } from '../../store/user-context';
 
 export default function EditProfileScreen() {
 
   const [isChangeUsername, setIsChangeUsername] = useState(false);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
   const [isChangePassword, setIsChangePassword] = useState(false);
+  const [isChangeDifficulty, setIsChangeDifficulty] = useState(false);
 
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     userName: false,
@@ -41,11 +41,14 @@ export default function EditProfileScreen() {
       case 'password':
         setIsChangePassword(true);
         break;
+      case 'difficulty':
+        setIsChangeDifficulty(true);
+        break;
     }
   }, [typeScreen])
 
-  function submitHandler(credentials: ICredentials) {
-    let { userName, email, password, confirmPassword } = credentials;
+  function submitHandler(credentials: IDataToEdit) {
+    let { userName, email, password, confirmPassword, difficulty } = credentials;
 
     userName = userName.trim();
     email = email.trim();
@@ -72,7 +75,13 @@ export default function EditProfileScreen() {
       return;
     }
 
-    const userData = { userName, email, password, date };
+    const userData = {
+      userName,
+      email,
+      password,
+      date,
+      difficulty: difficulty as 'medium' | 'easy' | 'hard'
+    };
 
     switch (typeScreen) {
       case 'profile':
@@ -84,6 +93,9 @@ export default function EditProfileScreen() {
       case 'password':
         changePassword(userData, authCtx, userCtx)
         break;
+      case 'difficulty':
+        changeDifficulty(userData, authCtx, userCtx)
+        break;
     }
     navigation.goBack();
   }
@@ -91,24 +103,27 @@ export default function EditProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
+        <Text style={styles.title}>
+          Change
+          {isChangeUsername && ' username'}
+          {isChangeEmail && ' email'}
+          {isChangePassword && ' password'}
+          {isChangeDifficulty && ' difficulty'}
+        </Text>
         {isChangeUsername &&
-          <>
-            <Text style={styles.title}>Change username</Text>
-            <Text style={styles.text}>Current username: {userCtx.user.userName}</Text>
-          </>
+          <Text style={styles.text}>Current username: {userCtx.user.userName}</Text>
         }
         {isChangeEmail &&
-          <>
-            <Text style={styles.title}>Change email</Text>
-            <Text style={styles.text}>Current email: {userCtx.user.email}</Text>
-          </>
-        }
-        {isChangePassword &&
-          <Text style={styles.title}>Change password</Text>
+          <Text style={styles.text}>Current email: {userCtx.user.email}</Text>
         }
       </View>
-      <EditProfileForm onSubmit={submitHandler} credentialsInvalid={credentialsInvalid}
-        isChangeUsername={isChangeUsername} isChangeEmail={isChangeEmail} isChangePassword={isChangePassword}
+      <EditProfileForm
+        onSubmit={submitHandler}
+        credentialsInvalid={credentialsInvalid}
+        isChangeUsername={isChangeUsername}
+        isChangeEmail={isChangeEmail}
+        isChangePassword={isChangePassword}
+        isChangeDifficulty={isChangeDifficulty}
       />
     </View>
   )
@@ -120,7 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey5,
     paddingHorizontal: 20,
     paddingBottom: 40,
-    // justifyContent: 'space-between'
   },
   textContainer: {
     marginTop: 15,
