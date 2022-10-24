@@ -8,8 +8,16 @@ export interface IUser {
   date: string
 }
 
-export type IUserData = Omit<IUser, "userId"> & {
-  difficulty: 'medium' | 'easy' | 'hard'
+export type IUserData = Omit<IUser, "userId">;
+
+export type IUserSettingsData = {
+  difficulty: 'medium' | 'easy' | 'hard',
+  isTimeGame: boolean,
+  timeOnAnswer: number,
+};
+
+export type IUserQuizData = {
+  points: number
 };
 
 export interface IUserBackendData {
