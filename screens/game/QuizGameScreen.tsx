@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -19,6 +19,10 @@ export default function QuizGameScreen() {
   const answers = [quizzes[index].correctAnswer, ...quizzes[index].incorrectAnswers];
   const correctAnswer = quizzes[index].correctAnswer;
 
+  function pressHandler(answer: string) {
+    Alert.alert(answer, correctAnswer === answer ? 'Yeeees' : "Noooo")
+  }
+
   return (
     <View style={styles.container}>
       <QuizGameHeader points={points} onPress={() => { }} />
@@ -26,7 +30,11 @@ export default function QuizGameScreen() {
         <Text style={styles.title}>QUESTION {index} OF {quizzes.length}</Text>
         <View style={styles.quizContainer}>
           <Text style={styles.question}>{quizzes[index].question}</Text>
-          <AnswersBlock correctAnswer={correctAnswer} answers={answers} quizType={quizType} />
+          <AnswersBlock
+            answers={answers}
+            quizType={quizType}
+            onPress={pressHandler}
+          />
         </View>
       </View>
     </View>

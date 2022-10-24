@@ -4,15 +4,19 @@ import { Colors } from '../../constants/styles';
 
 interface MultipleContentProps {
   answer: string,
+  onPress: (answer: string) => void
 }
 
-export default function MultipleContent({ answer }: MultipleContentProps) {
+export default function MultipleContent({ answer, onPress }: MultipleContentProps) {
   const [isSelected, setIsSelected] = useState(false);
 
   return (
     <Pressable
       style={[styles.answerContainer, isSelected && styles.selectedContainer]}
-      onPress={() => setIsSelected((currentState) => !currentState)}
+      onPress={() => {
+        onPress(answer);
+        setIsSelected((currentState) => !currentState)
+      }}
     >
       <Text style={styles.answer}>{answer}</Text>
     </Pressable>
