@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { QuizGameScreenNavigationProp, QuizGameScreenRouteProp } from '../../navigation/types';
@@ -21,7 +21,7 @@ export default function QuizGameScreen() {
   const quizType = route.params.quizType;
   const quizzes = route.params.quizzesOfThisCategory;
   const answers = [quizzes[index].correctAnswer, ...quizzes[index].incorrectAnswers];
-  const jumbledAnswers = shuffle(answers);
+  const jumbledAnswers = useMemo(() => shuffle(answers), [index]);
   const correctAnswer = quizzes[index].correctAnswer;
 
   function pressHandler(answer: string) {
