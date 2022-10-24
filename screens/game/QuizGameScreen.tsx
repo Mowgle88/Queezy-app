@@ -7,6 +7,7 @@ import { Colors } from '../../constants/styles';
 import QuizGameHeader from '../../components/game/QuizGameHeader';
 import AnswersBlock from '../../components/game/AnswersBlock';
 import QuizGameModal from '../../components/QuizGameModal';
+import { shuffle } from '../../shuffle';
 
 export default function QuizGameScreen() {
   const [points, setPoints] = useState(0);
@@ -20,6 +21,7 @@ export default function QuizGameScreen() {
   const quizType = route.params.quizType;
   const quizzes = route.params.quizzesOfThisCategory;
   const answers = [quizzes[index].correctAnswer, ...quizzes[index].incorrectAnswers];
+  const jumbledAnswers = shuffle(answers);
   const correctAnswer = quizzes[index].correctAnswer;
 
   function pressHandler(answer: string) {
@@ -52,7 +54,7 @@ export default function QuizGameScreen() {
         <View style={styles.quizContainer}>
           <Text style={styles.question}>{quizzes[index].question}</Text>
           <AnswersBlock
-            answers={answers}
+            answers={jumbledAnswers}
             quizType={quizType}
             onPress={pressHandler}
           />
