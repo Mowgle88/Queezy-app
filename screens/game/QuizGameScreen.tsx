@@ -48,7 +48,7 @@ export default function QuizGameScreen() {
         correctAnswer={correctAnswer}
         selectedAnswer={selectedAnswer}
       />
-      <QuizGameHeader points={points} onPress={() => { }} />
+      <QuizGameHeader points={points} onPress={() => { navigation.navigate('Home') }} />
       <View style={styles.innerContainer}>
         <Text style={styles.title}>QUESTION {index} OF {quizzes.length}</Text>
         <View style={styles.quizContainer}>

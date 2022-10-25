@@ -1,4 +1,4 @@
-import { NavigationProp, RouteProp } from "@react-navigation/native";
+import { CompositeNavigationProp, NavigationProp, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { IQuizItem } from "../models/quizData";
 
@@ -58,6 +58,9 @@ export type QuizDetailsScreenNavigationProp = NativeStackNavigationProp<Authenti
 
 export type QuizDetailsScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizDetails'>;
 
-export type QuizGameScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'QuizGame'>;
+export type QuizGameScreenNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<MainStackParamList>,
+  NativeStackNavigationProp<AuthenticatedStackParamList>
+>;
 
 export type QuizGameScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizGame'>;
