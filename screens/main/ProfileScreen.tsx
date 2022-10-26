@@ -13,6 +13,7 @@ export default function ProfileScreen() {
   const [indexIcon, setIndexIcon] = useState(0);
 
   const userCtx = useContext(UserContext);
+  const points = userCtx.quizData.points;
 
   const navigation = useNavigation<ProfileScreenNativeStackProps>();
 
@@ -33,7 +34,7 @@ export default function ProfileScreen() {
             </View>
           </View>
           <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
-          <StatisticsBoard />
+          <StatisticsBoard points={points} />
 
         </View>
       </View>
