@@ -94,6 +94,14 @@ function UserContextProvider({ children }: UserContextProviderProps) {
       userName: '',
       date: ''
     });
+    setSettingsData({
+      difficulty: 'medium',
+      isTimeGame: false,
+      timeOnAnswer: 60
+    });
+    setUserQuizData({
+      points: 0
+    })
     AsyncStorage.removeItem('userData');
     AsyncStorage.removeItem('settingsData');
     AsyncStorage.removeItem('quizData');
