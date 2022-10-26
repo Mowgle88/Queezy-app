@@ -1,5 +1,5 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 
 import IconButton from '../../components/ui/IconButton';
 import { Colors } from '../../constants/styles';
@@ -8,14 +8,29 @@ import { avatarSource } from '../../constants/avatar';
 import StatisticsBoard from '../../components/StatisticsBoard';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileScreenNativeStackProps } from '../../navigation/types';
+import { fetchUsers } from '../../util/http';
 
 export default function ProfileScreen() {
   const [indexIcon, setIndexIcon] = useState(0);
+  const [worldPrank, setWorldPrank] = useState(0);
 
   const userCtx = useContext(UserContext);
   const points = userCtx.quizData.points;
 
   const navigation = useNavigation<ProfileScreenNativeStackProps>();
+
+  useLayoutEffect(() => {
+    async function fetchUsersData() {
+      const usersData = await fetchUsers();
+      const sortedUsersData = usersData.sort((prev, next) => next.quizData.points - prev.quizData.points);
+      sortedUsersData.forEach((userData, index) => {
+        if (userData.user.userId === userCtx.user.userId) {
+          setWorldPrank(index + 1);
+        }
+      })
+    }
+    fetchUsersData();
+  })
 
   return (
     <ImageBackground style={styles.imageBgContainer} source={require('../../assets/Profile-background.png')}>
@@ -34,7 +49,7 @@ export default function ProfileScreen() {
             </View>
           </View>
           <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
-          <StatisticsBoard points={points} />
+          <StatisticsBoard points={points} worldPrank={worldPrank} />
 
         </View>
       </View>

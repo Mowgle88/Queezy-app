@@ -6,10 +6,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Colors } from '../constants/styles';
 
 interface StatisticsBoardProps {
-  points: number
+  points: number,
+  worldPrank: number
 }
 
-export default function StatisticsBoard({ points }: StatisticsBoardProps) {
+export default function StatisticsBoard({ points, worldPrank }: StatisticsBoardProps) {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
@@ -26,7 +27,7 @@ export default function StatisticsBoard({ points }: StatisticsBoardProps) {
       <View style={styles.section}>
         <Icon name="globe-outline" size={25} color='white'></Icon>
         <Text style={styles.text}>WORLD RANK</Text>
-        <Text style={styles.count}>#1</Text>
+        <Text style={styles.count}>#{worldPrank}</Text>
       </View>
       <LinearGradient
         colors={['#ffffff1a', '#ffffff80', '#ffffff1a']}
