@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { QuizGameScreenNavigationProp, QuizGameScreenRouteProp } from '../../navigation/types';
@@ -8,12 +8,18 @@ import QuizGameHeader from '../../components/game/QuizGameHeader';
 import AnswersBlock from '../../components/game/AnswersBlock';
 import QuizGameModal from '../../components/QuizGameModal';
 import { shuffle } from '../../shuffle';
+import CountDown from '../../components/CountDown';
+import { UserContext } from '../../store/user-context';
 
 export default function QuizGameScreen() {
   const [points, setPoints] = useState(0);
   const [index, seIndex] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState('');
+
+  const userCtx = useContext(UserContext);
+  const isTimeGame = userCtx.settings.isTimeGame;
+  const timeOnAnswer = userCtx.settings.timeOnAnswer;
 
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
   const route = useRoute<QuizGameScreenRouteProp>();
@@ -52,6 +58,14 @@ export default function QuizGameScreen() {
       <View style={styles.innerContainer}>
         <Text style={styles.title}>QUESTION {index} OF {quizzes.length}</Text>
         <View style={styles.quizContainer}>
+          {isTimeGame && (
+            <View style={styles.countDownContainer}>
+              <CountDown
+                timeOnAnswer={timeOnAnswer}
+                endGame={() => { navigation.navigate('QuizCompleted') }}
+              />
+            </View>
+          )}
           <Text style={styles.question}>{quizzes[index].question}</Text>
           <AnswersBlock
             answers={jumbledAnswers}
@@ -76,6 +90,9 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.white,
     borderRadius: 32,
+  },
+  countDownContainer: {
+    alignItems: 'center',
   },
   title: {
     marginVertical: 8,
