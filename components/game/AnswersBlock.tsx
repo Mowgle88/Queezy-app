@@ -8,15 +8,19 @@ import CustomButton from '../ui/CustomButton';
 
 interface AnswersBlockProps {
   answers: string[],
-  correctAnswer: string,
-  quizType: string
+  quizType: string,
+  onPress: (answer: string) => void
 }
 
-export default function AnswersBlock({ answers, correctAnswer, quizType }: AnswersBlockProps) {
+export default function AnswersBlock({ answers, quizType, onPress }: AnswersBlockProps) {
   return (
     <View>
       {quizType === 'Multiple' && answers.map((answer) => (
-        <MultipleContent answer={answer} key={answer} />
+        <MultipleContent
+          onPress={(answer) => { onPress(answer) }}
+          answer={answer}
+          key={answer}
+        />
       ))}
       {quizType === 'TrueOrFalse' && (
         <TrueOrFalseContent answer={answers[0]} />
