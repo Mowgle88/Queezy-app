@@ -9,10 +9,16 @@ import StatisticsBoard from '../../components/StatisticsBoard';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileScreenNativeStackProps } from '../../navigation/types';
 import { fetchUsers } from '../../util/http';
+import BadgeBoard from '../../components/BadgeBoard';
 
 export default function ProfileScreen() {
   const [indexIcon, setIndexIcon] = useState(0);
   const [worldPrank, setWorldPrank] = useState(0);
+  const [isAchieved_1, setIsAchieved_1] = useState(false);
+  const [isAchieved_2, setIsAchieved_2] = useState(false);
+  const [isAchieved_3, setIsAchieved_3] = useState(false);
+  const [isAchieved_4, setIsAchieved_4] = useState(false);
+  const [isAchieved_5, setIsAchieved_5] = useState(false);
 
   const userCtx = useContext(UserContext);
   const points = userCtx.quizData.points;
@@ -50,7 +56,13 @@ export default function ProfileScreen() {
           </View>
           <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
           <StatisticsBoard points={points} worldPrank={worldPrank} />
-
+          <BadgeBoard
+            isAchieved_1={isAchieved_1}
+            isAchieved_2={isAchieved_2}
+            isAchieved_3={isAchieved_3}
+            isAchieved_4={isAchieved_4}
+            isAchieved_5={isAchieved_5}
+          />
         </View>
       </View>
     </ImageBackground>
