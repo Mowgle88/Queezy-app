@@ -48,7 +48,7 @@ export async function changeDifficulty(userSettingsData: IUserSettingsData, user
   userBackendData.settings.difficulty = userSettingsData.difficulty;
 
   updateUser(userCtx.user.userId, userBackendData);
-  userCtx.setSettings(userBackendData.settings);
+  userCtx.setSettings(userSettingsData);
 }
 
 export async function setTimeGame(value: boolean, userCtx: IUserContext) {
