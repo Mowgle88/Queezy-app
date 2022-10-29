@@ -1,6 +1,7 @@
 import { CompositeNavigationProp, NavigationProp, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { IQuizItem } from "../models/quizData";
+import { IAnswersData } from "../screens/game/QuizGameScreen";
 
 export type RootStackParamList = {
   AuthStack: AuthStackParamList,
@@ -28,8 +29,15 @@ export type AuthenticatedStackParamList = {
     quizType: string,
     quizzesOfThisCategory: IQuizItem[]
   },
-  QuizCompleted: undefined,
-  ReviewQuiz: undefined,
+  QuizCompleted: {
+    points: number,
+    correctAnswers: IAnswersData[],
+    incorrectAnswers: IAnswersData[]
+  },
+  ReviewQuiz: {
+    correctAnswers: IAnswersData[],
+    incorrectAnswers: IAnswersData[]
+  },
 };
 
 export type MainStackParamList = {
@@ -64,3 +72,6 @@ export type QuizGameScreenNavigationProp = CompositeNavigationProp<
 >;
 
 export type QuizGameScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizGame'>;
+
+export type QuizCompletedScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizCompleted'>;
+

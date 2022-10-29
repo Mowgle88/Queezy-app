@@ -1,27 +1,60 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Colors } from '../../constants/styles';
 import CustomButton from '../../components/ui/CustomButton';
-import TitleValueBlock from '../../components/titleValueBlock';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { QuizCompletedScreenRouteProp, QuizGameScreenNavigationProp } from '../../navigation/types';
+import TitleValueBlock from '../../components/TitleValueBlock';
 
 export default function QuizCompletedScreen() {
+
+  const navigation = useNavigation<QuizGameScreenNavigationProp>();
+  const route = useRoute<QuizCompletedScreenRouteProp>();
+
+  const points = route.params.points;
+  const correctAnswers = route.params.correctAnswers;
+  const incorrectAnswers = route.params.incorrectAnswers;
+  const numberOfQuestions = correctAnswers.length + incorrectAnswers.length;
+  const completion = correctAnswers.length / numberOfQuestions * 100;
+
+  const title = completion < 20 ? 'Very sad...' :
+    completion >= 20 && completion < 50 ? 'Can be better' :
+      completion >= 50 && completion < 80 ? 'Good Job!' :
+        completion >= 80 && completion < 100 ? 'Excellent!!' : 'Perfect!!!';
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: title,
+    })
+  }, [points, navigation])
+
+  function goToStatistics() {
+    navigation.navigate('ReviewQuiz', {
+      correctAnswers: correctAnswers,
+      incorrectAnswers: incorrectAnswers
+    })
+  }
+
+  function exitTheGame() {
+    navigation.navigate('Home');
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Image source={require('../../assets/Illustration-5.png')} />
-        <Text style={styles.text}>You get +80 Quiz Points</Text>
-        <CustomButton style={styles.button} onPress={() => { }}>Check Correct Answer</CustomButton>
+        <Text style={styles.text}>You get +{points} Quiz Points</Text>
+        <CustomButton style={styles.button} onPress={goToStatistics}>Check Correct Answer</CustomButton>
       </View>
       <View style={styles.resultContainer}>
-        <TitleValueBlock title={'COMPLETION'} value={'80%'} />
+        <TitleValueBlock title={'COMPLETION'} value={`${completion}%`} />
         <View style={styles.answerContainer}>
-          <TitleValueBlock title={'CORRECT ANSWER'} value={'7 questions'} />
-          <TitleValueBlock title={'INCORRECT ANSWER'} value={'1 questions'} />
+          <TitleValueBlock title={'CORRECT ANSWER'} value={`${correctAnswers.length} questions`} />
+          <TitleValueBlock title={'INCORRECT ANSWER'} value={`${incorrectAnswers.length} questions`} />
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton style={styles.doneButton} onPress={() => { }}>Done</CustomButton>
+        <CustomButton style={styles.doneButton} onPress={exitTheGame}>Done</CustomButton>
       </View>
     </View>
   )
