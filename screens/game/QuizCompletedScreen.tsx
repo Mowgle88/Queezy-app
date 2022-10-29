@@ -1,15 +1,19 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { Colors } from '../../constants/styles';
 import CustomButton from '../../components/ui/CustomButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { QuizCompletedScreenRouteProp, QuizGameScreenNavigationProp } from '../../navigation/types';
 import TitleValueBlock from '../../components/TitleValueBlock';
+import { UserContext } from '../../store/user-context';
+import { setPoints } from '../../util/editProfile';
 
 export default function QuizCompletedScreen() {
 
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
   const route = useRoute<QuizCompletedScreenRouteProp>();
+
+  const userCtx = useContext(UserContext);
 
   const points = route.params.points;
   const correctAnswers = route.params.correctAnswers;
@@ -37,6 +41,7 @@ export default function QuizCompletedScreen() {
 
   function exitTheGame() {
     navigation.navigate('Home');
+    setPoints(points, userCtx);
   }
 
   return (

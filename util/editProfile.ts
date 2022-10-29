@@ -67,3 +67,11 @@ export async function changeTimeGame(time: number, userCtx: IUserContext) {
   updateUser(userCtx.user.userId, userBackendData);
   userCtx.setSettings(userBackendData.settings);
 }
+
+export async function setPoints(points: number, userCtx: IUserContext) {
+  const userBackendData = setUserBackendData(userCtx);
+  userBackendData.quizData.points = userBackendData.quizData.points + points;
+
+  updateUser(userCtx.user.userId, userBackendData);
+  userCtx.setSettings(userBackendData.settings);
+}
