@@ -5,20 +5,24 @@ import { Colors } from '../constants/styles';
 
 interface Counter {
   number: number,
-  changeTime: (time: number) => void,
+  step: number,
+  maxNumber?: number,
+  changeNumber: (count: number) => void,
 }
 
-export default function Counter({ number, changeTime }: Counter) {
+export default function Counter({ number, step, maxNumber = 300, changeNumber }: Counter) {
   let [count, setCount] = useState(number);
 
   function increment() {
-    setCount(count += 30);
-    changeTime(count)
+    if (count < maxNumber) {
+      setCount(count += step);
+      changeNumber(count)
+    }
   }
   function decrement() {
     if (count > 0) {
-      setCount(count -= 30);
-      changeTime(count)
+      setCount(count -= step);
+      changeNumber(count)
     }
   }
   return (
