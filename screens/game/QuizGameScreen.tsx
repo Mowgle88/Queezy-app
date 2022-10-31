@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useMemo, useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 
 import { QuizGameScreenNavigationProp, QuizGameScreenRouteProp } from '../../navigation/types';
 import { Colors } from '../../constants/styles';
@@ -11,28 +11,47 @@ import { shuffle } from '../../shuffle';
 import CountDown from '../../components/CountDown';
 import { UserContext } from '../../store/user-context';
 
+export interface IAnswersData {
+  id: string,
+  question: string,
+  correctAnswer: string,
+  selectedAnswer: string
+}
+
 export default function QuizGameScreen() {
   const [points, setPoints] = useState(0);
-  const [index, seIndex] = useState(1);
+  const [index, seIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [correctAnswers, setCorrectAnswers] = useState<IAnswersData[]>([]);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<IAnswersData[]>([]);
 
   const userCtx = useContext(UserContext);
-  const isTimeGame = userCtx.settings.isTimeGame;
+  let isTimeGame = userCtx.settings.isTimeGame;
   const timeOnAnswer = userCtx.settings.timeOnAnswer;
 
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
   const route = useRoute<QuizGameScreenRouteProp>();
+  const isFocused = useIsFocused();
 
   const quizType = route.params.quizType;
-  const quizzes = route.params.quizzesOfThisCategory;
+  const quizzes = route.params.quizzesOfThisCategory.slice(0, 10);
   const answers = [quizzes[index].correctAnswer, ...quizzes[index].incorrectAnswers];
   const jumbledAnswers = useMemo(() => shuffle(answers), [index]);
   const correctAnswer = quizzes[index].correctAnswer;
 
   function pressHandler(answer: string) {
+    const answersData = {
+      id: quizzes[index].id,
+      question: quizzes[index].question,
+      correctAnswer: correctAnswer,
+      selectedAnswer: answer
+    }
     if (correctAnswer === answer) {
-      setPoints((prevState) => prevState + 10)
+      setPoints((prevState) => prevState + 10);
+      setCorrectAnswers((prevState) => [...prevState, { ...answersData }])
+    } else {
+      setIncorrectAnswers((prevState) => [...prevState, { ...answersData }])
     }
     setModalVisible((currentModalIsVisible) => !currentModalIsVisible);
     setSelectedAnswer(answer);
@@ -40,7 +59,19 @@ export default function QuizGameScreen() {
 
   function goToNextQuestion() {
     setModalVisible((currentModalIsVisible) => !currentModalIsVisible);
-    seIndex((prevState) => prevState + 1)
+    if (index === quizzes.length - 1) {
+      finishTheGame();
+    } else {
+      seIndex((prevState) => prevState + 1);
+    }
+  }
+
+  function finishTheGame() {
+    navigation.navigate('QuizCompleted', {
+      points: points,
+      correctAnswers: correctAnswers,
+      incorrectAnswers: incorrectAnswers
+    })
   }
 
   return (
@@ -48,7 +79,7 @@ export default function QuizGameScreen() {
       <QuizGameModal
         visible={modalVisible}
         onPass={goToNextQuestion}
-        index={index}
+        index={index + 1}
         numberOfQuizzes={quizzes.length}
         question={quizzes[index].question}
         correctAnswer={correctAnswer}
@@ -56,13 +87,13 @@ export default function QuizGameScreen() {
       />
       <QuizGameHeader points={points} onPress={() => { navigation.navigate('Home') }} />
       <View style={styles.innerContainer}>
-        <Text style={styles.title}>QUESTION {index} OF {quizzes.length}</Text>
+        <Text style={styles.title}>QUESTION {index + 1} OF {quizzes.length}</Text>
         <View style={styles.quizContainer}>
-          {isTimeGame && (
+          {isTimeGame && isFocused && (
             <View style={styles.countDownContainer}>
               <CountDown
                 timeOnAnswer={timeOnAnswer}
-                endGame={() => { navigation.navigate('QuizCompleted') }}
+                finishTheGame={finishTheGame}
               />
             </View>
           )}

@@ -4,10 +4,10 @@ import { Colors } from '../constants/styles';
 
 interface CountDownProps {
   timeOnAnswer: number,
-  endGame: () => void
+  finishTheGame: () => void
 }
 
-export default function CountDown({ timeOnAnswer, endGame }: CountDownProps) {
+export default function CountDown({ timeOnAnswer, finishTheGame }: CountDownProps) {
   const minutes = Math.floor(timeOnAnswer / 60);
   const seconds = timeOnAnswer % 60;
 
@@ -15,7 +15,8 @@ export default function CountDown({ timeOnAnswer, endGame }: CountDownProps) {
 
   function tick() {
     if (m === 0 && s === 0) {
-      endGame();
+      finishTheGame();
+      return;
     } else if (s == 0) {
       setTime([m - 1, 59]);
     } else {

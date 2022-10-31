@@ -6,7 +6,7 @@ import { Colors } from '../../constants/styles';
 import { UserContext } from '../../store/user-context';
 import { avatarSource } from '../../constants/avatar';
 import StatisticsBoard from '../../components/StatisticsBoard';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ProfileScreenNativeStackProps } from '../../navigation/types';
 import { fetchUsers } from '../../util/http';
 import BadgeBoard from '../../components/BadgeBoard';
@@ -19,6 +19,8 @@ export default function ProfileScreen() {
   const [isAchieved_3, setIsAchieved_3] = useState(false);
   const [isAchieved_4, setIsAchieved_4] = useState(false);
   const [isAchieved_5, setIsAchieved_5] = useState(false);
+
+  const isFocused = useIsFocused();
 
   const userCtx = useContext(UserContext);
   const points = userCtx.quizData.points;
@@ -36,7 +38,7 @@ export default function ProfileScreen() {
       })
     }
     fetchUsersData();
-  })
+  }, [isFocused])
 
   return (
     <ImageBackground style={styles.imageBgContainer} source={require('../../assets/Profile-background.png')}>
