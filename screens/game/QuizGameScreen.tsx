@@ -35,7 +35,8 @@ export default function QuizGameScreen() {
   const isFocused = useIsFocused();
 
   const quizType = route.params.quizType;
-  const quizzes = route.params.quizzesOfThisCategory.slice(0, 10);
+  const numberOfQuastions = route.params.numberOfQuastions;
+  const quizzes = route.params.quizzesOfThisCategory.slice(0, numberOfQuastions);
   const answers = [quizzes[index].correctAnswer, ...quizzes[index].incorrectAnswers];
   const jumbledAnswers = useMemo(() => shuffle(answers), [index]);
   const correctAnswer = quizzes[index].correctAnswer;

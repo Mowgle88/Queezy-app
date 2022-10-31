@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SettingsScreenNativeStackProps } from '../../navigation/types';
 import { UserContext } from '../../store/user-context';
 import { changeTimeGame, setTimeGame } from '../../util/editProfile';
+import CounterBlock from '../../components/CounterBlock';
 
 export default function SettingsScreen() {
 
@@ -31,8 +32,8 @@ export default function SettingsScreen() {
     setTimeGame(value, userCtx);
   }
 
-  function changeTime(time: number) {
-    changeTimeGame(time, userCtx);
+  function changeTime(count: number) {
+    changeTimeGame(count, userCtx);
   }
 
   function onLogoutHandler() {
@@ -75,12 +76,12 @@ export default function SettingsScreen() {
         </View>
       </View>
       {isTimeGame &&
-        <View style={[styles.timeGameContainer, styles.timeToAnswerContainer]}>
-          <Text style={styles.switchTitle}>Time to answer</Text>
-          <View>
-            <Counter number={timeOnAnswer} changeTime={changeTime} />
-          </View>
-        </View>
+        <CounterBlock
+          title={'Time to answer'}
+          number={timeOnAnswer}
+          step={30}
+          changeNumber={changeTime}
+        />
       }
       <SettingItem
         title={'Change Difficulty'}
@@ -120,9 +121,6 @@ const styles = StyleSheet.create({
   },
   switchContainer: {
     flexDirection: 'row'
-  },
-  timeToAnswerContainer: {
-    marginTop: 10,
   },
   buttonContainer: {
     marginTop: 80

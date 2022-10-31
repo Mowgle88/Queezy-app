@@ -27,7 +27,8 @@ export type AuthenticatedStackParamList = {
   },
   QuizGame: {
     quizType: string,
-    quizzesOfThisCategory: IQuizItem[]
+    quizzesOfThisCategory: IQuizItem[],
+    numberOfQuastions: number
   },
   QuizCompleted: {
     points: number,
