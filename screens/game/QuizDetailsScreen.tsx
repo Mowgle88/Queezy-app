@@ -1,10 +1,11 @@
 import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import QuizDetalsContent from '../../components/QuizDetalsContent';
 import QuizTypesModal from '../../components/QuizTypesModal';
 import { QuizDetailsScreenNavigationProp, QuizDetailsScreenRouteProp } from '../../navigation/types';
+import { shuffle } from '../../shuffle';
 
 export default function QuizDetailsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,9 +25,11 @@ export default function QuizDetailsScreen() {
   }
 
   function selectType(quizType: string) {
+    const mixedQuizzes = shuffle(quizzes);
+
     navigation.navigate('QuizGame', {
       quizType: quizType,
-      quizzesOfThisCategory: quizzes,
+      quizzesOfThisCategory: mixedQuizzes,
       numberOfQuastions: numberOfQuastions
     })
     setModalVisible(false);
