@@ -73,5 +73,5 @@ export async function setPoints(points: number, userCtx: IUserContext) {
   userBackendData.quizData.points = userBackendData.quizData.points + points;
 
   updateUser(userCtx.user.userId, userBackendData);
-  userCtx.setSettings(userBackendData.settings);
+  userCtx.setQuizData(userBackendData.quizData);
 }
