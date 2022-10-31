@@ -53,7 +53,12 @@ export default function AuthenticatedStack() {
         },
         headerShadowVisible: false,
       }} />
-      <Stack.Screen name="ReviewQuiz" component={ReviewQuizScreen} />
+      <Stack.Screen name="ReviewQuiz" component={ReviewQuizScreen} options={{
+        title: 'Review Answers',
+        headerBackVisible: false,
+        headerTitleAlign: 'center',
+        headerShadowVisible: false,
+      }} />
     </Stack.Navigator>
   );
 }
