@@ -8,6 +8,7 @@ import { QuizDetailsScreenNavigationProp, QuizDetailsScreenRouteProp } from '../
 
 export default function QuizDetailsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [numberOfQuastions, setNumberOfQuastions] = useState(10);
 
   const { width } = useWindowDimensions();
 
@@ -25,7 +26,8 @@ export default function QuizDetailsScreen() {
   function selectType(quizType: string) {
     navigation.navigate('QuizGame', {
       quizType: quizType,
-      quizzesOfThisCategory: quizzes
+      quizzesOfThisCategory: quizzes,
+      numberOfQuastions: numberOfQuastions
     })
     setModalVisible(false);
   }
@@ -45,8 +47,10 @@ export default function QuizDetailsScreen() {
         <QuizDetalsContent
           title={title}
           number={quizzes ? quizzes.length : 0}
+          initialNumber={numberOfQuastions}
           difficulty={difficulty}
           onPress={() => setModalVisible(true)}
+          changeNumber={(count) => { setNumberOfQuastions(count) }}
         />
       </View>
     </ImageBackground>

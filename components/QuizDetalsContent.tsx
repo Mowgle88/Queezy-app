@@ -4,15 +4,18 @@ import { Colors } from '../constants/styles';
 import LinearGradient from 'react-native-linear-gradient';
 import VectorImage from 'react-native-vector-image';
 import CustomButton from './ui/CustomButton';
+import CounterBlock from './CounterBlock';
 
 interface QuizDetalsContentProps {
   title: string,
   number: number,
+  initialNumber: number,
   difficulty: 'easy' | 'medium' | 'hard',
-  onPress: () => void
+  onPress: () => void,
+  changeNumber: (count: number) => void,
 }
 
-export default function QuizDetalsContent({ title, number, difficulty, onPress }: QuizDetalsContentProps) {
+export default function QuizDetalsContent({ title, number, initialNumber, difficulty, onPress, changeNumber }: QuizDetalsContentProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -41,6 +44,12 @@ export default function QuizDetalsContent({ title, number, difficulty, onPress }
         <Image source={require('../assets/categories/Icon-TypeAnswer-small.png')} />
         <Image source={require('../assets/categories/Icon-Checkbox-small.png')} />
       </View>
+      <CounterBlock
+        title={'Number of questions'}
+        number={initialNumber}
+        step={1}
+        maxNumber={number}
+        changeNumber={changeNumber} />
       <View style={styles.buttonContainer}>
         <CustomButton onPress={onPress}>Play Quiz</CustomButton>
       </View>
@@ -97,6 +106,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   buttonContainer: {
-    marginTop: 50,
+    marginTop: 10,
   }
 })
