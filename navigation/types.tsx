@@ -75,3 +75,7 @@ export type QuizGameScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'Qu
 
 export type QuizCompletedScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'QuizCompleted'>;
 
+export type ReviewQuizScreenNavigationProp = NativeStackNavigationProp<AuthenticatedStackParamList, 'ReviewQuiz'>;
+
+export type ReviewQuizScreenRouteProp = RouteProp<AuthenticatedStackParamList, 'ReviewQuiz'>;
+
