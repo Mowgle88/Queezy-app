@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, Animated, StyleSheet, Text, View } from 'react-native';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
@@ -60,6 +60,25 @@ export default function HomeScreen() {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
+  const rightPosition = useRef(new Animated.Value(350)).current;
+  const leftPosition = useRef(new Animated.Value(-350)).current;
+
+  const translateX = rightPosition.interpolate({ inputRange: [0, 175], outputRange: [0, 350] });
+  const opacity = rightPosition.interpolate({ inputRange: [0, 175], outputRange: [1, 0.1] });
+  const translateX2 = leftPosition.interpolate({ inputRange: [0, 175], outputRange: [0, 350] });
+  const opacity2 = leftPosition.interpolate({ inputRange: [0, 175], outputRange: [1, 0.1] });
+
+  useEffect(() => {
+    const startAnimate = () => {
+      const config = { toValue: 0, useNativeDriver: true, duration: 1000 };
+      Animated.parallel([
+        Animated.timing(rightPosition, config),
+        Animated.timing(leftPosition, config)
+      ]).start()
+    }
+    startAnimate();
+  }, []);
+
   const snapPoints = useMemo(() => ['40%', '85%'], []);
 
   // const handleSheetChanges = useCallback((index: number) => {
@@ -95,8 +114,12 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <GreetingBoard userName={userCtx.user.userName} />
-      <RecentQuizBoard />
-      <FeaturedBoard />
+      <Animated.View style={{ transform: [{ translateX }], opacity }} >
+        <RecentQuizBoard />
+      </Animated.View>
+      <Animated.View style={{ transform: [{ translateX: translateX2 }], opacity: opacity2 }} >
+        <FeaturedBoard />
+      </Animated.View>
       <BottomSheet
         ref={bottomSheetRef}
         index={0}
