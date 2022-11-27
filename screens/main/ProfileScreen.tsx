@@ -1,5 +1,5 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useLayoutEffect, useState } from 'react';
+import { Animated, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import IconButton from '../../components/ui/IconButton';
 import { Colors } from '../../constants/styles';
@@ -40,6 +40,21 @@ export default function ProfileScreen() {
     fetchUsersData();
   }, [isFocused])
 
+  const valueOfScale = useRef(new Animated.Value(0)).current;
+  const valueOfRotate = useRef(new Animated.Value(0)).current;
+
+  const rotate = valueOfRotate.interpolate({ inputRange: [0, 1], outputRange: ["0deg", "360deg"], });
+
+  useEffect(() => {
+    const startAnimate = () => {
+      Animated.parallel([
+        Animated.timing(valueOfScale, { toValue: 1, useNativeDriver: true, duration: 1000 }),
+        Animated.timing(valueOfRotate, { toValue: 1, useNativeDriver: true, duration: 1000 })
+      ]).start()
+    }
+    startAnimate();
+  }, []);
+
   return (
     <ImageBackground style={styles.imageBgContainer} source={require('../../assets/Profile-background.png')}>
       <View style={styles.iconButton}>
@@ -57,13 +72,17 @@ export default function ProfileScreen() {
             </View>
           </View>
           <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
-          <StatisticsBoard points={points} worldPrank={worldPrank} />
+          <Animated.View style={{ transform: [{ scaleX: valueOfScale }] }} >
+            <StatisticsBoard points={points} worldPrank={worldPrank} />
+          </Animated.View>
           <BadgeBoard
             isAchieved_1={isAchieved_1}
             isAchieved_2={isAchieved_2}
             isAchieved_3={isAchieved_3}
             isAchieved_4={isAchieved_4}
             isAchieved_5={isAchieved_5}
+            rotate={rotate}
+            valueOfScale={valueOfScale}
           />
         </View>
       </View>

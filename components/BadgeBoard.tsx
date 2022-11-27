@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Animated } from 'react-native';
 import React from 'react';
 
 import { badgeSource } from '../constants/badges';
@@ -9,10 +9,21 @@ interface BadgeBoardProps {
   isAchieved_3: boolean,
   isAchieved_4: boolean,
   isAchieved_5: boolean,
+  valueOfScale: Animated.Value,
+  rotate: Animated.AnimatedInterpolation<string | number>
 }
 
 export default function BadgeBoard(props: BadgeBoardProps) {
-  const { isAchieved_1, isAchieved_2, isAchieved_3, isAchieved_4, isAchieved_5 } = props;
+  const {
+    isAchieved_1,
+    isAchieved_2,
+    isAchieved_3,
+    isAchieved_4,
+    isAchieved_5,
+    valueOfScale,
+    rotate
+  } = props;
+
   const {
     defaultBadge,
     achievement_1,
@@ -22,26 +33,28 @@ export default function BadgeBoard(props: BadgeBoardProps) {
     achievement_5
   } = badgeSource;
 
+  const animationStyles = { transform: [{ scale: valueOfScale }, { rotate: rotate }] };
+
   return (
     <>
       <View style={styles.row}>
-        <View style={styles.container}>
+        <Animated.View style={[styles.container, animationStyles]}>
           <Image source={isAchieved_1 ? achievement_1 : defaultBadge} />
-        </View>
-        <View style={styles.container}>
+        </Animated.View>
+        <Animated.View style={[styles.container, animationStyles]}>
           <Image source={isAchieved_2 ? achievement_2 : defaultBadge} />
-        </View>
-        <View style={styles.container}>
+        </Animated.View>
+        <Animated.View style={[styles.container, animationStyles]}>
           <Image source={isAchieved_3 ? achievement_3 : defaultBadge} />
-        </View>
+        </Animated.View>
       </View>
       <View style={styles.row}>
-        <View style={styles.container}>
+        <Animated.View style={[styles.container, animationStyles]}>
           <Image source={isAchieved_4 ? achievement_4 : defaultBadge} />
-        </View>
-        <View style={styles.container}>
+        </Animated.View>
+        <Animated.View style={[styles.container, animationStyles]}>
           <Image source={isAchieved_5 ? achievement_5 : defaultBadge} />
-        </View>
+        </Animated.View>
       </View>
     </>
   )
