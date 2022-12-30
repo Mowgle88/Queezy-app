@@ -6,6 +6,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStack from './AuthStack';
 import AuthenticatedStack from './AuthenticatedStack';
+import Toast from 'react-native-toast-message';
+import toastConfig from '../config/toast';
 
 export default function Root() {
   const [isTryingLogin, setIsTryingLogin] = useState(false);
@@ -38,6 +40,7 @@ export default function Root() {
   return (
     <NavigationContainer>
       {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+      <Toast config={toastConfig} />
     </NavigationContainer>
   );
 }

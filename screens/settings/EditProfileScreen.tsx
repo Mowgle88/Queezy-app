@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { Colors } from '../../constants/styles';
 import { AuthContext } from '../../store/auth-context';
@@ -7,6 +7,7 @@ import { EditProfileScreenNavigationProp, EditProfileScreenRouteProp } from '../
 import { changeDifficulty, changeEmail, changePassword, changeUserName } from '../../util/editProfile';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../store/user-context';
+import Toast from 'react-native-toast-message';
 
 export default function EditProfileScreen() {
 
@@ -65,7 +66,10 @@ export default function EditProfileScreen() {
     const isValidPassword = isChangePassword && !passwordIsValid || !passwordsAreEqual;
 
     if (isValidUserName || isValidEmail || isValidPassword) {
-      Alert.alert('Invalid input', 'Please check your entered credentials.');
+      Toast.show({
+        type: "error",
+        text1: `Please check your entered credentials`,
+      });
       setCredentialsInvalid({
         userName: !userNameIsValid,
         email: !emailIsValid,
@@ -103,6 +107,13 @@ export default function EditProfileScreen() {
         break;
     }
     navigation.goBack();
+
+    const valueChange = userName ? 'Username' : email ? 'Email' : password ? 'Password' : 'Difficulty';
+
+    Toast.show({
+      type: "success",
+      text1: `${valueChange} changed successfully`,
+    });
   }
 
   return (
