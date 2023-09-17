@@ -1,16 +1,16 @@
-import { StyleSheet, View, Image, Animated } from 'react-native';
+import {StyleSheet, View, Image, Animated} from 'react-native';
 import React from 'react';
 
-import { badgeSource } from '../constants/badges';
+import {badgeSource} from '../constants/badges';
 
 interface BadgeBoardProps {
-  isAchieved_1: boolean,
-  isAchieved_2: boolean,
-  isAchieved_3: boolean,
-  isAchieved_4: boolean,
-  isAchieved_5: boolean,
-  valueOfScale: Animated.Value,
-  rotate: Animated.AnimatedInterpolation<string | number>
+  isAchieved_1: boolean;
+  isAchieved_2: boolean;
+  isAchieved_3: boolean;
+  isAchieved_4: boolean;
+  isAchieved_5: boolean;
+  valueOfScale: Animated.Value;
+  rotate: Animated.AnimatedInterpolation<string | number>;
 }
 
 export default function BadgeBoard(props: BadgeBoardProps) {
@@ -21,7 +21,7 @@ export default function BadgeBoard(props: BadgeBoardProps) {
     isAchieved_4,
     isAchieved_5,
     valueOfScale,
-    rotate
+    rotate,
   } = props;
 
   const {
@@ -30,10 +30,12 @@ export default function BadgeBoard(props: BadgeBoardProps) {
     achievement_2,
     achievement_3,
     achievement_4,
-    achievement_5
+    achievement_5,
   } = badgeSource;
 
-  const animationStyles = { transform: [{ scale: valueOfScale }, { rotate: rotate }] };
+  const animationStyles = {
+    transform: [{scale: valueOfScale}, {rotate: rotate}],
+  };
 
   return (
     <>
@@ -57,14 +59,14 @@ export default function BadgeBoard(props: BadgeBoardProps) {
         </Animated.View>
       </View>
     </>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    margin: 16
+    margin: 16,
   },
   row: {
     flexDirection: 'row',
-  }
-})
+  },
+});

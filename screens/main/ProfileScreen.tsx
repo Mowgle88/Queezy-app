@@ -1,14 +1,27 @@
-import { Animated, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  Animated,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import IconButton from '../../components/ui/IconButton';
-import { Colors } from '../../constants/styles';
-import { UserContext } from '../../store/user-context';
-import { avatarSource } from '../../constants/avatar';
+import {Colors} from '../../constants/styles';
+import {UserContext} from '../../store/user-context';
+import {avatarSource} from '../../constants/avatar';
 import StatisticsBoard from '../../components/StatisticsBoard';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { ProfileScreenNativeStackProps } from '../../navigation/types';
-import { fetchUsers } from '../../util/http';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {ProfileScreenNativeStackProps} from '../../navigation/types';
+import {fetchUsers} from '../../util/http';
 import BadgeBoard from '../../components/BadgeBoard';
 
 export default function ProfileScreen() {
@@ -30,49 +43,77 @@ export default function ProfileScreen() {
   useLayoutEffect(() => {
     async function fetchUsersData() {
       const usersData = await fetchUsers();
-      const sortedUsersData = usersData.sort((prev, next) => next.quizData.points - prev.quizData.points);
+      const sortedUsersData = usersData.sort(
+        (prev, next) => next.quizData.points - prev.quizData.points,
+      );
       sortedUsersData.forEach((userData, index) => {
         if (userData.user.userId === userCtx.user.userId) {
           setWorldPrank(index + 1);
         }
-      })
+      });
     }
     fetchUsersData();
-  }, [isFocused])
+  }, [isFocused]);
 
   const valueOfScale = useRef(new Animated.Value(0)).current;
   const valueOfRotate = useRef(new Animated.Value(0)).current;
 
-  const rotate = valueOfRotate.interpolate({ inputRange: [0, 1], outputRange: ["0deg", "360deg"], });
+  const rotate = valueOfRotate.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
 
   useEffect(() => {
     const startAnimate = () => {
       Animated.parallel([
-        Animated.timing(valueOfScale, { toValue: 1, useNativeDriver: true, duration: 1000 }),
-        Animated.timing(valueOfRotate, { toValue: 1, useNativeDriver: true, duration: 1000 })
-      ]).start()
-    }
+        Animated.timing(valueOfScale, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 1000,
+        }),
+        Animated.timing(valueOfRotate, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 1000,
+        }),
+      ]).start();
+    };
     startAnimate();
   }, []);
 
   return (
-    <ImageBackground style={styles.imageBgContainer} source={require('../../assets/Profile-background.png')}>
+    <ImageBackground
+      style={styles.imageBgContainer}
+      source={require('../../assets/Profile-background.png')}>
       <View style={styles.iconButton}>
-        <IconButton icon={'settings-sharp'} size={24} color={Colors.hawkesBlue} onPress={() => {
-          navigation.navigate('Settings')
-        }} />
+        <IconButton
+          icon={'settings-sharp'}
+          size={24}
+          color={Colors.hawkesBlue}
+          onPress={() => {
+            navigation.navigate('Settings');
+          }}
+        />
       </View>
 
       <View style={styles.profileContainer}>
         <View style={styles.profileInnerContainer}>
           <View style={styles.avatarContainer}>
-            <Image style={styles.avatarImage} source={avatarSource[indexIcon].src} />
+            <Image
+              style={styles.avatarImage}
+              source={avatarSource[indexIcon].src}
+            />
             <View style={styles.photoIconContainer}>
-              <IconButton icon={'camera'} size={16} color={'black'} onPress={() => { }} />
+              <IconButton
+                icon={'camera'}
+                size={16}
+                color={'black'}
+                onPress={() => {}}
+              />
             </View>
           </View>
           <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
-          <Animated.View style={{ transform: [{ scaleX: valueOfScale }] }} >
+          <Animated.View style={{transform: [{scaleX: valueOfScale}]}}>
             <StatisticsBoard points={points} worldPrank={worldPrank} />
           </Animated.View>
           <BadgeBoard
@@ -87,7 +128,7 @@ export default function ProfileScreen() {
         </View>
       </View>
     </ImageBackground>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -98,7 +139,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginRight: 24,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   profileContainer: {
     flex: 1,
@@ -116,7 +157,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 50,
-    marginBottom: 16
+    marginBottom: 16,
   },
   avatarImage: {
     height: 100,
@@ -135,6 +176,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     color: Colors.grey,
-    marginBottom: 24
+    marginBottom: 24,
   },
-})
+});
