@@ -7,13 +7,14 @@ import {
   View,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { shuffle } from "../../shared/utils";
-import { CommonStyles } from "../../shared/constants";
+import { shuffle } from "#utils";
+import { CommonStyles } from "#styles";
 import {
   QuizDetailsScreenNavigationProp,
   QuizDetailsScreenRouteProp,
-} from "../../navigation/types";
+} from "#navigation/types";
 import { QuizDetalsContent, QuizTypesModal } from "./components";
+import { backgrounds, pictures } from "#constants";
 
 const QuizDetailsScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,7 +47,7 @@ const QuizDetailsScreen: React.FC = () => {
   return (
     <ImageBackground
       style={styles.imageBgContainer}
-      source={require("../../assets/QuizDetails-background.png")}>
+      source={backgrounds.QuizDetails}>
       <QuizTypesModal
         visible={modalVisible}
         onCancel={changeModalIsVisible}
@@ -55,7 +56,7 @@ const QuizDetailsScreen: React.FC = () => {
       <View style={styles.container}>
         <Image
           style={[CommonStyles.center, styles.image, { width: width }]}
-          source={require("../../assets/Illustration-4.png")}
+          source={pictures.Illustration_4}
         />
         <QuizDetalsContent
           title={title}

@@ -8,7 +8,8 @@ import {
   ViewStyle,
   useWindowDimensions,
 } from "react-native";
-import { CommonStyles, IStartContentData } from "../../../shared/constants";
+import { IStartContentData } from "#constants";
+import { CommonStyles } from "#styles";
 
 interface RotatingImagesProps {
   data: IStartContentData[];

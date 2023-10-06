@@ -7,8 +7,8 @@ import {
   Image,
   Platform,
 } from "react-native";
-import { Colors } from "../constants";
-import { getSourcePath } from "../utils";
+import { Colors } from "#styles";
+import { getSourcePath } from "#utils";
 
 interface CategoryGridTileProps {
   title: string;

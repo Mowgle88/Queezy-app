@@ -9,7 +9,8 @@ import {
   Pressable,
 } from "react-native";
 import VectorImage from "react-native-vector-image";
-import { Colors } from "../constants";
+import { Colors } from "#styles";
+import { formIcons } from "#constants";
 
 interface InputProps {
   label: string;
@@ -59,13 +60,9 @@ const CustomInput: React.FC<InputProps> = ({
         {isPassword && (
           <Pressable onPress={onUpdateSecure}>
             {secure ? (
-              <VectorImage
-                source={require("../../assets/icons/Icon-secure.svg")}
-              />
+              <VectorImage source={formIcons.Secure} />
             ) : (
-              <VectorImage
-                source={require("../../assets/icons/Icon-unprotected.svg")}
-              />
+              <VectorImage source={formIcons.Unprotected} />
             )}
           </Pressable>
         )}

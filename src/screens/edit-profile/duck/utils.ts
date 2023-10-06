@@ -1,7 +1,7 @@
-import { setUserBackendData, updateUser } from "../../../shared/api";
-import { UserData, ISettings } from "../../../shared/types";
-import { changeUserEmail, changeUserPassword } from "../../../shared/utils";
-import type { IAuthContext, IUserContext } from "../../../store";
+import { setUserBackendData, updateUser } from "#api";
+import { UserData, ISettings } from "#types";
+import { changeUserEmail, changeUserPassword } from "#utils";
+import type { IAuthContext, IUserContext } from "#store";
 
 export const changeUserName = (userData: UserData, userCtx: IUserContext) => {
   const userBackendData = setUserBackendData(userCtx);

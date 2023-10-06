@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import VectorImage from "react-native-vector-image";
-import { EditProfileScreenType } from "../../../shared/types";
-import { Colors } from "../../../shared/constants";
+import { EditProfileScreenType } from "#types";
+import { Colors } from "#styles";
 
 interface SettingItemProps {
   title: string;

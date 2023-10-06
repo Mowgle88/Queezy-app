@@ -8,7 +8,8 @@ import {
   ViewStyle,
 } from "react-native";
 import VectorImage from "react-native-vector-image";
-import { Colors } from "../constants";
+import { Colors } from "#styles";
+import { formIcons } from "#constants";
 
 interface CustomButtonProps {
   children: ReactNode;
@@ -38,7 +39,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           {mode === "light" && (
             <VectorImage
               style={styles.vectorImage}
-              source={require("../../assets/icons/Icon-find-friends.svg")}
+              source={formIcons.FindFriends}
             />
           )}
           <Text

@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { IQuizData, ISettings, IUser } from "../../shared/types";
+import { IQuizData, ISettings, IUser } from "#types";
 
 interface UserContextProviderProps {
   children: React.ReactNode;

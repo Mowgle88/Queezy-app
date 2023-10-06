@@ -6,7 +6,7 @@ import {
   BaseToastProps,
 } from "react-native-toast-message";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Colors } from "../constants";
+import { Colors } from "#styles";
 
 const toastConfig = {
   success: (props: BaseToastProps) => (

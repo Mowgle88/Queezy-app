@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { CommonStyles } from "../constants";
+import { CommonStyles } from "#styles";
 
 interface LoadingOverlayProps {
   message: string;

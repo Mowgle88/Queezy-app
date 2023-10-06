@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {StyleSheet, Text, View} from "react-native";
-import {IconButton} from "../ui";
-import {Colors} from "../constants";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { IconButton } from "../ui";
+import { Colors } from "#styles";
 
 interface CounterProps {
   number: number;

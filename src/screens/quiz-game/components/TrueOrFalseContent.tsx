@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { CustomButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
 
 interface TrueOrFalseContentProps {
   answer: string;

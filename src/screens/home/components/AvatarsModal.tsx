@@ -1,7 +1,8 @@
 import React from "react";
 import { Image, Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { CommonStyles, avatarSource } from "../../../shared/constants";
-import { IconButton } from "../../../shared/ui";
+import { avatarSource } from "#constants";
+import { CommonStyles } from "#styles";
+import { IconButton } from "#ui";
 
 interface AvatarsModalProps {
   visible: boolean;

@@ -5,15 +5,15 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { CountDown } from "../../shared/ui";
-import { Colors } from "../../shared/constants";
-import { shuffle } from "../../shared/utils";
-import { IAnswersData } from "../../shared/types";
+import { CountDown } from "#ui";
+import { Colors } from "#styles";
+import { shuffle } from "#utils";
+import { IAnswersData } from "#types";
 import {
   QuizGameScreenNavigationProp,
   QuizGameScreenRouteProp,
-} from "../../navigation/types";
-import { UserContext } from "../../store";
+} from "#navigation/types";
+import { UserContext } from "#store";
 import { AnswersBlock, QuizGameHeader, QuizGameModal } from "./components";
 
 const QuizGameScreen: React.FC = () => {

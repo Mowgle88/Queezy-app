@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { CustomButton } from "../../../shared/ui";
+import { CustomButton } from "#ui";
 import MultipleContent from "./MultipleContent";
 import CheckboxContent from "./CheckboxContent";
 import TrueOrFalseContent from "./TrueOrFalseContent";

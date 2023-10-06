@@ -1,9 +1,9 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { CustomButton } from "../../shared/ui";
-import { Colors } from "../../shared/constants";
-import { IAnswersData } from "../../shared/types";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
+import { IAnswersData } from "#types";
 import {
   ReviewQuizScreenNavigationProp,
   ReviewQuizScreenRouteProp,

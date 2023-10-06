@@ -2,9 +2,10 @@ import React from "react";
 import { Image } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LinearGradient from "react-native-linear-gradient";
-import { Colors } from "../../shared/constants";
+import { Colors } from "#styles";
 import { AuthStackParamList } from "../types";
-import { LoginScreen, SignupScreen, StartScreen } from "../../screens";
+import { LoginScreen, SignupScreen, StartScreen } from "#screens";
+import { logo } from "#constants";
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
@@ -20,12 +21,7 @@ const HeaderBackground = () => {
 };
 
 const HeaderRightImage = () => {
-  return (
-    <Image
-      style={{ width: 35, height: 35 }}
-      source={require("../../assets/queezy.png")}
-    />
-  );
+  return <Image style={{ width: 35, height: 35 }} source={logo.src} />;
 };
 
 export const AuthStack: React.FC = () => {

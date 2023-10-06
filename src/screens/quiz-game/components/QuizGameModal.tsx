@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { CustomButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
 
 interface QuizGameModalProps {
   visible: boolean;

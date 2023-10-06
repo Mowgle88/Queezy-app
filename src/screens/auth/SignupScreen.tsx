@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Alert } from "react-native";
-import { LoadingOverlay } from "../../shared/ui";
-import { UserData } from "../../shared/types";
-import { createUser } from "../../shared/utils";
-import { AuthContext, UserContext } from "../../store";
-import { addUserToDatabase } from "../../shared/api";
+import { LoadingOverlay } from "#ui";
+import { UserData } from "#types";
+import { createUser } from "#utils";
+import { AuthContext, UserContext } from "#store";
+import { addUserToDatabase } from "#api";
 import { AuthContent } from "./components";
 
 const SignupScreen: React.FC = () => {

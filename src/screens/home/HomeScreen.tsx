@@ -3,18 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
-import { CategoryGridTile } from "../../shared/ui";
-import { Colors } from "../../shared/constants";
-import { Category } from "../../shared/models";
-import { CATEGORIES } from "../../shared/data";
-import { HomeScreenNavigationProp } from "../../navigation/types";
+import { CategoryGridTile } from "#ui";
+import { Colors } from "#styles";
+import { Category } from "#models";
+import { CATEGORIES } from "#data";
+import { HomeScreenNavigationProp } from "#navigation/types";
 import {
   CategoryName,
   IQuizCategoriesData,
   LocalStorageUserData,
-} from "../../shared/types";
-import { QuizContext, UserContext } from "../../store";
-import { fetchUser, getQuizCategories } from "../../shared/api";
+} from "#types";
+import { QuizContext, UserContext } from "#store";
+import { fetchUser, getQuizCategories } from "#api";
 import {
   FeaturedBoard,
   GreetingBoard,

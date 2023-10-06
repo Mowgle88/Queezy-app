@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, Image, Animated } from "react-native";
-import { badgeSource } from "../../../shared/constants";
+import { badgeSource } from "#constants";
 
 interface BadgeBoardProps {
   isAchieved_1: boolean;

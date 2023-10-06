@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
-import { Colors } from "../../../shared/constants";
+import { Colors } from "#styles";
 
 interface StatisticsBoardProps {
   points: number;

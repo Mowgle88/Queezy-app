@@ -1,6 +1,7 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import { Colors } from "../../../shared/constants";
+import { Colors } from "#styles";
+import { backgrounds } from "#constants";
 
 const RecentQuizBoard: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const RecentQuizBoard: React.FC = () => {
       <ImageBackground
         style={styles.image}
         resizeMode="cover"
-        source={require("../../../assets/Recent-background.png")}>
+        source={backgrounds.Recent}>
         <Text style={styles.text}>RECENT QUIZ</Text>
       </ImageBackground>
     </View>
