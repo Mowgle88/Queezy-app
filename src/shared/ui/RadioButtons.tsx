@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { DifficultyDataType, RadioButtonProps } from "../types";
-import { Colors } from "../constants";
+import { DifficultyDataType, RadioButtonProps } from "#types";
+import { Colors } from "#styles";
 
 interface RadioButtonsProps {
   radioButtons: RadioButtonProps<DifficultyDataType>[];

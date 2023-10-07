@@ -3,8 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SplashScreen from "react-native-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
-import { AuthContext } from "../store";
-import { toastConfig } from "../shared/config";
+import { AuthContext } from "#store";
+import { toastConfig } from "#config";
 import { AuthStack, AuthenticatedStack } from "./staks";
 
 const Root: React.FC = () => {

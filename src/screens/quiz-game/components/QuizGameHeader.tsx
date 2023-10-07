@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { IconButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
+import { IconButton } from "#ui";
+import { Colors } from "#styles";
 
 interface QuizGameHeaderProps {
   points: number;

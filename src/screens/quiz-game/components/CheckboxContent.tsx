@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
-import { Colors } from "../../../shared/constants";
+import { Colors } from "#styles";
 
 interface CheckboxContentProps {
   answer: string;

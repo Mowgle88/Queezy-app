@@ -8,11 +8,12 @@ import {
   View,
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { IconButton } from "../../shared/ui";
-import { Colors, avatarSource } from "../../shared/constants";
-import { UserContext } from "../../store";
-import { ProfileScreenNativeStackProps } from "../../navigation/types";
-import { fetchUsers } from "../../shared/api";
+import { avatarSource, backgrounds } from "#constants";
+import { Colors } from "#styles";
+import { IconButton } from "#ui";
+import { UserContext } from "#store";
+import { ProfileScreenNativeStackProps } from "#navigation/types";
+import { fetchUsers } from "#api";
 import { BadgeBoard, RotatingView, StatisticsBoard } from "./components";
 
 const ProfileInfoScreen = () => {
@@ -53,7 +54,7 @@ const ProfileInfoScreen = () => {
   return (
     <ImageBackground
       style={styles.imageBgContainer}
-      source={require("../../assets/Profile-background.png")}>
+      source={backgrounds.Profile}>
       <View style={styles.iconButton}>
         <IconButton
           icon={"settings-sharp"}

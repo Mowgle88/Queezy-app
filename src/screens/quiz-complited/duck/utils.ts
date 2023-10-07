@@ -1,5 +1,5 @@
-import { setUserBackendData, updateUser } from "../../../shared/api";
-import type { IUserContext } from "../../../store";
+import { setUserBackendData, updateUser } from "#api";
+import type { IUserContext } from "#store";
 
 export const setPoints = async (points: number, userCtx: IUserContext) => {
   const userBackendData = setUserBackendData(userCtx);

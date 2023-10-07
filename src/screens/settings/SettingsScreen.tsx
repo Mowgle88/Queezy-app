@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { CustomButton } from "../../shared/ui";
-import { CounterBlock } from "../../shared/components";
-import { Colors } from "../../shared/constants";
-import { SettingsScreenNativeStackProps } from "../../navigation/types";
-import { EditProfileScreenType } from "../../shared/types";
+import { CustomButton } from "#ui";
+import { CounterBlock } from "#components";
+import { Colors } from "#styles";
+import { SettingsScreenNativeStackProps } from "#navigation/types";
+import { EditProfileScreenType } from "#types";
 import { utils } from "./duck";
-import { AuthContext, UserContext } from "../../store";
+import { AuthContext, UserContext } from "#store";
 import { SettingItem } from "./components";
+import { formIcons } from "#constants";
 
 const SettingsScreen = () => {
   const navigation = useNavigation<SettingsScreenNativeStackProps>();
@@ -45,21 +46,21 @@ const SettingsScreen = () => {
         title={"Update Profile"}
         description={"Update username, country, etc"}
         type={"profile"}
-        source={require("../../assets/icons/Icon-user.svg")}
+        source={formIcons.User}
         onPress={pressHandler}
       />
       <SettingItem
         title={"Change Email Address"}
         description={userCtx.user.email}
         type={"email"}
-        source={require("../../assets/icons/Icon-email.svg")}
+        source={formIcons.Email}
         onPress={pressHandler}
       />
       <SettingItem
         title={"Change Password"}
         description={`last change ${userCtx.user.date}`}
         type={"password"}
-        source={require("../../assets/icons/Icon-password.svg")}
+        source={formIcons.Password}
         onPress={pressHandler}
       />
       <Text style={styles.categoryTitle}>Other</Text>
@@ -87,7 +88,7 @@ const SettingsScreen = () => {
         title={"Change Difficulty"}
         description={"Easy, normal, hard"}
         type={"difficulty"}
-        source={require("../../assets/icons/Icon-difficulty.svg")}
+        source={formIcons.Difficulty}
         onPress={pressHandler}
       />
       <View style={styles.buttonContainer}>

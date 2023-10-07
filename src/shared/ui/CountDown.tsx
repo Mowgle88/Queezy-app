@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Colors } from "../constants";
+import { Colors } from "#styles";
 
 interface CountDownProps {
   timeOnAnswer: number;

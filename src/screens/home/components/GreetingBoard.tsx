@@ -3,8 +3,9 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 import AvatarsModal from "./AvatarsModal";
-import { Colors, avatarSource } from "../../../shared/constants";
-import { getTimeOfDay } from "../../../shared/utils";
+import { Colors } from "#styles";
+import { getTimeOfDay } from "#utils";
+import { avatarSource } from "#constants";
 
 interface GreetingBoardProps {
   userName: string;

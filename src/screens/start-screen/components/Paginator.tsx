@@ -7,7 +7,8 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { Colors, IStartContentData } from "../../../shared/constants";
+import { IStartContentData } from "#constants";
+import { Colors } from "#styles";
 
 interface PaginatorProps {
   data: IStartContentData[];

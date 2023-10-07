@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { CustomButton, CustomInput } from "../../../shared/ui";
-import { ICredentialsInvalid } from "../../../shared/types";
+import { CustomButton, CustomInput } from "#ui";
+import { ICredentialsInvalid } from "#types";
+import { formIcons } from "#constants";
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -80,7 +81,7 @@ function AuthForm(
             isInvalid={userNameIsInvalid}
             secure={false}
             placeholder={"Your username"}
-            source={require("../../../assets/icons/Icon-user.svg")}
+            source={formIcons.User}
           />
         )}
         <CustomInput
@@ -91,7 +92,7 @@ function AuthForm(
           isInvalid={emailIsInvalid}
           secure={false}
           placeholder={"Your email address"}
-          source={require("../../../assets/icons/Icon-email.svg")}
+          source={formIcons.Email}
         />
         <CustomInput
           label="Password"
@@ -103,7 +104,7 @@ function AuthForm(
           placeholder={"Your password"}
           isPassword
           onUpdateSecure={updateSecurePasswordHandler}
-          source={require("../../../assets/icons/Icon-password.svg")}
+          source={formIcons.Password}
         />
         {!isLogin && (
           <CustomInput
@@ -119,7 +120,7 @@ function AuthForm(
             placeholder={"Confirm password"}
             isPassword
             onUpdateSecure={updateSecureConfirmPasswordHandler}
-            source={require("../../../assets/icons/Icon-password.svg")}
+            source={formIcons.Password}
           />
         )}
         <View style={styles.buttons}>

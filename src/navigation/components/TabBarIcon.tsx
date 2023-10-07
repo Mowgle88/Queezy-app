@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, ImageRequireSource, ImageStyle, StyleProp } from "react-native";
-import { Colors } from "../../shared/constants";
+import { Colors } from "#styles";
 
 interface TabBarIconProps {
   focused?: boolean;

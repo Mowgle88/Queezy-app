@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Colors } from "../../shared/constants";
+import { Colors } from "#styles";
 import { AuthenticatedStackParamList } from "../types";
 import { MainTabs } from "../components";
 import {
@@ -10,7 +10,7 @@ import {
   QuizGameScreen,
   QuizReviewScreen,
   SettingsScreen,
-} from "../../screens";
+} from "#screens";
 
 const Stack = createNativeStackNavigator<AuthenticatedStackParamList>();
 

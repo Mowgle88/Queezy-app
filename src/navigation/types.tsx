@@ -9,7 +9,7 @@ import {
   EditProfileScreenType,
   IAnswersData,
   IQuizItem,
-} from "../shared/types";
+} from "#types";
 
 export type RootStackParamList = {
   AuthStack: AuthStackParamList;

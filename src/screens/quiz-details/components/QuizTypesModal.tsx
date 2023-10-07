@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, FlatList, Modal, StyleSheet, Text, View } from "react-native";
-import { CategoryGridTile } from "../../../shared/ui";
-import { Colors, CommonStyles } from "../../../shared/constants";
-import { QUIZ_TYPES } from "../../../shared/data";
-import { Category } from "../../../shared/models";
+import { CategoryGridTile } from "#ui";
+import { Colors, CommonStyles } from "#styles";
+import { QUIZ_TYPES } from "#data";
+import { Category } from "#models";
 
 interface QuizTypesModalProps {
   visible: boolean;

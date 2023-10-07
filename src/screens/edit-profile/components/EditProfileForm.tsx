@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { CustomButton, CustomInput, RadioButtons } from "../../../shared/ui";
-import { difficultyData, DifficultyData } from "../../../shared/constants";
-import { ICredentialsInvalid } from "../../../shared/types";
-import { UserContext } from "../../../store";
+import { CustomButton, CustomInput, RadioButtons } from "#ui";
+import { difficultyData, DifficultyData, formIcons } from "#constants";
+import { ICredentialsInvalid } from "#types";
+import { UserContext } from "#store";
 
 interface EditProfileFormProps {
   isChangeUsername?: boolean;
@@ -78,7 +78,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             isInvalid={userNameIsInvalid}
             secure={false}
             placeholder={"Your username"}
-            source={require("../../../assets/icons/Icon-user.svg")}
+            source={formIcons.User}
           />
         )}
         {isChangeEmail && (
@@ -90,7 +90,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             isInvalid={emailIsInvalid}
             secure={false}
             placeholder={"Your email address"}
-            source={require("../../../assets/icons/Icon-email.svg")}
+            source={formIcons.Email}
           />
         )}
         {isChangePassword && (
@@ -105,7 +105,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
               placeholder={"Your password"}
               isPassword
               onUpdateSecure={updateSecurePasswordHandler}
-              source={require("../../../assets/icons/Icon-password.svg")}
+              source={formIcons.Password}
             />
             <CustomInput
               label="Confirm Password"
@@ -117,7 +117,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
               placeholder={"Confirm password"}
               isPassword
               onUpdateSecure={updateSecureConfirmPasswordHandler}
-              source={require("../../../assets/icons/Icon-password.svg")}
+              source={formIcons.Password}
             />
           </>
         )}

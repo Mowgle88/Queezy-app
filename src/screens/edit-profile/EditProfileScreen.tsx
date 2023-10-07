@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
-import { Colors, DifficultyData } from "../../shared/constants";
-import { AuthContext, UserContext } from "../../store";
+import { DifficultyData } from "#constants";
+import { Colors } from "#styles";
+import { AuthContext, UserContext } from "#store";
 import {
   EditProfileScreenNavigationProp,
   EditProfileScreenRouteProp,
-} from "../../navigation/types";
+} from "#navigation/types";
 import { EditProfileForm, type IDataToEdit } from "./components";
 import { utils } from "./duck";
 

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LinearGradient from "react-native-linear-gradient";
-import { AuthContentNativeStackProps } from "../../../navigation/types";
-import { CustomButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
-import { UserData } from "../../../shared/types";
+import { AuthContentNativeStackProps } from "#navigation/types";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
+import { UserData } from "#types";
 import AuthForm, { type ICredentials } from "./AuthForm";
 
 interface AuthContentProps {

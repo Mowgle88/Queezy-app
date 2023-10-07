@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Root } from "../navigation";
+import { Root } from "#navigation";
 import {
   AuthContextProvider,
   QuizContextProvider,

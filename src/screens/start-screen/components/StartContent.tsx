@@ -1,13 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { CustomButton } from "../../../shared/ui";
-import {
-  Colors,
-  CommonStyles,
-  IStartContentData,
-} from "../../../shared/constants";
-import { StartContentNavigationProp } from "../../../navigation/types";
+import { CustomButton } from "#ui";
+import { Colors, CommonStyles } from "#styles";
+import { IStartContentData } from "#constants";
+import { StartContentNavigationProp } from "#navigation/types";
 
 interface StartContentProps {
   item: IStartContentData;

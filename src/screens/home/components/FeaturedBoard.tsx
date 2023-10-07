@@ -1,7 +1,8 @@
 import React from "react";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import { CustomButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
+import { backgrounds, pictures } from "#constants";
 
 const FeaturedBoard: React.FC = () => {
   return (
@@ -9,19 +10,13 @@ const FeaturedBoard: React.FC = () => {
       <ImageBackground
         style={styles.image}
         resizeMode="cover"
-        source={require("../../../assets/Featured-background.png")}>
-        <Image
-          style={styles.topImage}
-          source={require("../../../assets/Icon-featured-1.png")}
-        />
+        source={backgrounds.Featured}>
+        <Image style={styles.topImage} source={pictures.IconFeatured_1} />
         <Text style={styles.text}>FEATURED</Text>
         <Text style={styles.description}>
           Take part in challenges with friends or other players
         </Text>
-        <Image
-          style={styles.bottomImage}
-          source={require("../../../assets/Icon-featured-2.png")}
-        />
+        <Image style={styles.bottomImage} source={pictures.IconFeatured_2} />
         <CustomButton style={styles.button} mode={"light"} onPress={() => {}}>
           Find Friends
         </CustomButton>

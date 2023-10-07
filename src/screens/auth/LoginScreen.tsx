@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Alert } from "react-native";
-import { LoadingOverlay } from "../../shared/ui";
-import { login } from "../../shared/utils";
-import { fetchUsers } from "../../shared/api";
-import { AuthContext, UserContext } from "../../store";
+import { LoadingOverlay } from "#ui";
+import { login } from "#utils";
+import { fetchUsers } from "#api";
+import { AuthContext, UserContext } from "#store";
 import { AuthContent } from "./components";
 
 const LoginScreen: React.FC = () => {

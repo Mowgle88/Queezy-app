@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { IQuizCategoriesData } from "../../shared/types";
+import { IQuizCategoriesData } from "#types";
 
 interface QuizContextProviderProps {
   children: React.ReactNode;

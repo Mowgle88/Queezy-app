@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
-import { Colors } from "../../../shared/constants";
+import { Colors } from "#styles";
 
 interface MultipleContentProps {
   answer: string;

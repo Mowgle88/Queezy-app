@@ -2,10 +2,11 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import VectorImage from "react-native-vector-image";
-import { CustomButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
-import { DifficultyDataType } from "../../../shared/types";
-import { CounterBlock } from "../../../shared/components";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
+import { DifficultyDataType } from "#types";
+import { CounterBlock } from "#components";
+import { icons, quizTypesIcons } from "#constants";
 
 interface QuizDetalsContentProps {
   title: string;
@@ -29,9 +30,7 @@ const QuizDetalsContent: React.FC<QuizDetalsContentProps> = ({
       <Text style={styles.title}>{title}</Text>
       <View style={styles.boardContainer}>
         <View style={styles.boardInnerContainer}>
-          <VectorImage
-            source={require("../../../assets/icons/Icon-questions.svg")}
-          />
+          <VectorImage source={icons.Questions} />
           <Text style={styles.text}>{number} questions</Text>
         </View>
         <LinearGradient
@@ -41,9 +40,7 @@ const QuizDetalsContent: React.FC<QuizDetalsContentProps> = ({
           end={{ x: 0, y: 1 }}
         />
         <View style={styles.boardInnerContainer}>
-          <VectorImage
-            source={require("../../../assets/icons/Icon-difficulty-2.svg")}
-          />
+          <VectorImage source={icons.Difficulty} />
           <Text style={styles.text}>{difficulty}</Text>
         </View>
       </View>
@@ -53,19 +50,11 @@ const QuizDetalsContent: React.FC<QuizDetalsContentProps> = ({
         {title} themed quiz!
       </Text>
       <Text style={styles.title}>Quiz Types</Text>
-      <View style={styles.quizTipesContainer}>
-        <Image
-          source={require("../../../assets/categories/Icon-Multiple-small.png")}
-        />
-        <Image
-          source={require("../../../assets/categories/Icon-TrueOrFalse-small.png")}
-        />
-        <Image
-          source={require("../../../assets/categories/Icon-TypeAnswer-small.png")}
-        />
-        <Image
-          source={require("../../../assets/categories/Icon-Checkbox-small.png")}
-        />
+      <View style={styles.quizTypesContainer}>
+        <Image source={quizTypesIcons.Multiple} />
+        <Image source={quizTypesIcons.Multiple} />
+        <Image source={quizTypesIcons.TypeAnswer} />
+        <Image source={quizTypesIcons.Checkbox} />
       </View>
       <CounterBlock
         title={"Number of questions"}
@@ -125,7 +114,7 @@ const styles = StyleSheet.create({
     left: "50%",
     top: 16,
   },
-  quizTipesContainer: {
+  quizTypesContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
   },

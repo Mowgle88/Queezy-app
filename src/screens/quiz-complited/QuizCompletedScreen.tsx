@@ -1,15 +1,16 @@
 import React, { useContext, useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { CustomButton } from "../../shared/ui";
-import { Colors } from "../../shared/constants";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
 import {
   QuizCompletedScreenRouteProp,
   QuizGameScreenNavigationProp,
-} from "../../navigation/types";
-import { UserContext } from "../../store";
+} from "#navigation/types";
+import { UserContext } from "#store";
 import { setPoints } from "./duck/utils";
 import { TitleValueBlock } from "./components";
+import { pictures } from "#constants";
 
 const QuizCompletedScreen = () => {
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
@@ -55,7 +56,7 @@ const QuizCompletedScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Image source={require("../../assets/Illustration-5.png")} />
+        <Image source={pictures.Illustration_5} />
         <Text style={styles.text}>You get +{points} Quiz Points</Text>
         <CustomButton style={styles.button} onPress={goToStatistics}>
           Check Correct Answer

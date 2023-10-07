@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
-import { CustomButton } from "../../../shared/ui";
-import { Colors } from "../../../shared/constants";
+import { CustomButton } from "#ui";
+import { Colors } from "#styles";
 
 interface TypeAnswerContentProps {
   answer: string;

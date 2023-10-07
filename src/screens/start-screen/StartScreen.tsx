@@ -7,7 +7,8 @@ import {
   View,
   ViewToken,
 } from "react-native";
-import { CommonStyles, startContentData } from "../../shared/constants";
+import { backgrounds, startContentData } from "#constants";
+import { CommonStyles } from "#styles";
 import { Paginator, RotatingImages, StartContent } from "./components";
 
 export const StartScreen: React.FC = () => {
@@ -30,7 +31,7 @@ export const StartScreen: React.FC = () => {
 
   return (
     <ImageBackground
-      source={require("../../assets/auth-image-bachground.png")}
+      source={backgrounds.Auth}
       resizeMode="cover"
       style={CommonStyles.center}>
       <RotatingImages

@@ -1,10 +1,66 @@
 // prettier-ignore
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",     /* Recommended React Native TSConfig base */
+  "extends": "@tsconfig/react-native/tsconfig.json", /* Recommended React Native TSConfig base */
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
     /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "baseUrl": "./src",
+    "paths": {
+      "#app": [
+        "./app"
+      ],
+      "#assets/*": [
+        "./assets/*"
+      ],
+      "#navigation": [
+        "./navigation"
+      ],
+      "#navigation/*": [
+        "./navigation/*"
+      ],
+      "#screens": [
+        "./screens"
+      ],
+      "#store": [
+        "./store"
+      ],
+      "#store/*": [
+        "./store/*"
+      ],
+      "#api": [
+        "./shared/api"
+      ],
+      "#components": [
+        "./shared/components"
+      ],
+      "#config": [
+        "./shared/config"
+      ],
+      "#constants": [
+        "./shared/constants"
+      ],
+      "#styles": [
+        "./shared/constants/styles"
+      ],
+      "#data": [
+        "./shared/data"
+      ],
+      "#models": [
+        "./shared/models"
+      ],
+      "#hooks": [
+        "./shared/hooks"
+      ],
+      "#types": [
+        "./shared/types"
+      ],
+      "#utils": [
+        "./shared/utils"
+      ],
+      "#ui": [
+        "./shared/ui"
+      ]
+    }
   }
 }

@@ -1,6 +1,6 @@
-import { setUserBackendData, updateUser } from "../../../shared/api";
-import { ISettings } from "../../../shared/types";
-import type { IUserContext } from "../../../store";
+import { setUserBackendData, updateUser } from "#api";
+import { ISettings } from "#types";
+import type { IUserContext } from "#store";
 
 export const changeDifficulty = async (
   userSettingsData: ISettings,
