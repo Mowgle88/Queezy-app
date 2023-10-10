@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IQuizCategoriesData } from "#types";
 
@@ -14,7 +14,7 @@ export interface IQuizContext {
 
 export const QuizContext = createContext<IQuizContext>({
   quizCategoryData: null,
-  setQuizCategoryData: (quizCategoryData: IQuizCategoriesData) => {},
+  setQuizCategoryData: (_quizCategoryData: IQuizCategoriesData) => {},
   removeQuizCategoryData: () => {},
 });
 

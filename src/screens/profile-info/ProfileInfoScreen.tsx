@@ -19,11 +19,6 @@ import { BadgeBoard, RotatingView, StatisticsBoard } from "./components";
 const ProfileInfoScreen = () => {
   const [indexIcon, setIndexIcon] = useState(0);
   const [worldPrank, setWorldPrank] = useState(0);
-  const [isAchieved_1, setIsAchieved_1] = useState(false);
-  const [isAchieved_2, setIsAchieved_2] = useState(false);
-  const [isAchieved_3, setIsAchieved_3] = useState(false);
-  const [isAchieved_4, setIsAchieved_4] = useState(false);
-  const [isAchieved_5, setIsAchieved_5] = useState(false);
 
   const isFocused = useIsFocused();
 
@@ -87,11 +82,11 @@ const ProfileInfoScreen = () => {
             <StatisticsBoard points={points} worldPrank={worldPrank} />
           </RotatingView>
           <BadgeBoard
-            isAchieved_1={isAchieved_1}
-            isAchieved_2={isAchieved_2}
-            isAchieved_3={isAchieved_3}
-            isAchieved_4={isAchieved_4}
-            isAchieved_5={isAchieved_5}
+            isAchieved_1={false}
+            isAchieved_2={false}
+            isAchieved_3={false}
+            isAchieved_4={false}
+            isAchieved_5={false}
             valueOfRotate={valueOfRotate}
             valueOfScale={valueOfScale}
           />

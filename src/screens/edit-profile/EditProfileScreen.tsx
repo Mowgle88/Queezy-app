@@ -50,8 +50,8 @@ const EditProfileScreen: React.FC = () => {
   }, [screenType]);
 
   const submitHandler = (credentials: IDataToEdit) => {
-    let { userName, email, password, confirmPassword, difficulty } =
-      credentials;
+    let { userName, email, password } = credentials;
+    const { confirmPassword, difficulty } = credentials;
 
     userName = userName.trim();
     email = email.trim();
@@ -71,7 +71,7 @@ const EditProfileScreen: React.FC = () => {
     if (isValidUserName || isValidEmail || isValidPassword) {
       Toast.show({
         type: "error",
-        text1: `Please check your entered credentials`,
+        text1: "Please check your entered credentials",
       });
       setCredentialsInvalid({
         userName: !userNameIsValid,

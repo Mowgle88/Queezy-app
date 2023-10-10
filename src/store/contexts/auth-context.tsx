@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface AuthContextProviderProps {
@@ -15,7 +15,7 @@ export interface IAuthContext {
 export const AuthContext = createContext({
   token: "",
   isAuthenticated: false,
-  authenticate: (token: string) => {},
+  authenticate: (_token: string) => {},
   logout: () => {},
 });
 

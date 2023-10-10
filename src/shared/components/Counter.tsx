@@ -16,17 +16,17 @@ const Counter: React.FC<CounterProps> = ({
   maxNumber = 300,
   changeNumber,
 }) => {
-  let [count, setCount] = useState(number);
+  const [count, setCount] = useState(number);
 
   const increment = () => {
     if (count < maxNumber) {
-      setCount((count += step));
+      setCount(prev => (prev += step));
       changeNumber(count);
     }
   };
   const decrement = () => {
     if (count > 0) {
-      setCount((count -= step));
+      setCount(prev => (prev -= step));
       changeNumber(count);
     }
   };

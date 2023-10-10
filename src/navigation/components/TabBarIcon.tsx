@@ -15,20 +15,17 @@ const TabBarIcon: React.FC<TabBarIconProps> = ({
   style,
   isCustom,
 }) => {
+  const imageStyle = {
+    width: focused ? 35 : 25,
+    height: focused ? 35 : 25,
+    tintColor: focused ? Colors.royalBlue : Colors.grey2,
+  };
+
   return (
     <Image
       source={source}
       resizeMode="contain"
-      style={[
-        !isCustom
-          ? {
-              width: focused ? 35 : 25,
-              height: focused ? 35 : 25,
-              tintColor: focused ? Colors.royalBlue : Colors.grey2,
-            }
-          : null,
-        style,
-      ]}
+      style={[!isCustom ? imageStyle : null, style]}
     />
   );
 };

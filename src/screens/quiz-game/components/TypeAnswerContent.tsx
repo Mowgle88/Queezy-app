@@ -4,9 +4,9 @@ import { CustomButton } from "#ui";
 import { Colors } from "#styles";
 
 interface TypeAnswerContentProps {
-  answer: string;
+  onPress: (answer: string) => void;
 }
-const TypeAnswerContent: React.FC<TypeAnswerContentProps> = ({ answer }) => {
+const TypeAnswerContent: React.FC<TypeAnswerContentProps> = ({ onPress }) => {
   const [value, setValue] = useState("");
 
   return (
@@ -17,7 +17,11 @@ const TypeAnswerContent: React.FC<TypeAnswerContentProps> = ({ answer }) => {
         onChangeText={setValue}
         value={value}
       />
-      <CustomButton style={styles.button} onPress={() => {}}>
+      <CustomButton
+        style={styles.button}
+        onPress={() => {
+          onPress(value);
+        }}>
         Confirm
       </CustomButton>
     </View>

@@ -25,7 +25,7 @@ const CategoryGridTile: React.FC<CategoryGridTileProps> = ({
   onPress,
   isQuizTypes,
 }) => {
-  let source = getSourcePath(title);
+  const source = getSourcePath(title);
 
   return (
     <View style={styles.gridItem}>

@@ -18,7 +18,7 @@ export interface ICredentials {
 }
 
 function AuthForm(
-  this: any,
+  this: unknown,
   { isLogin, onSubmit, credentialsInvalid }: AuthFormProps,
 ) {
   const [enteredUserName, setEnteredUserName] = useState("");

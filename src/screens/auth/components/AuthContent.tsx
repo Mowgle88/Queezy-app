@@ -35,7 +35,8 @@ const AuthContent: React.FC<AuthContentProps> = ({
   };
 
   const submitHandler = (credentials: ICredentials) => {
-    let { userName, email, password, confirmPassword } = credentials;
+    let { userName, email, password } = credentials;
+    const { confirmPassword } = credentials;
 
     userName = userName.trim();
     email = email.trim();
