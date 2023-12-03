@@ -96,7 +96,7 @@ const MainTabs: React.FC = () => {
         name="CreateQuiz"
         component={CreateQuizScreen}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: () => (
             <TabBarIcon
               isCustom
               style={styles.customImage}

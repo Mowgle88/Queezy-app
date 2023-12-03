@@ -30,7 +30,13 @@ const AnswersBlock: React.FC<AnswersBlockProps> = ({
           />
         ))}
       {quizType === "TrueOrFalse" && <TrueOrFalseContent answer={answers[0]} />}
-      {quizType === "TypeAnswer" && <TypeAnswerContent answer={answers[0]} />}
+      {quizType === "TypeAnswer" && (
+        <TypeAnswerContent
+          onPress={answer => {
+            onPress(answer);
+          }}
+        />
+      )}
       {quizType === "Checkbox" &&
         answers.map(answer => <CheckboxContent answer={answer} key={answer} />)}
       {quizType === "Checkbox" && (

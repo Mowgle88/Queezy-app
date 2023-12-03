@@ -25,7 +25,7 @@ const QuizGameScreen: React.FC = () => {
   const [incorrectAnswers, setIncorrectAnswers] = useState<IAnswersData[]>([]);
 
   const userCtx = useContext(UserContext);
-  let isTimeGame = userCtx.settings.isTimeGame;
+  const isTimeGame = userCtx.settings.isTimeGame;
   const timeOnAnswer = userCtx.settings.timeOnAnswer;
 
   const navigation = useNavigation<QuizGameScreenNavigationProp>();

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IQuizData, ISettings, IUser } from "#types";
 
@@ -32,10 +32,10 @@ export const UserContext = createContext<IUserContext>({
   quizData: {
     points: 0,
   },
-  setUser: (userData: IUser) => {},
+  setUser: (_userData: IUser) => {},
   removeUser: () => {},
-  setSettings: (settings: ISettings) => {},
-  setQuizData: (quizData: IQuizData) => {},
+  setSettings: (_settings: ISettings) => {},
+  setQuizData: (_quizData: IQuizData) => {},
 });
 
 export const UserContextProvider: React.FC<UserContextProviderProps> = ({
