@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SplashScreen from "react-native-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -8,8 +8,6 @@ import { toastConfig } from "#config";
 import { AuthStack, AuthenticatedStack } from "./staks";
 
 const Root: React.FC = () => {
-  const [isTryingLogin, setIsTryingLogin] = useState(false);
-
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
@@ -19,20 +17,11 @@ const Root: React.FC = () => {
       if (storedToken) {
         authCtx.authenticate(storedToken);
       }
-      setIsTryingLogin(true);
+      SplashScreen.hide();
     };
 
     fetchToken();
-    SplashScreen.hide();
   }, []);
-
-  useEffect(() => {
-    if (isTryingLogin) {
-      SplashScreen.hide();
-    } else {
-      SplashScreen.show();
-    }
-  }, [isTryingLogin]);
 
   return (
     <NavigationContainer>
