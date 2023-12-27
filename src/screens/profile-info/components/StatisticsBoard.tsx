@@ -1,8 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import VectorImage from "react-native-vector-image";
 import LinearGradient from "react-native-linear-gradient";
 import { Colors } from "#styles";
+import { profile } from "#constants";
 
 interface StatisticsBoardProps {
   points: number;
@@ -38,7 +40,7 @@ const StatisticsBoard: React.FC<StatisticsBoardProps> = ({
         end={{ x: 0, y: 1 }}
       />
       <View style={styles.section}>
-        <Icon name="locate-outline" size={25} color="white"></Icon>
+        <VectorImage style={styles.icon} source={profile.LocalRank} />
         <Text style={styles.text}>LOCAL RANK</Text>
         <Text style={styles.count}>#1</Text>
       </View>
@@ -77,6 +79,11 @@ const styles = StyleSheet.create({
   },
   gradient2: {
     left: 218,
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    tintColor: "white",
   },
 });
 
