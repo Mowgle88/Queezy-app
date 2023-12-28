@@ -11,7 +11,6 @@ import { IconButton } from "#ui";
 import { Colors } from "#styles";
 import { MainStackParamList } from "../types";
 import { AuthContext } from "#store";
-import TabBarIcon from "./TabBarIcon";
 import {
   AchievementsScreen,
   CreateQuizScreen,
@@ -20,6 +19,8 @@ import {
   SearchScreen,
 } from "#screens";
 import { tabBarIcons } from "#constants";
+import VectorImage from "react-native-vector-image";
+import FastImage from "react-native-fast-image";
 
 const MainTab = createBottomTabNavigator<MainStackParamList>();
 
@@ -45,6 +46,12 @@ const CustomTabBarButton: React.FC<CustomTabBarButtonProps> = ({
 
 const MainTabs: React.FC = () => {
   const authCtx = useContext(AuthContext);
+
+  const iconStyle = (focused: boolean) => ({
+    width: focused ? 35 : 25,
+    height: focused ? 35 : 25,
+    tintColor: focused ? Colors.royalBlue : Colors.grey2,
+  });
 
   return (
     <MainTab.Navigator
@@ -78,7 +85,10 @@ const MainTabs: React.FC = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} source={tabBarIcons.Home} />
+            <VectorImage
+              style={{ ...iconStyle(focused) }}
+              source={tabBarIcons.Home}
+            />
           ),
           headerShown: false,
         }}
@@ -88,7 +98,10 @@ const MainTabs: React.FC = () => {
         component={SearchScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} source={tabBarIcons.Search} />
+            <VectorImage
+              style={{ ...iconStyle(focused) }}
+              source={tabBarIcons.Search}
+            />
           ),
         }}
       />
@@ -97,21 +110,20 @@ const MainTabs: React.FC = () => {
         component={CreateQuizScreen}
         options={{
           tabBarIcon: () => (
-            <TabBarIcon
-              isCustom
-              style={styles.customImage}
-              source={tabBarIcons.Plus}
-            />
+            <FastImage style={styles.customImage} source={tabBarIcons.Plus} />
           ),
           tabBarButton: props => <CustomTabBarButton {...props} />,
         }}
       />
       <MainTab.Screen
-        name="Achievements"
+        name="Leaderboard"
         component={AchievementsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} source={tabBarIcons.Achievements} />
+            <VectorImage
+              style={{ ...iconStyle(focused) }}
+              source={tabBarIcons.Leaderboard}
+            />
           ),
         }}
       />
@@ -120,7 +132,10 @@ const MainTabs: React.FC = () => {
         component={ProfileInfoScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} source={tabBarIcons.Profile} />
+            <VectorImage
+              style={{ ...iconStyle(focused) }}
+              source={tabBarIcons.Profile}
+            />
           ),
           headerShown: false,
         }}

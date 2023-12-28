@@ -53,7 +53,7 @@ export type MainStackParamList = {
   Home: undefined;
   Search: undefined;
   CreateQuiz: undefined;
-  Achievements: undefined;
+  Leaderboard: undefined;
   Profile: undefined;
 };
 

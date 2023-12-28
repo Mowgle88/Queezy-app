@@ -58,11 +58,11 @@ export const pictures = {
 
 export const tabBarIcons = {
   BottomTabs: require("../../assets/Bottom-tabs.png"),
-  Home: require("../../assets/Home.png"),
-  Search: require("../../assets/Search.png"),
+  Home: require("../../assets/icons/Icon-home.svg"),
+  Search: require("../../assets/icons/Icon-search.svg"),
   Plus: require("../../assets/Plus.png"),
-  Achievements: require("../../assets/Achievements.png"),
-  Profile: require("../../assets/Profile.png"),
+  Leaderboard: require("../../assets/icons/Icon-leaderboard.svg"),
+  Profile: require("../../assets/icons/Icon-profile.svg"),
 };
 
 export const formIcons = {
@@ -73,6 +73,10 @@ export const formIcons = {
   Secure: require("../../assets/icons/Icon-secure.svg"),
   Unprotected: require("../../assets/icons/Icon-unprotected.svg"),
   FindFriends: require("../../assets/icons/Icon-find-friends.svg"),
+};
+
+export const profile = {
+  LocalRank: require("../../assets/icons/Icon-localRank.svg"),
 };
 
 export const quizTypesIcons = {
