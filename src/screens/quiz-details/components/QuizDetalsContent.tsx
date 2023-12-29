@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import VectorImage from "react-native-vector-image";
 import { CustomButton } from "#ui";
@@ -45,10 +45,11 @@ const QuizDetalsContent: React.FC<QuizDetalsContentProps> = ({
         </View>
       </View>
       <Text style={styles.title}>Description</Text>
-      <Text style={styles.text}>
-        Any time is a good time for a quiz and even better if that happens to be{" "}
-        {title} themed quiz!
-      </Text>
+      <ScrollView>
+        <Text style={styles.text}>
+          {`Any time is a good time for a quiz and even better if that happens to ${title} themed quiz!`}
+        </Text>
+      </ScrollView>
       <Text style={styles.title}>Quiz Types</Text>
       <View style={styles.quizTypesContainer}>
         <Image source={quizTypesIcons.Multiple} />
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   },
   boardContainer: {
     height: 64,
-    marginVertical: 16,
+    marginVertical: 8,
     paddingVertical: 16,
     flexDirection: "row",
     justifyContent: "space-between",
