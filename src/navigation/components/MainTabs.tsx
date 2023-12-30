@@ -4,9 +4,11 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  View,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import VectorImage from "react-native-vector-image";
+import FastImage from "react-native-fast-image";
+import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "#ui";
 import { Colors } from "#styles";
 import { MainStackParamList } from "../types";
@@ -19,8 +21,6 @@ import {
   SearchScreen,
 } from "#screens";
 import { tabBarIcons } from "#constants";
-import VectorImage from "react-native-vector-image";
-import FastImage from "react-native-fast-image";
 
 const MainTab = createBottomTabNavigator<MainStackParamList>();
 
@@ -29,23 +29,31 @@ interface CustomTabBarButtonProps {
   onPress?: (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent,
   ) => void;
+  insets: EdgeInsets;
 }
 
 const CustomTabBarButton: React.FC<CustomTabBarButtonProps> = ({
   children,
   onPress,
+  insets,
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.customTabBarButtonContainer, styles.shadow]}
+      style={[
+        styles.customTabBarButtonContainer,
+        styles.shadow,
+        { bottom: insets.bottom ? 30 : 60 },
+      ]}
       onPress={onPress}>
-      <View style={styles.customTabBarButtonInnerContainer}>{children}</View>
+      {children}
     </TouchableOpacity>
   );
 };
 
 const MainTabs: React.FC = () => {
   const authCtx = useContext(AuthContext);
+
+  const insets = useSafeAreaInsets();
 
   const iconStyle = (focused: boolean) => ({
     width: focused ? 35 : 25,
@@ -70,7 +78,7 @@ const MainTabs: React.FC = () => {
           ...styles.shadow,
         },
         tabBarItemStyle: {
-          bottom: 15,
+          bottom: insets.bottom ? -10 : 20,
         },
         tabBarBackground: () => (
           <Image
@@ -85,10 +93,7 @@ const MainTabs: React.FC = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <VectorImage
-              style={{ ...iconStyle(focused) }}
-              source={tabBarIcons.Home}
-            />
+            <VectorImage style={iconStyle(focused)} source={tabBarIcons.Home} />
           ),
           headerShown: false,
         }}
@@ -99,7 +104,7 @@ const MainTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <VectorImage
-              style={{ ...iconStyle(focused) }}
+              style={iconStyle(focused)}
               source={tabBarIcons.Search}
             />
           ),
@@ -112,7 +117,9 @@ const MainTabs: React.FC = () => {
           tabBarIcon: () => (
             <FastImage style={styles.customImage} source={tabBarIcons.Plus} />
           ),
-          tabBarButton: props => <CustomTabBarButton {...props} />,
+          tabBarButton: props => (
+            <CustomTabBarButton insets={insets} {...props} />
+          ),
         }}
       />
       <MainTab.Screen
@@ -121,7 +128,7 @@ const MainTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <VectorImage
-              style={{ ...iconStyle(focused) }}
+              style={iconStyle(focused)}
               source={tabBarIcons.Leaderboard}
             />
           ),
@@ -133,7 +140,7 @@ const MainTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <VectorImage
-              style={{ ...iconStyle(focused) }}
+              style={iconStyle(focused)}
               source={tabBarIcons.Profile}
             />
           ),
@@ -146,11 +153,8 @@ const MainTabs: React.FC = () => {
 
 const styles = StyleSheet.create({
   customTabBarButtonContainer: {
-    bottom: 60,
     justifyContent: "center",
     alignItems: "center",
-  },
-  customTabBarButtonInnerContainer: {
     width: 50,
     height: 50,
     borderRadius: 25,
@@ -161,7 +165,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
-    elevation: 3,
+    elevation: 6,
   },
   customImage: {
     width: 125,

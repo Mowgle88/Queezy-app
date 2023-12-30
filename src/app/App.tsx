@@ -7,20 +7,23 @@ import {
   QuizContextProvider,
   UserContextProvider,
 } from "../store";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const App: React.FC = () => {
   return (
     <>
-      <StatusBar />
-      <AuthContextProvider>
-        <UserContextProvider>
-          <QuizContextProvider>
-            <GestureHandlerRootView style={styles.container}>
-              <Root />
-            </GestureHandlerRootView>
-          </QuizContextProvider>
-        </UserContextProvider>
-      </AuthContextProvider>
+      <SafeAreaProvider>
+        <StatusBar />
+        <AuthContextProvider>
+          <UserContextProvider>
+            <QuizContextProvider>
+              <GestureHandlerRootView style={styles.container}>
+                <Root />
+              </GestureHandlerRootView>
+            </QuizContextProvider>
+          </UserContextProvider>
+        </AuthContextProvider>
+      </SafeAreaProvider>
     </>
   );
 };

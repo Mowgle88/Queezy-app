@@ -15,10 +15,13 @@ import { UserContext } from "#store";
 import { ProfileScreenNativeStackProps } from "#navigation/types";
 import { fetchUsers } from "#api";
 import { BadgeBoard, RotatingView, StatisticsBoard } from "./components";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ProfileInfoScreen = () => {
   const [indexIcon, setIndexIcon] = useState(0);
   const [worldPrank, setWorldPrank] = useState(0);
+
+  const insets = useSafeAreaInsets();
 
   const isFocused = useIsFocused();
 
@@ -48,7 +51,7 @@ const ProfileInfoScreen = () => {
 
   return (
     <ImageBackground
-      style={styles.imageBgContainer}
+      style={[styles.imageBgContainer, { paddingTop: insets.top }]}
       source={backgrounds.Profile}>
       <View style={styles.iconButton}>
         <IconButton

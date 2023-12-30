@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LinearGradient from "react-native-linear-gradient";
 import { AuthContentNativeStackProps } from "#navigation/types";
@@ -67,30 +75,35 @@ const AuthContent: React.FC<AuthContentProps> = ({
   };
 
   return (
-    <LinearGradient
-      colors={["#9087E5", "#C4D0FB"]}
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}>
-      <View style={styles.authContent}>
-        <AuthForm
-          isLogin={isLogin}
-          onSubmit={submitHandler}
-          credentialsInvalid={credentialsInvalid}
-        />
-        <View style={styles.buttons}>
-          <CustomButton mode="flat" onPress={switchAuthModeHandler}>
-            {isLogin ? "Create a new user" : "Log in instead"}
-          </CustomButton>
-        </View>
-      </View>
-    </LinearGradient>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <LinearGradient
+        colors={["#9087E5", "#C4D0FB"]}
+        style={{ flex: 1 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={styles.keyboardAvoidingView}>
+          <View style={styles.authContent}>
+            <AuthForm
+              isLogin={isLogin}
+              onSubmit={submitHandler}
+              credentialsInvalid={credentialsInvalid}
+            />
+            <View style={styles.buttons}>
+              <CustomButton mode="flat" onPress={switchAuthModeHandler}>
+                {isLogin ? "Create a new user" : "Log in instead"}
+              </CustomButton>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </LinearGradient>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   authContent: {
-    marginTop: 100,
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 20,
@@ -112,6 +125,10 @@ const styles = StyleSheet.create({
   },
   buttons: {
     marginTop: 8,
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+    justifyContent: "center",
   },
 });
 

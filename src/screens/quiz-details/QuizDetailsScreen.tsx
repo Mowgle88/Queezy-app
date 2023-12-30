@@ -15,12 +15,16 @@ import {
 } from "#navigation/types";
 import { QuizDetalsContent, QuizTypesModal } from "./components";
 import { backgrounds, pictures } from "#constants";
+import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
 
 const QuizDetailsScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [numberOfQuastions, setNumberOfQuastions] = useState(10);
 
   const { width } = useWindowDimensions();
+
+  const insets = useSafeAreaInsets();
+  const styles = getStyles(insets);
 
   const navigation = useNavigation<QuizDetailsScreenNavigationProp>();
   const route = useRoute<QuizDetailsScreenRouteProp>();
@@ -73,17 +77,18 @@ const QuizDetailsScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  imageBgContainer: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    marginTop: 55,
-  },
-  image: {
-    top: 4,
-  },
-});
+const getStyles = (insets: EdgeInsets) =>
+  StyleSheet.create({
+    imageBgContainer: {
+      flex: 1,
+    },
+    container: {
+      flex: 1,
+      marginTop: 55 + insets.top,
+    },
+    image: {
+      top: 4,
+    },
+  });
 
 export default QuizDetailsScreen;
