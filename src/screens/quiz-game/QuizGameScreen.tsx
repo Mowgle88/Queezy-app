@@ -15,6 +15,7 @@ import {
 } from "#navigation/types";
 import { UserContext } from "#store";
 import { AnswersBlock, QuizGameHeader, QuizGameModal } from "./components";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const QuizGameScreen: React.FC = () => {
   const [points, setPoints] = useState(0);
@@ -31,6 +32,8 @@ const QuizGameScreen: React.FC = () => {
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
   const route = useRoute<QuizGameScreenRouteProp>();
   const isFocused = useIsFocused();
+
+  const insets = useSafeAreaInsets();
 
   const quizType = route.params.quizType;
   const numberOfQuastions = route.params.numberOfQuastions;
@@ -80,7 +83,7 @@ const QuizGameScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <QuizGameModal
         visible={modalVisible}
         onPass={goToNextQuestion}

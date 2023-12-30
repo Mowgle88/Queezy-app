@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { IconButton } from "../ui";
 import { Colors } from "#styles";
@@ -18,16 +18,18 @@ const Counter: React.FC<CounterProps> = ({
 }) => {
   const [count, setCount] = useState(number);
 
+  useEffect(() => {
+    changeNumber(count);
+  }, [count]);
+
   const increment = () => {
     if (count < maxNumber) {
       setCount(prev => (prev += step));
-      changeNumber(count);
     }
   };
   const decrement = () => {
-    if (count > 0) {
+    if (count > step) {
       setCount(prev => (prev -= step));
-      changeNumber(count);
     }
   };
   return (

@@ -10,9 +10,12 @@ import { utils } from "./duck";
 import { AuthContext, UserContext } from "#store";
 import { SettingItem } from "./components";
 import { formIcons } from "#constants";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const SettingsScreen = () => {
   const navigation = useNavigation<SettingsScreenNativeStackProps>();
+
+  const insets = useSafeAreaInsets();
 
   const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
@@ -40,7 +43,7 @@ const SettingsScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: 45 + insets.top }]}>
       <Text style={styles.categoryTitle}>Account</Text>
       <SettingItem
         title={"Update Profile"}
@@ -103,7 +106,6 @@ const SettingsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 45,
     paddingHorizontal: 24,
     backgroundColor: "white",
   },
@@ -122,9 +124,11 @@ const styles = StyleSheet.create({
   switchTitle: {
     fontWeight: "bold",
     fontSize: 16,
+    marginRight: 8,
   },
   switchContainer: {
     flexDirection: "row",
+    alignItems: "center",
   },
   buttonContainer: {
     marginTop: 80,
