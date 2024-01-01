@@ -1,16 +1,19 @@
 import React, { useContext, useState } from "react";
 import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
 import { LoadingOverlay } from "#ui";
 import { UserData } from "#types";
 import { createUser } from "#utils";
-import { AuthContext, UserContext } from "#store";
+import { UserContext } from "#store";
 import { addUserToDatabase } from "#api";
 import { AuthContent } from "./components";
+import { authenticate } from "#store/slices";
 
 const SignupScreen: React.FC = () => {
+  const dispatch = useDispatch();
+
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
   const signupHandler = async ({
@@ -22,7 +25,7 @@ const SignupScreen: React.FC = () => {
     setIsAuthenticating(true);
     try {
       const token = await createUser(email, password);
-      authCtx.authenticate(token);
+      dispatch(authenticate({ token }));
       const userID = await addUserToDatabase({
         email,
         password,

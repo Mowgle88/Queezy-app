@@ -114,10 +114,10 @@ const EditProfileScreen: React.FC = () => {
     const valueChange = userName
       ? "Username"
       : email
-      ? "Email"
-      : password
-      ? "Password"
-      : "Difficulty";
+        ? "Email"
+        : password
+          ? "Password"
+          : "Difficulty";
 
     Toast.show({
       type: "success",

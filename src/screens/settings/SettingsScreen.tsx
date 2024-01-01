@@ -1,23 +1,26 @@
 import React, { useContext } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import { CustomButton } from "#ui";
 import { CounterBlock } from "#components";
 import { Colors } from "#styles";
 import { SettingsScreenNativeStackProps } from "#navigation/types";
 import { EditProfileScreenType } from "#types";
 import { utils } from "./duck";
-import { AuthContext, UserContext } from "#store";
+import { UserContext } from "#store";
 import { SettingItem } from "./components";
 import { formIcons } from "#constants";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { logout } from "#store/slices";
 
 const SettingsScreen = () => {
   const navigation = useNavigation<SettingsScreenNativeStackProps>();
 
+  const dispatch = useDispatch();
+
   const insets = useSafeAreaInsets();
 
-  const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
   const isTimeGame = userCtx.settings.isTimeGame;
@@ -38,7 +41,7 @@ const SettingsScreen = () => {
   };
 
   const onLogoutHandler = () => {
-    authCtx.logout();
+    dispatch(logout());
     userCtx.removeUser();
   };
 

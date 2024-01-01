@@ -3,13 +3,16 @@ import { Alert } from "react-native";
 import { LoadingOverlay } from "#ui";
 import { login } from "#utils";
 import { fetchUsers } from "#api";
-import { AuthContext, UserContext } from "#store";
+import { UserContext } from "#store";
 import { AuthContent } from "./components";
+import { useDispatch } from "react-redux";
+import { authenticate } from "#store/slices";
 
 const LoginScreen: React.FC = () => {
+  const dispatch = useDispatch();
+
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  const authCtx = useContext(AuthContext);
   const userCtx = useContext(UserContext);
 
   const signinHandler = async ({
@@ -22,7 +25,7 @@ const LoginScreen: React.FC = () => {
     setIsAuthenticating(true);
     try {
       const token = await login(email, password);
-      authCtx.authenticate(token);
+      dispatch(authenticate({ token }));
       const users = await fetchUsers();
       const userData = users.filter(
         userData => userData.user.email === email,

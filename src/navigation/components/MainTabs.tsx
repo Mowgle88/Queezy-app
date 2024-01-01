@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode } from "react";
 import {
   GestureResponderEvent,
   Image,
@@ -9,10 +9,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import VectorImage from "react-native-vector-image";
 import FastImage from "react-native-fast-image";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import { IconButton } from "#ui";
 import { Colors } from "#styles";
 import { MainStackParamList } from "../types";
-import { AuthContext } from "#store";
 import {
   AchievementsScreen,
   CreateQuizScreen,
@@ -21,6 +21,7 @@ import {
   SearchScreen,
 } from "#screens";
 import { tabBarIcons } from "#constants";
+import { logout } from "#store/slices";
 
 const MainTab = createBottomTabNavigator<MainStackParamList>();
 
@@ -51,7 +52,7 @@ const CustomTabBarButton: React.FC<CustomTabBarButtonProps> = ({
 };
 
 const MainTabs: React.FC = () => {
-  const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const insets = useSafeAreaInsets();
 
@@ -69,7 +70,7 @@ const MainTabs: React.FC = () => {
             icon={"exit"}
             size={24}
             color={tintColor!}
-            onPress={authCtx.logout}
+            onPress={() => dispatch(logout())}
           />
         ),
         tabBarShowLabel: false,
