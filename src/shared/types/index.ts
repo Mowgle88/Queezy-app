@@ -17,17 +17,16 @@ export interface IUser {
 
 export type UserData = Omit<IUser, "userId">;
 
-export type UserQuizData = {
-  points: number;
-};
-
 export interface IUserBackendData {
   email: string;
-  password: string;
   userName: string;
   date: string;
   settings: ISettings;
   quizData: IQuizData;
+}
+
+export interface IQuizData {
+  points: number;
 }
 
 export interface ISettings {
@@ -43,10 +42,6 @@ export type EditProfileScreenType =
   | "email"
   | "password"
   | "difficulty";
-
-export interface IQuizData {
-  points: number;
-}
 
 export type LocalStorageUserData = Omit<IUser, "email" | "password" | "date">;
 

@@ -3,19 +3,19 @@ import {
   IUser,
   IUserBackendData,
   UserData,
-  UserQuizData,
+  IQuizData,
   ISettings,
 } from "../types";
 import { IUserContext } from "../../store";
 
 type IFetchUsers = IUser & { settings: ISettings } & {
-  quizData: UserQuizData;
+  quizData: IQuizData;
 };
 
 const BACKEND_URL =
   "https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/";
 
-export const addUserToDatabase = async (userData: UserData) => {
+export const addUserToDatabase = async (userData: Partial<UserData>) => {
   const userBackendData = {
     ...userData,
     settings: {
@@ -31,7 +31,7 @@ export const addUserToDatabase = async (userData: UserData) => {
     `${BACKEND_URL}/users.json`,
     userBackendData,
   );
-  const id = response.data.name;
+  const id: string = response.data.name;
   return id;
 };
 
@@ -42,13 +42,10 @@ export const fetchUsers = async () => {
 
   for (const key in response.data) {
     const userObj = {
-      user: {
-        userId: key,
-        email: response.data[key].email,
-        password: response.data[key].password,
-        userName: response.data[key].userName,
-        date: response.data[key].date,
-      },
+      userId: key,
+      email: response.data[key].email,
+      userName: response.data[key].userName,
+      date: response.data[key].date,
       settings: {
         difficulty: response.data[key].settings.difficulty,
         isTimeGame: response.data[key].settings.isTimeGame,
