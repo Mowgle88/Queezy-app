@@ -3,48 +3,32 @@ import { StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 import { CategoryGridTile } from "#ui";
 import { Colors } from "#styles";
 import { Category } from "#models";
 import { CATEGORIES } from "#data";
 import { HomeScreenNavigationProp } from "#navigation/types";
-import {
-  CategoryName,
-  IQuizCategoriesData,
-  LocalStorageUserData,
-} from "#types";
-import { QuizContext, UserContext } from "#store";
-import { fetchUser, getQuizCategories } from "#api";
+import { CategoryName, IQuizCategoriesData } from "#types";
+import { QuizContext } from "#store";
+import { getQuizCategories } from "#api";
 import {
   FeaturedBoard,
   GreetingBoard,
   RecentQuizBoard,
   SlidingView,
 } from "./components";
+import { selectors } from "#store/selectors";
 
 interface renderCategoryItemProps {
   item: Category;
 }
 
 const HomeScreen: React.FC = () => {
-  const userCtx = useContext(UserContext);
+  const user = useSelector(selectors.user);
+
   const quizCtx = useContext(QuizContext);
   const navigation = useNavigation<HomeScreenNavigationProp>();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const userData = await AsyncStorage.getItem("userData");
-
-      if (userData) {
-        const lSUserData: LocalStorageUserData = JSON.parse(userData);
-        const user = await fetchUser(lSUserData.userId);
-        userCtx.setUser({ ...user, userId: lSUserData.userId });
-        userCtx.setSettings(user.settings);
-        userCtx.setQuizData(user.quizData);
-      }
-    };
-    fetchUserData();
-  }, []);
 
   useEffect(() => {
     const fetchQuizCategoriesData = async () => {
@@ -72,7 +56,7 @@ const HomeScreen: React.FC = () => {
 
   const renderCategoryItem = (itemData: renderCategoryItemProps) => {
     const categoryName = itemData.item.title.toLowerCase();
-    const difficulty = userCtx.settings.difficulty;
+    const difficulty = user.settings.difficulty;
     const quizzes =
       quizCtx.quizCategoryData &&
       quizCtx.quizCategoryData[categoryName as CategoryName]
@@ -99,7 +83,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <GreetingBoard userName={userCtx.user.userName} />
+      <GreetingBoard userName={user.userName} />
 
       <SlidingView distance={350}>
         <RecentQuizBoard />

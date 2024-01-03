@@ -6,7 +6,6 @@ import {
   IQuizData,
   ISettings,
 } from "../types";
-import { IUserContext } from "../../store";
 
 type IFetchUsers = IUser & { settings: ISettings } & {
   quizData: IQuizData;
@@ -79,14 +78,4 @@ export const updateUser = async (id: string, userData: IUserBackendData) => {
 export const getQuizCategories = async () => {
   const response = await axios.get(`${BACKEND_URL}/categories.json`);
   return response.data;
-};
-
-export const setUserBackendData = (userCtx: IUserContext) => {
-  const userBackendData = {
-    ...userCtx.user,
-    settings: userCtx.settings,
-    quizData: userCtx.quizData,
-  };
-  Reflect.deleteProperty(userBackendData, "userId");
-  return userBackendData;
 };

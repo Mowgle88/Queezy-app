@@ -21,7 +21,7 @@ import {
   SearchScreen,
 } from "#screens";
 import { tabBarIcons } from "#constants";
-import { logout } from "#store/slices";
+import { logout, removeUser } from "#store/slices";
 
 const MainTab = createBottomTabNavigator<MainStackParamList>();
 
@@ -70,7 +70,10 @@ const MainTabs: React.FC = () => {
             icon={"exit"}
             size={24}
             color={tintColor!}
-            onPress={() => dispatch(logout())}
+            onPress={() => {
+              dispatch(logout());
+              dispatch(removeUser());
+            }}
           />
         ),
         tabBarShowLabel: false,

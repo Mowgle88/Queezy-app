@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { CustomButton } from "#ui";
@@ -7,16 +7,18 @@ import {
   QuizCompletedScreenRouteProp,
   QuizGameScreenNavigationProp,
 } from "#navigation/types";
-import { UserContext } from "#store";
-import { setPoints } from "./duck/utils";
 import { TitleValueBlock } from "./components";
 import { pictures } from "#constants";
+import { updatePoints } from "#utils";
+import { useDispatch, useSelector } from "react-redux";
+import { selectors } from "#store/selectors";
 
 const QuizCompletedScreen = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectors.user);
+
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
   const route = useRoute<QuizCompletedScreenRouteProp>();
-
-  const userCtx = useContext(UserContext);
 
   const points = route.params?.points;
   const correctAnswers = route.params?.correctAnswers;
@@ -28,18 +30,24 @@ const QuizCompletedScreen = () => {
     completion < 20
       ? "Very sad..."
       : completion >= 20 && completion < 50
-      ? "Can be better"
-      : completion >= 50 && completion < 80
-      ? "Good Job!"
-      : completion >= 80 && completion < 100
-      ? "Excellent!!"
-      : "Perfect!!!";
+        ? "Can be better"
+        : completion >= 50 && completion < 80
+          ? "Good Job!"
+          : completion >= 80 && completion < 100
+            ? "Excellent!!"
+            : "Perfect!!!";
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: title,
     });
   }, [points, navigation]);
+
+  useEffect(() => {
+    if (points > 0) {
+      updatePoints(points, user, dispatch);
+    }
+  }, [points]);
 
   const goToStatistics = () => {
     navigation.navigate("ReviewQuiz", {
@@ -50,7 +58,6 @@ const QuizCompletedScreen = () => {
 
   const exitTheGame = () => {
     navigation.navigate("Home");
-    setPoints(points, userCtx);
   };
 
   return (

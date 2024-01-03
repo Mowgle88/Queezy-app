@@ -1,30 +1,26 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CustomButton } from "#ui";
 import { CounterBlock } from "#components";
 import { Colors } from "#styles";
 import { SettingsScreenNativeStackProps } from "#navigation/types";
-import { EditProfileScreenType } from "#types";
-import { utils } from "./duck";
-import { UserContext } from "#store";
+import { EditProfileScreenType, ISettings } from "#types";
 import { SettingItem } from "./components";
 import { formIcons } from "#constants";
-import { logout } from "#store/slices";
+import { logout, removeUser } from "#store/slices";
+import { selectors } from "#store/selectors";
+import { updateSettings } from "#utils";
 
 const SettingsScreen = () => {
   const navigation = useNavigation<SettingsScreenNativeStackProps>();
 
   const dispatch = useDispatch();
+  const user = useSelector(selectors.user);
 
   const insets = useSafeAreaInsets();
-
-  const userCtx = useContext(UserContext);
-
-  const isTimeGame = userCtx.settings.isTimeGame;
-  const timeOnAnswer = userCtx.settings.timeOnAnswer;
 
   const pressHandler = (type: EditProfileScreenType) => {
     navigation.navigate("EditProfile", {
@@ -32,17 +28,13 @@ const SettingsScreen = () => {
     });
   };
 
-  const changeValue = (value: boolean) => {
-    utils.setTimeGame(value, userCtx);
-  };
-
-  const changeTime = (count: number) => {
-    utils.changeTimeGame(count, userCtx);
+  const changeValue = (value: Partial<ISettings>) => {
+    updateSettings(value, user, dispatch);
   };
 
   const onLogoutHandler = () => {
     dispatch(logout());
-    userCtx.removeUser();
+    dispatch(removeUser());
   };
 
   return (
@@ -57,14 +49,14 @@ const SettingsScreen = () => {
       />
       <SettingItem
         title={"Change Email Address"}
-        description={userCtx.user.email}
+        description={user.email}
         type={"email"}
         source={formIcons.Email}
         onPress={pressHandler}
       />
       <SettingItem
         title={"Change Password"}
-        description={`last change ${userCtx.user.date}`}
+        description={`last change ${user.date}`}
         type={"password"}
         source={formIcons.Password}
         onPress={pressHandler}
@@ -73,21 +65,27 @@ const SettingsScreen = () => {
       <View style={styles.timeGameContainer}>
         <Text style={styles.switchTitle}>Time game</Text>
         <View style={styles.switchContainer}>
-          <Text style={styles.switchTitle}>{isTimeGame ? "on" : "off"}</Text>
+          <Text style={styles.switchTitle}>
+            {user.settings.isTimeGame ? "on" : "off"}
+          </Text>
           <Switch
             trackColor={{ false: "#767577", true: Colors.royalBlue }}
-            thumbColor={isTimeGame ? Colors.hawkesBlue : "#f4f3f4"}
-            onValueChange={changeValue}
-            value={isTimeGame}
+            thumbColor={
+              user.settings.isTimeGame ? Colors.hawkesBlue : "#f4f3f4"
+            }
+            onValueChange={(value: boolean) =>
+              changeValue({ isTimeGame: value })
+            }
+            value={user.settings.isTimeGame}
           />
         </View>
       </View>
-      {isTimeGame && (
+      {user.settings.isTimeGame && (
         <CounterBlock
           title={"Time to answer"}
-          number={timeOnAnswer}
+          number={user.settings.timeOnAnswer}
           step={30}
-          changeNumber={changeTime}
+          changeNumber={(count: number) => changeValue({ timeOnAnswer: count })}
         />
       )}
       <SettingItem
