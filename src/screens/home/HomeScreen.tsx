@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CategoryGridTile } from "#ui";
 import { Colors } from "#styles";
 import { Category } from "#models";
 import { CATEGORIES } from "#data";
 import { HomeScreenNavigationProp } from "#navigation/types";
 import { CategoryName, IQuizCategoriesData } from "#types";
-import { QuizContext } from "#store";
 import { getQuizCategories } from "#api";
 import {
   FeaturedBoard,
@@ -19,29 +17,23 @@ import {
   SlidingView,
 } from "./components";
 import { selectors } from "#store/selectors";
+import { setCategories } from "#store/slices";
 
 interface renderCategoryItemProps {
   item: Category;
 }
 
 const HomeScreen: React.FC = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectors.user);
+  const categories = useSelector(selectors.categories);
 
-  const quizCtx = useContext(QuizContext);
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   useEffect(() => {
     const fetchQuizCategoriesData = async () => {
-      const categoriesData = await AsyncStorage.getItem("quizCategoryData");
-
-      if (categoriesData) {
-        const lsCategoriesData: IQuizCategoriesData =
-          JSON.parse(categoriesData);
-        quizCtx.setQuizCategoryData(lsCategoriesData);
-      } else {
-        const categoriesData: IQuizCategoriesData = await getQuizCategories();
-        quizCtx.setQuizCategoryData(categoriesData);
-      }
+      const categoriesData: IQuizCategoriesData = await getQuizCategories();
+      dispatch(setCategories(categoriesData));
     };
     fetchQuizCategoriesData();
   }, []);
@@ -56,12 +48,8 @@ const HomeScreen: React.FC = () => {
 
   const renderCategoryItem = (itemData: renderCategoryItemProps) => {
     const categoryName = itemData.item.title.toLowerCase();
-    const difficulty = user.settings.difficulty;
-    const quizzes =
-      quizCtx.quizCategoryData &&
-      quizCtx.quizCategoryData[categoryName as CategoryName]
-        ? quizCtx.quizCategoryData[categoryName as CategoryName][difficulty]
-        : null;
+    const difficulty = user.settings?.difficulty;
+    const quizzes = categories?.[categoryName as CategoryName]?.[difficulty];
 
     const pressHandler = () => {
       navigation.navigate("QuizDetails", {

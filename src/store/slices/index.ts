@@ -5,3 +5,4 @@ export {
   updateQuizData,
   removeUser,
 } from "./userSlice";
+export { setCategories, addNewQuiz } from "./quizSlice";

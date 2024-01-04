@@ -26,6 +26,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        warnAfter: 128,
       },
       thunk: true,
     }),
@@ -35,15 +36,3 @@ export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-export {
-  type IAuthContext,
-  AuthContextProvider,
-  AuthContext,
-} from "./contexts/auth-context";
-export { QuizContextProvider, QuizContext } from "./contexts/quiz-context";
-export {
-  type IUserContext,
-  UserContextProvider,
-  UserContext,
-} from "./contexts/user-context";

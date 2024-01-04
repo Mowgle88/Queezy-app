@@ -5,13 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Root } from "#navigation";
-import {
-  AuthContextProvider,
-  QuizContextProvider,
-  UserContextProvider,
-  persistor,
-  store,
-} from "../store";
+import { persistor, store } from "../store";
 
 const App: React.FC = () => {
   return (
@@ -20,15 +14,9 @@ const App: React.FC = () => {
         <StatusBar />
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <AuthContextProvider>
-              <UserContextProvider>
-                <QuizContextProvider>
-                  <GestureHandlerRootView style={styles.container}>
-                    <Root />
-                  </GestureHandlerRootView>
-                </QuizContextProvider>
-              </UserContextProvider>
-            </AuthContextProvider>
+            <GestureHandlerRootView style={styles.container}>
+              <Root />
+            </GestureHandlerRootView>
           </PersistGate>
         </Provider>
       </SafeAreaProvider>
