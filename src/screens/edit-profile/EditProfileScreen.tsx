@@ -1,24 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
-import { DifficultyData } from "#constants";
+import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "#styles";
-import { AuthContext, UserContext } from "#store";
 import {
   EditProfileScreenNavigationProp,
   EditProfileScreenRouteProp,
 } from "#navigation/types";
 import { EditProfileForm, type IDataToEdit } from "./components";
-import { utils } from "./duck";
+import {
+  changeEmail,
+  changePassword,
+  updateInfo,
+  updateSettings,
+} from "#utils";
+import { selectors } from "#store/selectors";
 
 const EditProfileScreen: React.FC = () => {
   const navigation = useNavigation<EditProfileScreenNavigationProp>();
   const route = useRoute<EditProfileScreenRouteProp>();
   const screenType = route.params.screenType;
 
-  const authCtx = useContext(AuthContext);
-  const userCtx = useContext(UserContext);
+  const dispatch = useDispatch();
+  const user = useSelector(selectors.user);
+  const { token } = useSelector(selectors.auth);
 
   const [isChangeUsername, setIsChangeUsername] = useState(false);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
@@ -82,31 +88,18 @@ const EditProfileScreen: React.FC = () => {
       return;
     }
 
-    const userData = {
-      userName,
-      email,
-      password,
-      date,
-    };
-
-    const userSettingsData = {
-      difficulty: difficulty as DifficultyData,
-      isTimeGame: userCtx.settings.isTimeGame,
-      timeOnAnswer: userCtx.settings.timeOnAnswer,
-    };
-
     switch (screenType) {
       case "profile":
-        utils.changeUserName(userData, userCtx);
+        updateInfo({ userName }, user, dispatch);
         break;
       case "email":
-        utils.changeEmail(userData, authCtx, userCtx);
+        changeEmail({ email }, user, token!, dispatch);
         break;
       case "password":
-        utils.changePassword(userData, authCtx, userCtx);
+        changePassword({ password, date }, user, token!, dispatch);
         break;
       case "difficulty":
-        utils.changeDifficulty(userSettingsData, userCtx);
+        updateSettings({ difficulty }, user, dispatch);
         break;
     }
     navigation.goBack();
@@ -114,10 +107,10 @@ const EditProfileScreen: React.FC = () => {
     const valueChange = userName
       ? "Username"
       : email
-      ? "Email"
-      : password
-      ? "Password"
-      : "Difficulty";
+        ? "Email"
+        : password
+          ? "Password"
+          : "Difficulty";
 
     Toast.show({
       type: "success",
@@ -136,12 +129,10 @@ const EditProfileScreen: React.FC = () => {
           {isChangeDifficulty && " difficulty"}
         </Text>
         {isChangeUsername && (
-          <Text style={styles.text}>
-            Current username: {userCtx.user.userName}
-          </Text>
+          <Text style={styles.text}>Current username: {user.userName}</Text>
         )}
         {isChangeEmail && (
-          <Text style={styles.text}>Current email: {userCtx.user.email}</Text>
+          <Text style={styles.text}>Current email: {user.email}</Text>
         )}
       </View>
       <EditProfileForm

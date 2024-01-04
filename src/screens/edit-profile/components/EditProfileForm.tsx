@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
 import { CustomButton, CustomInput, RadioButtons } from "#ui";
 import { difficultyData, DifficultyData, formIcons } from "#constants";
 import { ICredentialsInvalid } from "#types";
-import { UserContext } from "#store";
+import { selectors } from "#store/selectors";
 
 interface EditProfileFormProps {
   isChangeUsername?: boolean;
@@ -30,7 +31,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
   onSubmit,
   credentialsInvalid,
 }) => {
-  const userCtx = useContext(UserContext);
+  const settings = useSelector(selectors.settings);
 
   const [enteredUserName, setEnteredUserName] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -126,7 +127,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             passValue={value => {
               setSelectedDifficulty(value);
             }}
-            defaultValue={userCtx.settings.difficulty}
+            defaultValue={settings.difficulty}
             radioButtons={difficultyData}
           />
         )}

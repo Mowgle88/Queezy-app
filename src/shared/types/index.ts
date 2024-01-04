@@ -17,17 +17,16 @@ export interface IUser {
 
 export type UserData = Omit<IUser, "userId">;
 
-export type UserQuizData = {
-  points: number;
-};
-
 export interface IUserBackendData {
   email: string;
-  password: string;
   userName: string;
   date: string;
   settings: ISettings;
   quizData: IQuizData;
+}
+
+export interface IQuizData {
+  points: number;
 }
 
 export interface ISettings {
@@ -44,12 +43,6 @@ export type EditProfileScreenType =
   | "password"
   | "difficulty";
 
-export interface IQuizData {
-  points: number;
-}
-
-export type LocalStorageUserData = Omit<IUser, "email" | "password" | "date">;
-
 export type IQuizCategoriesData = {
   [key in CategoryName]: IDifficultyData;
 };
@@ -61,14 +54,14 @@ export interface IDifficultyData {
 }
 
 export interface IQuizItem {
-  category: string;
+  category: CategoryName;
   correctAnswer: string;
-  difficulty: string;
+  difficulty: DifficultyDataType;
   id: string;
   incorrectAnswers: string[];
   question: string;
   tags: string[];
-  type: string;
+  type: string | string[];
 }
 
 export type RadioButtonProps<Type> = {

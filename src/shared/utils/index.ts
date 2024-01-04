@@ -1,4 +1,5 @@
 export * from "./auth/index";
+export * from "./user/index";
 export * from "./date/index";
 
 export const getSourcePath = (title: string) => {
