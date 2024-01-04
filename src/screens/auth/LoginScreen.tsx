@@ -1,16 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
 import { LoadingOverlay } from "#ui";
 import { login } from "#utils";
 import { fetchUsers } from "#api";
-import { AuthContext, UserContext } from "#store";
 import { AuthContent } from "./components";
+import { authenticate, setUserData } from "#store/slices";
 
 const LoginScreen: React.FC = () => {
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const dispatch = useDispatch();
 
-  const authCtx = useContext(AuthContext);
-  const userCtx = useContext(UserContext);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const signinHandler = async ({
     email,
@@ -22,14 +22,10 @@ const LoginScreen: React.FC = () => {
     setIsAuthenticating(true);
     try {
       const token = await login(email, password);
-      authCtx.authenticate(token);
+      dispatch(authenticate({ token }));
       const users = await fetchUsers();
-      const userData = users.filter(
-        userData => userData.user.email === email,
-      )[0];
-      userCtx.setUser(userData.user);
-      userCtx.setSettings(userData.settings);
-      userCtx.setQuizData(userData.quizData);
+      const userData = users.filter(userData => userData.email === email)[0];
+      dispatch(setUserData(userData));
     } catch (error) {
       Alert.alert(
         "Authentication failed!",

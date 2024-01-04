@@ -1,10 +1,12 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   useIsFocused,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import { CountDown } from "#ui";
 import { Colors } from "#styles";
 import { shuffle } from "#utils";
@@ -13,27 +15,25 @@ import {
   QuizGameScreenNavigationProp,
   QuizGameScreenRouteProp,
 } from "#navigation/types";
-import { UserContext } from "#store";
 import { AnswersBlock, QuizGameHeader, QuizGameModal } from "./components";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { selectors } from "#store/selectors";
 
 const QuizGameScreen: React.FC = () => {
+  const settings = useSelector(selectors.settings);
+
+  const navigation = useNavigation<QuizGameScreenNavigationProp>();
+  const route = useRoute<QuizGameScreenRouteProp>();
+
+  const isFocused = useIsFocused();
+
+  const insets = useSafeAreaInsets();
+
   const [points, setPoints] = useState(0);
   const [index, seIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [correctAnswers, setCorrectAnswers] = useState<IAnswersData[]>([]);
   const [incorrectAnswers, setIncorrectAnswers] = useState<IAnswersData[]>([]);
-
-  const userCtx = useContext(UserContext);
-  const isTimeGame = userCtx.settings.isTimeGame;
-  const timeOnAnswer = userCtx.settings.timeOnAnswer;
-
-  const navigation = useNavigation<QuizGameScreenNavigationProp>();
-  const route = useRoute<QuizGameScreenRouteProp>();
-  const isFocused = useIsFocused();
-
-  const insets = useSafeAreaInsets();
 
   const quizType = route.params.quizType;
   const numberOfQuastions = route.params.numberOfQuastions;
@@ -104,10 +104,10 @@ const QuizGameScreen: React.FC = () => {
           QUESTION {index + 1} OF {quizzes.length}
         </Text>
         <View style={styles.quizContainer}>
-          {isTimeGame && isFocused && (
+          {settings.isTimeGame && isFocused && (
             <View style={styles.countDownContainer}>
               <CountDown
-                timeOnAnswer={timeOnAnswer}
+                timeOnAnswer={settings.timeOnAnswer}
                 finishTheGame={finishTheGame}
               />
             </View>

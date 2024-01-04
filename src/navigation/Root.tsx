@@ -1,31 +1,22 @@
-import React, { useContext, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect } from "react";
 import SplashScreen from "react-native-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
-import { AuthContext } from "#store";
+import { useSelector } from "react-redux";
 import { toastConfig } from "#config";
 import { AuthStack, AuthenticatedStack } from "./staks";
+import { selectors } from "#store/selectors";
 
 const Root: React.FC = () => {
-  const authCtx = useContext(AuthContext);
+  const { isAuthenticated } = useSelector(selectors.auth);
 
   useEffect(() => {
-    const fetchToken = async () => {
-      const storedToken = await AsyncStorage.getItem("token");
-
-      if (storedToken) {
-        authCtx.authenticate(storedToken);
-      }
-      SplashScreen.hide();
-    };
-
-    fetchToken();
+    SplashScreen.hide();
   }, []);
 
   return (
     <NavigationContainer>
-      {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+      {isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
       <Toast config={toastConfig} />
     </NavigationContainer>
   );

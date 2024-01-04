@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
@@ -8,16 +8,23 @@ import {
   View,
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import { avatarSource, backgrounds } from "#constants";
 import { Colors } from "#styles";
 import { IconButton } from "#ui";
-import { UserContext } from "#store";
 import { ProfileScreenNativeStackProps } from "#navigation/types";
 import { fetchUsers } from "#api";
 import { BadgeBoard, RotatingView, StatisticsBoard } from "./components";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { selectors } from "#store/selectors";
 
 const ProfileInfoScreen = () => {
+  const {
+    userId,
+    userName,
+    quizData: { points },
+  } = useSelector(selectors.user);
+
   const [indexIcon, setIndexIcon] = useState(0);
   const [worldPrank, setWorldPrank] = useState(0);
 
@@ -27,8 +34,6 @@ const ProfileInfoScreen = () => {
 
   const navigation = useNavigation<ProfileScreenNativeStackProps>();
 
-  const userCtx = useContext(UserContext);
-
   useLayoutEffect(() => {
     const fetchUsersData = async () => {
       const usersData = await fetchUsers();
@@ -36,15 +41,13 @@ const ProfileInfoScreen = () => {
         (prev, next) => next.quizData.points - prev.quizData.points,
       );
       sortedUsersData.forEach((userData, index) => {
-        if (userData.user.userId === userCtx.user.userId) {
+        if (userData.userId === userId) {
           setWorldPrank(index + 1);
         }
       });
     };
     fetchUsersData();
   }, [isFocused]);
-
-  const points = userCtx.quizData.points;
 
   const valueOfScale = useRef(new Animated.Value(0)).current;
   const valueOfRotate = useRef(new Animated.Value(0)).current;
@@ -80,7 +83,7 @@ const ProfileInfoScreen = () => {
               />
             </View>
           </View>
-          <Text style={styles.userNameText}>{userCtx.user.userName}</Text>
+          <Text style={styles.userNameText}>{userName}</Text>
           <RotatingView valueOfScale={valueOfScale}>
             <StatisticsBoard points={points} worldPrank={worldPrank} />
           </RotatingView>
