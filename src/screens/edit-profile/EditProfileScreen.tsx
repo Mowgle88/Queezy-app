@@ -24,7 +24,6 @@ const EditProfileScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const user = useSelector(selectors.user);
-  const { token } = useSelector(selectors.auth);
 
   const [isChangeUsername, setIsChangeUsername] = useState(false);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
@@ -90,16 +89,16 @@ const EditProfileScreen: React.FC = () => {
 
     switch (screenType) {
       case "profile":
-        updateInfo({ userName }, user, dispatch);
+        updateInfo({ userName }, dispatch);
         break;
       case "email":
-        changeEmail({ email }, user, token!, dispatch);
+        changeEmail({ email }, dispatch);
         break;
       case "password":
-        changePassword({ password, date }, user, token!, dispatch);
+        changePassword({ password, date }, dispatch);
         break;
       case "difficulty":
-        updateSettings({ difficulty }, user, dispatch);
+        updateSettings({ difficulty }, dispatch);
         break;
     }
     navigation.goBack();

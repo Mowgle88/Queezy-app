@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import { CustomButton } from "#ui";
 import { Colors } from "#styles";
 import {
@@ -10,12 +11,9 @@ import {
 import { TitleValueBlock } from "./components";
 import { pictures } from "#constants";
 import { updatePoints } from "#utils";
-import { useDispatch, useSelector } from "react-redux";
-import { selectors } from "#store/selectors";
 
 const QuizCompletedScreen = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectors.user);
 
   const navigation = useNavigation<QuizGameScreenNavigationProp>();
   const route = useRoute<QuizCompletedScreenRouteProp>();
@@ -45,7 +43,7 @@ const QuizCompletedScreen = () => {
 
   useEffect(() => {
     if (points > 0) {
-      updatePoints(points, user, dispatch);
+      updatePoints(points, dispatch);
     }
   }, [points]);
 

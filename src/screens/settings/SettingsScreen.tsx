@@ -29,7 +29,7 @@ const SettingsScreen = () => {
   };
 
   const changeValue = (value: Partial<ISettings>) => {
-    updateSettings(value, user, dispatch);
+    updateSettings(value, dispatch);
   };
 
   const onLogoutHandler = () => {
