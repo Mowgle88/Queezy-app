@@ -1,27 +1,26 @@
 import { updateUser } from "#api";
 import { ISettings, UserData } from "#types";
-import type { AppDispatch } from "#store";
-import { authenticate, changeSettings } from "#store/slices";
+import { store, type AppDispatch } from "#store";
 import {
-  UserState,
+  authenticate,
+  changeSettings,
   setUserData,
   updateQuizData,
-} from "#store/slices/userSlice";
+} from "#store/slices";
 import { changeUserEmail, changeUserPassword } from "#utils";
 
 export const updateSettings = async (
   value: Partial<ISettings>,
-  user: UserState,
   dispatch: AppDispatch,
 ) => {
-  const { userId, ...userBackendData } = user;
+  const { userId, ...userData } = store.getState().user;
 
   dispatch(changeSettings(value));
 
   await updateUser(userId, {
-    ...userBackendData,
+    ...userData,
     settings: {
-      ...user.settings,
+      ...userData.settings,
       ...value,
     },
   });
@@ -29,28 +28,27 @@ export const updateSettings = async (
 
 export const updateInfo = async (
   value: Partial<UserData>,
-  user: UserState,
   dispatch: AppDispatch,
 ) => {
-  const { userId, ...userBackendData } = user;
+  const { userId, ...userData } = store.getState().user;
 
   dispatch(setUserData(value));
 
   await updateUser(userId, {
-    ...userBackendData,
+    ...userData,
     ...value,
   });
 };
 
 export const changeEmail = async (
   value: Partial<UserData>,
-  user: UserState,
-  token: string,
   dispatch: AppDispatch,
 ) => {
-  updateInfo(value, user, dispatch);
+  const token = store.getState().auth.token;
 
-  const newToken = await changeUserEmail(value.email!, token);
+  updateInfo(value, dispatch);
+
+  const newToken = await changeUserEmail(value.email!, token!);
   dispatch(authenticate({ token: newToken }));
 };
 
@@ -59,31 +57,28 @@ export const changePassword = async (
     password: string;
     date: string;
   },
-  user: UserState,
-  token: string,
   dispatch: AppDispatch,
 ) => {
-  const { date, password } = value;
-  updateInfo({ date }, user, dispatch);
+  const token = store.getState().auth.token;
 
-  const newToken = await changeUserPassword(password, token);
+  const { date, password } = value;
+  updateInfo({ date }, dispatch);
+
+  const newToken = await changeUserPassword(password, token!);
   dispatch(authenticate({ token: newToken }));
 };
 
-export const updatePoints = async (
-  points: number,
-  user: UserState,
-  dispatch: AppDispatch,
-) => {
-  const { userId, ...userBackendData } = user;
+export const updatePoints = async (points: number, dispatch: AppDispatch) => {
+  const { userId, ...userData } = store.getState().user;
+  const totalPoints = userData.quizData.points + points;
 
-  dispatch(updateQuizData({ points }));
+  dispatch(updateQuizData({ points: totalPoints }));
 
   await updateUser(userId, {
-    ...userBackendData,
+    ...userData,
     quizData: {
-      ...user.quizData,
-      points: points,
+      ...userData.quizData,
+      points: totalPoints,
     },
   });
 };
