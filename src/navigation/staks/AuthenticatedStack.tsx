@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useDispatch } from "react-redux";
+import { child, off, onValue } from "firebase/database";
 import { Colors } from "#styles";
 import { AuthenticatedStackParamList } from "../types";
 import { MainTabs } from "../components";
@@ -11,10 +13,32 @@ import {
   QuizReviewScreen,
   SettingsScreen,
 } from "#screens";
+import { getDbRef } from "#utils";
+import { setCategories } from "#store/slices";
 
 const Stack = createNativeStackNavigator<AuthenticatedStackParamList>();
 
 const AuthenticatedStack: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Subscribing to firebase listening
+    const dbRef = getDbRef();
+
+    const categories = child(dbRef, "categories");
+    const refs = [categories];
+
+    onValue(categories, querySnapshot => {
+      const categoriesData = querySnapshot.val() || {};
+      dispatch(setCategories(categoriesData));
+    });
+
+    return () => {
+      // Unsubscribing to firebase lisstening
+      refs.forEach(chatsRef => off(chatsRef));
+    };
+  }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Screen

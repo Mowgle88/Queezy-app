@@ -1,15 +1,14 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CategoryGridTile } from "#ui";
 import { Colors } from "#styles";
 import { Category } from "#models";
 import { CATEGORIES } from "#data";
 import { HomeScreenNavigationProp } from "#navigation/types";
-import { CategoryName, IQuizCategoriesData } from "#types";
-import { getQuizCategories } from "#api";
+import { CategoryName } from "#types";
 import {
   FeaturedBoard,
   GreetingBoard,
@@ -17,26 +16,16 @@ import {
   SlidingView,
 } from "./components";
 import { selectors } from "#store/selectors";
-import { setCategories } from "#store/slices";
 
 interface renderCategoryItemProps {
   item: Category;
 }
 
 const HomeScreen: React.FC = () => {
-  const dispatch = useDispatch();
   const user = useSelector(selectors.user);
   const categories = useSelector(selectors.categories);
 
   const navigation = useNavigation<HomeScreenNavigationProp>();
-
-  useEffect(() => {
-    const fetchQuizCategoriesData = async () => {
-      const categoriesData: IQuizCategoriesData = await getQuizCategories();
-      dispatch(setCategories(categoriesData));
-    };
-    fetchQuizCategoriesData();
-  }, []);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
