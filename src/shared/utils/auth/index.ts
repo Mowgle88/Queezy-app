@@ -1,4 +1,9 @@
 import axios, { AxiosResponse } from "axios";
+import { getDatabase, set, ref, child } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "@firebase/util";
+import { IUser } from "#types";
+import { getFirebaseApp } from "#utils";
 
 type mode = "signInWithPassword" | "signUp";
 
@@ -46,15 +51,77 @@ export const authenticate = async (
   });
 
   const token = response.data.idToken;
-  return token;
+  const userId = response.data.localId;
+
+  return { userId, token };
 };
 
-export const createUser = (email: string, password: string) => {
-  return authenticate("signUp", email, password);
+export const signUp = async (email: string, password: string) => {
+  // return authenticate("signUp", email, password);
+  const app = getFirebaseApp();
+  const auth = getAuth(app);
+  try {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const { uid: userId } = response.user;
+    const { token } = await response.user.getIdTokenResult();
+    return { token, userId };
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) {
+      const errorCode = error.code;
+      let message = "Something went wrong.";
+      if (errorCode === "auth/email-already-in-use") {
+        message = "This email is already is use";
+      }
+      throw new Error(message);
+    }
+    return { token: "", userId: "" };
+  }
 };
 
 export const login = (email: string, password: string) => {
   return authenticate("signInWithPassword", email, password);
+};
+
+export const createUser = async (userData: Partial<IUser>) => {
+  const user = {
+    ...userData,
+    settings: {
+      difficulty: "medium",
+      isTimeGame: false,
+      timeOnAnswer: 60,
+    },
+    quizData: {
+      points: 0,
+    },
+  };
+
+  try {
+    const dbRef = ref(getDatabase());
+    const childRef = child(dbRef, `users/${userData.userId}`);
+    await set(childRef, user);
+    return user;
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) {
+      const errorCode = error.code;
+
+      let message = "Something went wrong.";
+
+      if (
+        errorCode === "auth/wrong-password" ||
+        errorCode === "auth/user-not-found"
+      ) {
+        message = "The username or password was incorrect";
+      }
+
+      throw new Error(message);
+    }
+  }
+  // await axios.post(`${BACKEND_URL}/users.json`, user);
+  // return user;
 };
 
 export const changeUserEmail = async (email: string, token: string) => {

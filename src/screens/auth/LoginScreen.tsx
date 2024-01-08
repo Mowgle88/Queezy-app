@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { LoadingOverlay } from "#ui";
 import { login } from "#utils";
-import { fetchUsers } from "#api";
+import { fetchUser } from "#api";
 import { AuthContent } from "./components";
 import { authenticate, setUserData } from "#store/slices";
 
@@ -21,11 +21,10 @@ const LoginScreen: React.FC = () => {
   }) => {
     setIsAuthenticating(true);
     try {
-      const token = await login(email, password);
+      const { userId, token } = await login(email, password);
+      const user = await fetchUser(userId);
       dispatch(authenticate({ token }));
-      const users = await fetchUsers();
-      const userData = users.filter(userData => userData.email === email)[0];
-      dispatch(setUserData(userData));
+      dispatch(setUserData(user));
     } catch (error) {
       Alert.alert(
         "Authentication failed!",

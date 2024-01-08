@@ -1,11 +1,5 @@
 import axios from "axios";
-import {
-  IUser,
-  IUserBackendData,
-  UserData,
-  IQuizData,
-  ISettings,
-} from "../types";
+import { IUser, IUserBackendData, IQuizData, ISettings } from "../types";
 
 type IFetchUsers = IUser & { settings: ISettings } & {
   quizData: IQuizData;
@@ -13,26 +7,6 @@ type IFetchUsers = IUser & { settings: ISettings } & {
 
 const BACKEND_URL =
   "https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/";
-
-export const addUserToDatabase = async (userData: Partial<UserData>) => {
-  const userBackendData = {
-    ...userData,
-    settings: {
-      difficulty: "medium",
-      isTimeGame: false,
-      timeOnAnswer: 60,
-    },
-    quizData: {
-      points: 0,
-    },
-  };
-  const response = await axios.post(
-    `${BACKEND_URL}/users.json`,
-    userBackendData,
-  );
-  const id: string = response.data.name;
-  return id;
-};
 
 export const fetchUsers = async () => {
   const response = await axios.get<IFetchUsers[]>(`${BACKEND_URL}/users.json`);
