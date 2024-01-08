@@ -46,7 +46,7 @@ export const changeEmail = async (
 ) => {
   const token = store.getState().auth.token;
 
-  updateInfo(value, dispatch);
+  await updateInfo(value, dispatch);
 
   const newToken = await changeUserEmail(value.email!, token!);
   dispatch(authenticate({ token: newToken }));
@@ -62,7 +62,7 @@ export const changePassword = async (
   const token = store.getState().auth.token;
 
   const { date, password } = value;
-  updateInfo({ date }, dispatch);
+  await updateInfo({ date }, dispatch);
 
   const newToken = await changeUserPassword(password, token!);
   dispatch(authenticate({ token: newToken }));

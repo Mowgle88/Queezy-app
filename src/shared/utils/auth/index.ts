@@ -126,15 +126,20 @@ export const createUser = async (userData: Partial<IUser>) => {
 
 export const changeUserEmail = async (email: string, token: string) => {
   const URL = `${BACKEND_URL}:update?key=${API_KEY}`;
-
-  const response: AxiosResponse<IChengeEmailResponse> = await axios.post(URL, {
-    email: email,
-    idToken: token,
-    returnSecureToken: true,
-  });
-
-  const newToken = response.data.idToken;
-  return newToken;
+  try {
+    const response: AxiosResponse<IChengeEmailResponse> = await axios.post(
+      URL,
+      {
+        email: email,
+        idToken: token,
+        returnSecureToken: true,
+      },
+    );
+    const newToken = response.data.idToken;
+    return newToken;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const changeUserPassword = async (password: string, token: string) => {
