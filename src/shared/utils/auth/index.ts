@@ -4,6 +4,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { IUser } from "#types";
 import { getFirebaseApp } from "#utils";
+import { WEB_API_KEY } from "#env";
 
 type mode = "signInWithPassword" | "signUp";
 
@@ -34,15 +35,14 @@ interface IChengePasswordResponse {
   localId: string;
 }
 
-const BACKEND_URL = "https://identitytoolkit.googleapis.com/v1/accounts";
-const API_KEY = "AIzaSyDwYyv4wXD1iRHPG8f0spPPmXlH2ManpxQ";
+const AUTH_URL = "https://identitytoolkit.googleapis.com/v1/accounts";
 
 export const authenticate = async (
   mode: mode,
   email: string,
   password: string,
 ) => {
-  const URL = `${BACKEND_URL}:${mode}?key=${API_KEY}`;
+  const URL = `${AUTH_URL}:${mode}?key=${WEB_API_KEY}`;
 
   const response: AxiosResponse<IAuthResponseData> = await axios.post(URL, {
     email: email,
@@ -125,7 +125,7 @@ export const createUser = async (userData: Partial<IUser>) => {
 };
 
 export const changeUserEmail = async (email: string, token: string) => {
-  const URL = `${BACKEND_URL}:update?key=${API_KEY}`;
+  const URL = `${AUTH_URL}:update?key=${WEB_API_KEY}`;
   try {
     const response: AxiosResponse<IChengeEmailResponse> = await axios.post(
       URL,
@@ -143,7 +143,7 @@ export const changeUserEmail = async (email: string, token: string) => {
 };
 
 export const changeUserPassword = async (password: string, token: string) => {
-  const URL = `${BACKEND_URL}:update?key=${API_KEY}`;
+  const URL = `${AUTH_URL}:update?key=${WEB_API_KEY}`;
 
   const response: AxiosResponse<IChengePasswordResponse> = await axios.post(
     URL,

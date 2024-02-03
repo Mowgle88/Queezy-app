@@ -6,14 +6,14 @@ type IFetchUsers = IUser & { settings: ISettings } & {
   quizData: IQuizData;
 };
 
-const BACKEND_URL =
+const DATABASE_URL =
   "https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/";
 
 export const fetchUsers = async () => {
   const token = store.getState().auth.token;
 
   const response = await axios.get<IFetchUsers[]>(
-    `${BACKEND_URL}/users.json?auth=${token}`,
+    `${DATABASE_URL}/users.json?auth=${token}`,
   );
 
   const users = [];
@@ -41,7 +41,7 @@ export const fetchUsers = async () => {
 
 export const fetchUser = async (id: string) => {
   const response = await axios.get<IFetchUsers>(
-    `${BACKEND_URL}/users/${id}.json`,
+    `${DATABASE_URL}/users/${id}.json`,
   );
   return response.data;
 };
@@ -49,15 +49,15 @@ export const fetchUser = async (id: string) => {
 export const deleteUser = async (id: string) => {
   const token = store.getState().auth.token;
 
-  return axios.delete(`${BACKEND_URL}/users/${id}.json?auth=${token}`);
+  return axios.delete(`${DATABASE_URL}/users/${id}.json?auth=${token}`);
 };
 
 export const updateUser = async (id: string, userData: IUserBackendData) => {
   const token = store.getState().auth.token;
-  return axios.put(`${BACKEND_URL}/users/${id}.json?auth=${token}`, userData);
+  return axios.put(`${DATABASE_URL}/users/${id}.json?auth=${token}`, userData);
 };
 
 export const getQuizCategories = async () => {
-  const response = await axios.get(`${BACKEND_URL}/categories.json`);
+  const response = await axios.get(`${DATABASE_URL}/categories.json`);
   return response.data;
 };

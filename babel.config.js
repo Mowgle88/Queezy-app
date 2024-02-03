@@ -29,5 +29,13 @@ module.exports = {
     ],
     ["react-native-reanimated/plugin"],
     ["@babel/plugin-transform-export-namespace-from"],
+    [
+      "module:react-native-dotenv",
+      {
+        envName: "APP_ENV",
+        moduleName: "#env",
+        path: ".env",
+      },
+    ],
   ],
 };

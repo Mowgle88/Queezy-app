@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import { getDatabase, ref } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FIREBASE_CONFIG_API_KEY } from "#env";
 
 export const getFirebaseApp = () => {
   // TODO: Add SDKs for Firebase products that you want to use
@@ -11,7 +12,7 @@ export const getFirebaseApp = () => {
   // Your web app's Firebase configuration
 
   const firebaseConfig = {
-    apiKey: "AIzaSyA244xBaKtKcTRLjJQ48PCF0mDu9vWDafM",
+    apiKey: FIREBASE_CONFIG_API_KEY,
     authDomain: "art-quiz-f71ff.firebaseapp.com",
     databaseURL:
       "https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app",
