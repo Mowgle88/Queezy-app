@@ -3,10 +3,12 @@ import { StyleSheet, View } from "react-native";
 import { CustomButton, CustomInput } from "#ui";
 import { ICredentialsInvalid } from "#types";
 import { formIcons } from "#constants";
+import GoogleButton from "./GoogleButton";
 
 interface AuthFormProps {
   isLogin: boolean;
   onSubmit: (credentials: ICredentials) => void;
+  onSignInWithGoogle: () => void;
   credentialsInvalid: ICredentialsInvalid;
 }
 
@@ -19,7 +21,7 @@ export interface ICredentials {
 
 function AuthForm(
   this: unknown,
-  { isLogin, onSubmit, credentialsInvalid }: AuthFormProps,
+  { isLogin, onSubmit, onSignInWithGoogle, credentialsInvalid }: AuthFormProps,
 ) {
   const [enteredUserName, setEnteredUserName] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -127,6 +129,7 @@ function AuthForm(
           <CustomButton onPress={submitHandler}>
             {isLogin ? "Login" : "Sign Up"}
           </CustomButton>
+          {isLogin && <GoogleButton onPress={onSignInWithGoogle} />}
         </View>
       </View>
     </View>

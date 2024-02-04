@@ -1,10 +1,24 @@
 import axios, { AxiosResponse } from "axios";
 import { getDatabase, set, ref, child } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+import {
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+
 import { FirebaseError } from "@firebase/util";
 import { IUser } from "#types";
-import { getFirebaseApp } from "#utils";
+import { auth } from "#utils";
 import { WEB_API_KEY } from "#env";
+
+GoogleSignin.configure({
+  webClientId:
+    "1032740223218-gakicmli64oimceepan16cvmfenf891m.apps.googleusercontent.com",
+});
 
 type mode = "signInWithPassword" | "signUp";
 
@@ -37,6 +51,50 @@ interface IChengePasswordResponse {
 
 const AUTH_URL = "https://identitytoolkit.googleapis.com/v1/accounts";
 
+export const signInWithGoogle = async () => {
+  try {
+    const isSigned = await GoogleSignin.isSignedIn();
+    if (isSigned) await GoogleSignin.signOut();
+
+    await GoogleSignin.hasPlayServices();
+    const { idToken } = await GoogleSignin.signIn();
+
+    const googleCredentials = GoogleAuthProvider.credential(idToken);
+    const { user } = await signInWithCredential(auth, googleCredentials);
+    const tokenResult = await user.getIdTokenResult();
+
+    const { token } = tokenResult;
+    const userData = {
+      userId: user.uid,
+      email: user.email || "",
+      userName: user.displayName || "",
+      date: new Date().toISOString().slice(0, 10),
+      // date: user.metadata.creationTime || "",
+    };
+
+    return { userData, token };
+  } catch (error: unknown) {
+    console.log(error);
+    if (error instanceof FirebaseError) {
+      const errorCode = error.code;
+
+      let message = "Something went wrong.";
+
+      if (errorCode === statusCodes.SIGN_IN_CANCELLED) {
+        message = "SIGN_IN_CANCELLED";
+      } else if (errorCode === statusCodes.IN_PROGRESS) {
+        message = "IN_PROGRESS";
+      } else if (errorCode === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        message = "PLAY_SERVICES_NOT_AVAILABLE";
+      } else {
+        message = error.message;
+      }
+      throw new Error(message);
+    }
+    return { userData: { userId: "" }, token: "" };
+  }
+};
+
 export const authenticate = async (
   mode: mode,
   email: string,
@@ -58,8 +116,6 @@ export const authenticate = async (
 
 export const signUp = async (email: string, password: string) => {
   // return authenticate("signUp", email, password);
-  const app = getFirebaseApp();
-  const auth = getAuth(app);
   try {
     const response = await createUserWithEmailAndPassword(
       auth,

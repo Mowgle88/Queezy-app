@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { LoadingOverlay } from "#ui";
-import { login } from "#utils";
+import { createUser, login, signInWithGoogle } from "#utils";
 import { fetchUser } from "#api";
 import { AuthContent } from "./components";
 import { authenticate, setUserData } from "#store/slices";
@@ -34,11 +34,36 @@ const LoginScreen: React.FC = () => {
     }
   };
 
+  const signinWithGoogleHandler = async () => {
+    try {
+      setIsAuthenticating(true);
+      const { userData, token } = await signInWithGoogle();
+
+      let user = await fetchUser(userData.userId);
+
+      if (!user) {
+        user = await createUser(userData);
+      }
+
+      dispatch(authenticate({ token }));
+      dispatch(setUserData(user));
+    } catch (error: any) {
+      Alert.alert("An error occurred", error.message);
+      setIsAuthenticating(false);
+    }
+  };
+
   if (isAuthenticating) {
     return <LoadingOverlay message={"Logging you in..."} />;
   }
 
-  return <AuthContent isLogin onAuthenticate={signinHandler} />;
+  return (
+    <AuthContent
+      isLogin
+      onAuthenticate={signinHandler}
+      onSignInWithGoogle={signinWithGoogleHandler}
+    />
+  );
 };
 
 export default LoginScreen;

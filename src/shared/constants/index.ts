@@ -41,6 +41,10 @@ export const logo = {
   src: require("../../assets/queezy.png"),
 };
 
+export const google = {
+  src: require("../../assets/icons/Icon-google.svg"),
+};
+
 export const backgrounds = {
   Profile: require("../../assets/Profile-background.png"),
   QuizDetails: require("../../assets/QuizDetails-background.png"),

@@ -2,7 +2,7 @@ import axios from "axios";
 import { IUser, IUserBackendData, IQuizData, ISettings } from "../types";
 import { store } from "#store";
 
-type IFetchUsers = IUser & { settings: ISettings } & {
+type IFetchUser = IUser & { settings: ISettings } & {
   quizData: IQuizData;
 };
 
@@ -12,7 +12,7 @@ const DATABASE_URL =
 export const fetchUsers = async () => {
   const token = store.getState().auth.token;
 
-  const response = await axios.get<IFetchUsers[]>(
+  const response = await axios.get<IFetchUser[]>(
     `${DATABASE_URL}/users.json?auth=${token}`,
   );
 
@@ -40,7 +40,7 @@ export const fetchUsers = async () => {
 };
 
 export const fetchUser = async (id: string) => {
-  const response = await axios.get<IFetchUsers>(
+  const response = await axios.get<IFetchUser>(
     `${DATABASE_URL}/users/${id}.json`,
   );
   return response.data;
