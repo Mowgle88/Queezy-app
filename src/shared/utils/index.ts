@@ -1,6 +1,7 @@
 export * from "./auth/index";
 export * from "./user/index";
 export * from "./date/index";
+export * from "./firebaseHelper";
 
 export const getSourcePath = (title: string) => {
   switch (title) {

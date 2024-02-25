@@ -1,41 +1,20 @@
 import axios from "axios";
-import {
-  IUser,
-  IUserBackendData,
-  UserData,
-  IQuizData,
-  ISettings,
-} from "../types";
+import { IUser, IUserBackendData, IQuizData, ISettings } from "../types";
+import { store } from "#store";
 
-type IFetchUsers = IUser & { settings: ISettings } & {
+type IFetchUser = IUser & { settings: ISettings } & {
   quizData: IQuizData;
 };
 
-const BACKEND_URL =
+const DATABASE_URL =
   "https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app/";
 
-export const addUserToDatabase = async (userData: Partial<UserData>) => {
-  const userBackendData = {
-    ...userData,
-    settings: {
-      difficulty: "medium",
-      isTimeGame: false,
-      timeOnAnswer: 60,
-    },
-    quizData: {
-      points: 0,
-    },
-  };
-  const response = await axios.post(
-    `${BACKEND_URL}/users.json`,
-    userBackendData,
-  );
-  const id: string = response.data.name;
-  return id;
-};
-
 export const fetchUsers = async () => {
-  const response = await axios.get<IFetchUsers[]>(`${BACKEND_URL}/users.json`);
+  const token = store.getState().auth.token;
+
+  const response = await axios.get<IFetchUser[]>(
+    `${DATABASE_URL}/users.json?auth=${token}`,
+  );
 
   const users = [];
 
@@ -61,21 +40,24 @@ export const fetchUsers = async () => {
 };
 
 export const fetchUser = async (id: string) => {
-  const response = await axios.get<IFetchUsers>(
-    `${BACKEND_URL}/users/${id}.json`,
+  const response = await axios.get<IFetchUser>(
+    `${DATABASE_URL}/users/${id}.json`,
   );
   return response.data;
 };
 
 export const deleteUser = async (id: string) => {
-  return axios.delete(`${BACKEND_URL}/users/${id}.json`);
+  const token = store.getState().auth.token;
+
+  return axios.delete(`${DATABASE_URL}/users/${id}.json?auth=${token}`);
 };
 
 export const updateUser = async (id: string, userData: IUserBackendData) => {
-  return axios.put(`${BACKEND_URL}/users/${id}.json`, userData);
+  const token = store.getState().auth.token;
+  return axios.put(`${DATABASE_URL}/users/${id}.json?auth=${token}`, userData);
 };
 
 export const getQuizCategories = async () => {
-  const response = await axios.get(`${BACKEND_URL}/categories.json`);
+  const response = await axios.get(`${DATABASE_URL}/categories.json`);
   return response.data;
 };

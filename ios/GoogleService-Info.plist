@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1032740223218-njfrdiqtoukt73juuj0ko3n30hubonla.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1032740223218-njfrdiqtoukt73juuj0ko3n30hubonla</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1032740223218-of3jb7hmrt12tu395vaqsfdv58jq3uf2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCmsXy6SUZtBI4Yy08KQ7H-AAJzYSFV0h8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1032740223218</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mowgle.quiz-app</string>
+	<key>PROJECT_ID</key>
+	<string>art-quiz-f71ff</string>
+	<key>STORAGE_BUCKET</key>
+	<string>art-quiz-f71ff.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1032740223218:ios:952d9d7368551050d6386b</string>
+	<key>DATABASE_URL</key>
+	<string>https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

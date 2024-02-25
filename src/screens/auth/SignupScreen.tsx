@@ -3,8 +3,7 @@ import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { LoadingOverlay } from "#ui";
 import { UserData } from "#types";
-import { createUser } from "#utils";
-import { addUserToDatabase } from "#api";
+import { createUser, signUp } from "#utils";
 import { AuthContent } from "./components";
 import { authenticate, setUserData } from "#store/slices";
 
@@ -21,24 +20,19 @@ const SignupScreen: React.FC = () => {
   }: UserData) => {
     setIsAuthenticating(true);
     try {
-      const token = await createUser(email, password);
-      dispatch(authenticate({ token }));
-      const userID = await addUserToDatabase({
+      const { userId, token } = await signUp(email, password);
+      const userData = await createUser({
+        userId,
         email,
         userName,
         date,
       });
-      const userData = {
-        userId: userID,
-        email,
-        userName,
-        date,
-      };
+      dispatch(authenticate({ token }));
       dispatch(setUserData(userData));
     } catch (error) {
       Alert.alert(
         "Authentication failed!",
-        "Could not create user. Please check your input andr try again later!",
+        "Could not create user. Please check your input and try again later!",
       );
       setIsAuthenticating(false);
     }

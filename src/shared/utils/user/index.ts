@@ -1,5 +1,5 @@
 import { updateUser } from "#api";
-import { ISettings, UserData } from "#types";
+import { ISettings, IUser } from "#types";
 import { store, type AppDispatch } from "#store";
 import {
   authenticate,
@@ -13,11 +13,11 @@ export const updateSettings = async (
   value: Partial<ISettings>,
   dispatch: AppDispatch,
 ) => {
-  const { userId, ...userData } = store.getState().user;
+  const userData = store.getState().user;
 
   dispatch(changeSettings(value));
 
-  await updateUser(userId, {
+  await updateUser(userData.userId, {
     ...userData,
     settings: {
       ...userData.settings,
@@ -27,26 +27,26 @@ export const updateSettings = async (
 };
 
 export const updateInfo = async (
-  value: Partial<UserData>,
+  value: Partial<IUser>,
   dispatch: AppDispatch,
 ) => {
-  const { userId, ...userData } = store.getState().user;
+  const userData = store.getState().user;
 
   dispatch(setUserData(value));
 
-  await updateUser(userId, {
+  await updateUser(userData.userId, {
     ...userData,
     ...value,
   });
 };
 
 export const changeEmail = async (
-  value: Partial<UserData>,
+  value: Partial<IUser>,
   dispatch: AppDispatch,
 ) => {
   const token = store.getState().auth.token;
 
-  updateInfo(value, dispatch);
+  await updateInfo(value, dispatch);
 
   const newToken = await changeUserEmail(value.email!, token!);
   dispatch(authenticate({ token: newToken }));
@@ -62,19 +62,19 @@ export const changePassword = async (
   const token = store.getState().auth.token;
 
   const { date, password } = value;
-  updateInfo({ date }, dispatch);
+  await updateInfo({ date }, dispatch);
 
   const newToken = await changeUserPassword(password, token!);
   dispatch(authenticate({ token: newToken }));
 };
 
 export const updatePoints = async (points: number, dispatch: AppDispatch) => {
-  const { userId, ...userData } = store.getState().user;
+  const userData = store.getState().user;
   const totalPoints = userData.quizData.points + points;
 
   dispatch(updateQuizData({ points: totalPoints }));
 
-  await updateUser(userId, {
+  await updateUser(userData.userId, {
     ...userData,
     quizData: {
       ...userData.quizData,
