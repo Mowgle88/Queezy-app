@@ -8,7 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint \"**/*.{ts,tsx}\"",
-    "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix"
+    "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix",
+    "build-android-clean": "cd android && ./gradlew clean && cd ../",
+    "index-android-bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
+    "build-android": "cd android && ./gradlew assembleRelease && cd ../"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
