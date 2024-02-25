@@ -19,11 +19,13 @@ import AuthForm, { type ICredentials } from "./AuthForm";
 interface AuthContentProps {
   isLogin: boolean;
   onAuthenticate: ({ email, password, userName, date }: UserData) => void;
+  onSignInWithGoogle?: () => void;
 }
 
 const AuthContent: React.FC<AuthContentProps> = ({
   isLogin,
   onAuthenticate,
+  onSignInWithGoogle,
 }) => {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     userName: false,
@@ -88,6 +90,7 @@ const AuthContent: React.FC<AuthContentProps> = ({
             <AuthForm
               isLogin={isLogin}
               onSubmit={submitHandler}
+              onSignInWithGoogle={() => onSignInWithGoogle?.()}
               credentialsInvalid={credentialsInvalid}
             />
             <View style={styles.buttons}>

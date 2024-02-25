@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1032740223218",
+    "firebase_url": "https://art-quiz-f71ff-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "art-quiz-f71ff",
+    "storage_bucket": "art-quiz-f71ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032740223218:android:50444cc7875df24dd6386b",
+        "android_client_info": {
+          "package_name": "com.queezyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032740223218-of3jb7hmrt12tu395vaqsfdv58jq3uf2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.queezyapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1032740223218-gakicmli64oimceepan16cvmfenf891m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwYyv4wXD1iRHPG8f0spPPmXlH2ManpxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032740223218-gakicmli64oimceepan16cvmfenf891m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1032740223218-njfrdiqtoukt73juuj0ko3n30hubonla.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mowgle.quiz-app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
