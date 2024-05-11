@@ -6,8 +6,9 @@ import {
   SearchScreen,
 } from "#screens";
 import { tabBarIcons } from "#constants";
+import { Tab } from "./types";
 
-export const tabs = [
+export const tabs: Tab[] = [
   {
     id: 1,
     title: "Home",

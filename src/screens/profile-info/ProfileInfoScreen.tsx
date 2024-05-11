@@ -18,7 +18,7 @@ import { fetchUsers } from "#api";
 import { BadgeBoard, RotatingView, StatisticsBoard } from "./components";
 import { selectors } from "#store/selectors";
 
-const ProfileInfoScreen = () => {
+const ProfileInfoScreen: React.FC = () => {
   const {
     userId,
     userName,

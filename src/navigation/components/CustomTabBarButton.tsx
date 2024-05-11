@@ -1,14 +1,15 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import {
   GestureResponderEvent,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { EdgeInsets } from "react-native-safe-area-context";
+import FastImage from "react-native-fast-image";
 import { Colors } from "#styles";
+import { tabBarIcons } from "#constants";
 
 export interface CustomTabBarButtonProps {
-  children: ReactNode;
   onPress?: (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent,
   ) => void;
@@ -16,7 +17,6 @@ export interface CustomTabBarButtonProps {
 }
 
 const CustomTabBarButton: React.FC<CustomTabBarButtonProps> = ({
-  children,
   onPress,
   insets,
 }) => {
@@ -28,7 +28,7 @@ const CustomTabBarButton: React.FC<CustomTabBarButtonProps> = ({
         { bottom: insets.bottom ? 30 : 60 },
       ]}
       onPress={onPress}>
-      {children}
+      <FastImage style={styles.customImage} source={tabBarIcons.Plus} />
     </TouchableOpacity>
   );
 };
@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
     elevation: 6,
+  },
+  customImage: {
+    width: 125,
+    height: 125,
   },
 });
 
