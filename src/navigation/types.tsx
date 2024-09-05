@@ -11,6 +11,16 @@ import {
   IQuizItem,
 } from "#types";
 
+export type Tab = {
+  id: number;
+  title: string;
+  screen: string;
+  Component: React.FC;
+  icon: number;
+  headerShown: boolean;
+  isCustomButton?: boolean;
+};
+
 export type RootStackParamList = {
   AuthStack: AuthStackParamList;
   AuthenticatedStack: AuthenticatedStackParamList;

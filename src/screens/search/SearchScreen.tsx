@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export default function SearchScreen() {
+const SearchScreen: React.FC = () => {
   return (
     <View>
       <Text>SearchScreen</Text>
     </View>
   );
-}
+};
+
+export default SearchScreen;

@@ -1,66 +1,22 @@
-import React, { ReactNode } from "react";
-import {
-  GestureResponderEvent,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { Image, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import VectorImage from "react-native-vector-image";
-import FastImage from "react-native-fast-image";
-import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { IconButton } from "#ui";
-import { Colors } from "#styles";
 import { MainStackParamList } from "../types";
-import {
-  AchievementsScreen,
-  CreateQuizScreen,
-  HomeScreen,
-  ProfileInfoScreen,
-  SearchScreen,
-} from "#screens";
 import { tabBarIcons } from "#constants";
 import { logout, removeUser } from "#store/slices";
+import CustomTabBarButton from "./CustomTabBarButton";
+import TabButton from "./TabButton";
+import { tabs } from "#navigation/tabs";
 
 const MainTab = createBottomTabNavigator<MainStackParamList>();
-
-interface CustomTabBarButtonProps {
-  children: ReactNode;
-  onPress?: (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent,
-  ) => void;
-  insets: EdgeInsets;
-}
-
-const CustomTabBarButton: React.FC<CustomTabBarButtonProps> = ({
-  children,
-  onPress,
-  insets,
-}) => {
-  return (
-    <TouchableOpacity
-      style={[
-        styles.customTabBarButtonContainer,
-        styles.shadow,
-        { bottom: insets.bottom ? 30 : 60 },
-      ]}
-      onPress={onPress}>
-      {children}
-    </TouchableOpacity>
-  );
-};
 
 const MainTabs: React.FC = () => {
   const dispatch = useDispatch();
 
   const insets = useSafeAreaInsets();
-
-  const iconStyle = (focused: boolean) => ({
-    width: focused ? 35 : 25,
-    height: focused ? 35 : 25,
-    tintColor: focused ? Colors.royalBlue : Colors.grey2,
-  });
 
   return (
     <MainTab.Navigator
@@ -77,13 +33,10 @@ const MainTabs: React.FC = () => {
           />
         ),
         tabBarShowLabel: false,
-        tabBarStyle: {
-          position: "absolute",
-          ...styles.shadow,
-        },
-        tabBarItemStyle: {
-          bottom: insets.bottom ? -10 : 20,
-        },
+        tabBarStyle: styles.tabBar,
+        // tabBarItemStyle: {
+        //   bottom: insets.bottom ? -10 : 20,
+        // },
         tabBarBackground: () => (
           <Image
             source={tabBarIcons.BottomTabs}
@@ -92,88 +45,31 @@ const MainTabs: React.FC = () => {
           />
         ),
       }}>
-      <MainTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <VectorImage style={iconStyle(focused)} source={tabBarIcons.Home} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <MainTab.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <VectorImage
-              style={iconStyle(focused)}
-              source={tabBarIcons.Search}
-            />
-          ),
-        }}
-      />
-      <MainTab.Screen
-        name="CreateQuiz"
-        component={CreateQuizScreen}
-        options={{
-          tabBarIcon: () => (
-            <FastImage style={styles.customImage} source={tabBarIcons.Plus} />
-          ),
-          tabBarButton: props => (
-            <CustomTabBarButton insets={insets} {...props} />
-          ),
-        }}
-      />
-      <MainTab.Screen
-        name="Leaderboard"
-        component={AchievementsScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <VectorImage
-              style={iconStyle(focused)}
-              source={tabBarIcons.Leaderboard}
-            />
-          ),
-        }}
-      />
-      <MainTab.Screen
-        name="Profile"
-        component={ProfileInfoScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <VectorImage
-              style={iconStyle(focused)}
-              source={tabBarIcons.Profile}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
+      {tabs.map(tab => (
+        <MainTab.Screen
+          key={tab.id}
+          name={tab.screen as keyof MainStackParamList}
+          component={tab.Component}
+          options={{
+            tabBarButton: tab?.isCustomButton
+              ? props => <CustomTabBarButton insets={insets} {...props} />
+              : props => <TabButton insets={insets} item={tab} {...props} />,
+            headerShown: tab.headerShown,
+          }}
+        />
+      ))}
     </MainTab.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
-  customTabBarButtonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: Colors.royalBlue,
-  },
-  shadow: {
+  tabBar: {
+    position: "absolute",
     shadowColor: "black",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
     elevation: 6,
-  },
-  customImage: {
-    width: 125,
-    height: 125,
   },
   tabBarImageBackground: {
     position: "absolute",
